@@ -53,48 +53,39 @@ export const getMarcaciones = async (req: Request, res: Response) => {
   }
 }
 
-
-
 export const getAuditMarcacion = async (req: Request, res: Response) => {
   try {
-    // const result = await Marcacion.findAll({
-    //   attributes: ['Id', 'Hora', 'estado'],
-    //   where: { Fecha: { [Op.eq]: fn('CURDATE') }, estado: 'Entrada' },
-    //   include: [{
-    //     attributes: ['nombres', 'apellidos', 'id_Grupo_Horario'],
-    //     model: Persona,
-    //     where: { id_Grupo_Horario: { [Op.ne]: null } },
-    //       include: [{
-    //         // attributes: ['diaSeman'],
-    //         model: GrupoTurnoVsHorario,
-    //         // where: { diaSeman: getDayOfWeekString() },
-    //         // include: [{
-    //         //   attributes: ['descripcion', 'hora_inicio'],
-    //         //   model: Turnos
-    //         // }]
-    //       }]
-    //   }],
-    // });
-
-
-    // const marcaciones = result.map(marcacion => {
-    //   return {
-    //     id: marcacion.Id,
-    //     nombres: marcacion.Persona.nombres,
-    //     apellidos: marcacion.Persona.apellidos,
-    //     hora: marcacion.Hora.toString().slice(0, 5),
-    //     estado: marcacion.estado,
-    //     hora_inicio: marcacion.Persona.GrupoTurnoVsHorario
-    //   }
-    // })
 
     const result = await Marcacion.findAll({
-      where: { Fecha: { [Op.eq]: fn('CURDATE') }, codigo: '1118307852' },
-      include: Persona
-    }
-    )
+      attributes: ['Id', 'Hora', 'estado'],
+      where: { Fecha: { [Op.eq]: fn('CURDATE') }, estado: { [Op.or]: ['Entrada', 'Salida'] } },
+      include: {
+        attributes: ['nombres', 'apellidos'],
+        where: { id_Grupo_Horario: { [Op.ne]: null } },
+        model: Persona,
+        include: [{
+          model: GrupoTurnoVsHorario,
+          attributes: ['diaSeman'],
+          include: [{
+            model: Turnos,
+            attributes: ['hora_inicio', 'hora_fin']
+          }]
+        }]
+      },
+    })
 
-    res.status(200).json(result);
+    const marcaciones = result.map(m => {
+      return {
+        id: m.Id,
+        hora: m.Hora,
+        estado: m.estado,
+        nombres: m.Persona.nombres,
+        apellidos: m.Persona.apellidos,
+        turno: m.Persona.GrupoTurnoVsHorarios !== undefined ? m.Persona.GrupoTurnoVsHorarios.filter(t => t.diaSeman === getDayOfWeekString())[0] : []
+      }
+    })
+
+    res.status(200).json(marcaciones);
   } catch (error) {
     console.error('Error al obtener las marcaciones:', error);
     res.status(500).json({ message: 'Internal server error' });

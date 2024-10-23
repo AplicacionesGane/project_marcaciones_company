@@ -17,7 +17,7 @@ class Persona extends Model<InferAttributes<Persona>, InferCreationAttributes<Pe
   declare id_Ciudad: number | null
   declare id_Cargo: number | null
   declare Area?: Area
-  declare GrupoTurnoVsHorario?: GrupoTurnoVsHorario
+  declare GrupoTurnoVsHorarios?: GrupoTurnoVsHorario[]
 }
 
 Persona.init({
