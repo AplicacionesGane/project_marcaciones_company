@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  web_marcaciones:
+    image: nginx:stable-alpine3.19-slim
+    container_name: web_marcaciones
+    volumes:
+      - ./client/dist:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - red-gane-int
+
+  api_marcaciones:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: api-marcaciones
+    image: api-marca-v1.0
+    networks:
+      - red-gane-int
+    environment:
+      - TZ=America/Bogota
+      
+networks:
+  red-gane-int:
+    external: true
