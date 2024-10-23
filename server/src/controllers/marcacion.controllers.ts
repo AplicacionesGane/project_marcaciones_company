@@ -53,40 +53,48 @@ export const getMarcaciones = async (req: Request, res: Response) => {
   }
 }
 
+
+
 export const getAuditMarcacion = async (req: Request, res: Response) => {
   try {
+    // const result = await Marcacion.findAll({
+    //   attributes: ['Id', 'Hora', 'estado'],
+    //   where: { Fecha: { [Op.eq]: fn('CURDATE') }, estado: 'Entrada' },
+    //   include: [{
+    //     attributes: ['nombres', 'apellidos', 'id_Grupo_Horario'],
+    //     model: Persona,
+    //     where: { id_Grupo_Horario: { [Op.ne]: null } },
+    //       include: [{
+    //         // attributes: ['diaSeman'],
+    //         model: GrupoTurnoVsHorario,
+    //         // where: { diaSeman: getDayOfWeekString() },
+    //         // include: [{
+    //         //   attributes: ['descripcion', 'hora_inicio'],
+    //         //   model: Turnos
+    //         // }]
+    //       }]
+    //   }],
+    // });
+
+
+    // const marcaciones = result.map(marcacion => {
+    //   return {
+    //     id: marcacion.Id,
+    //     nombres: marcacion.Persona.nombres,
+    //     apellidos: marcacion.Persona.apellidos,
+    //     hora: marcacion.Hora.toString().slice(0, 5),
+    //     estado: marcacion.estado,
+    //     hora_inicio: marcacion.Persona.GrupoTurnoVsHorario
+    //   }
+    // })
+
     const result = await Marcacion.findAll({
-      attributes: ['Id', 'Hora', 'estado'],
-      where: { Fecha: { [Op.eq]: fn('CURDATE') } },
-      include: [{
-        attributes: ['nombres', 'apellidos'],
-        model: Persona,
-        as: 'Persona',
-        where: { id_Grupo_Horario: { [Op.ne]: null } },
-        include: [{
-          attributes: ['diaSeman'],
-          model: GrupoTurnoVsHorario,
-          where: { diaSeman: getDayOfWeekString() },
-          include: [{
-            attributes: ['descripcion', 'hora_inicio'],
-            model: Turnos
-          }]
-        }]
-      }]
-    });
+      where: { Fecha: { [Op.eq]: fn('CURDATE') }, codigo: '1118307852' },
+      include: Persona
+    }
+    )
 
-    const marcaciones = result.map(marcacion => {
-      return {
-        id: marcacion.Id,
-        nombres: marcacion.Persona.nombres,
-        apellidos: marcacion.Persona.apellidos,
-        hora: marcacion.Hora.toString().slice(0, 5),
-        estado: marcacion.estado,
-        hora_inicio: marcacion.Persona.GrupoTurnoVsHorario?.Turno.hora_inicio
-      }
-    })
-
-    res.status(200).json(marcaciones);
+    res.status(200).json(result);
   } catch (error) {
     console.error('Error al obtener las marcaciones:', error);
     res.status(500).json({ message: 'Internal server error' });
