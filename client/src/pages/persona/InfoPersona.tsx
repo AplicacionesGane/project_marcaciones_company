@@ -11,6 +11,7 @@ export default function InfoPersona() {
     id: 0,
     identificacion: '',
     nombres: '',
+    estado: 'A',
     apellidos: '',
     id_Areas: 0,
     id_Cargo: 0,
@@ -88,9 +89,17 @@ export default function InfoPersona() {
             </div>
           </div>
 
- 
+
         </section>
         <section className='w-96 mx-auto'>
+          <div className='w-full mb-5'>
+            <article className='flex gap-2 items-center'>
+              <h1>Estado:</h1>
+              <span className='bg-green-100 text-green-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300'>
+                { persona.estado === 'A' ? 'Activo' : 'Inactivo' }
+              </span>
+            </article>
+          </div>
           <div className='w-full mb-5 group'>
             <label htmlFor='id_Areas' className='block mb-2 text-xl font-medium text-gray-900 dark:text-white'>Área del empleado</label>
             <select id='id_Areas' name='id_Areas' value={persona.id_Areas || 0} onChange={ev => handleSelectChange(ev)}
@@ -142,7 +151,7 @@ export default function InfoPersona() {
 
       <button onClick={() => navigate('/empleados')}
         className='absolute bottom-12 right-64 px-4 py-2 text-white bg-red-700 rounded-lg font-semibold hover:bg-red-600'>
-          <span>Cancelar</span>
+        <span>Cancelar</span>
       </button>
 
     </section>

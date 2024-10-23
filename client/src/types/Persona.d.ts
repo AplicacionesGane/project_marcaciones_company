@@ -8,6 +8,7 @@ export interface Persona {
 }
 
 export interface PersonaFields extends Persona {
+  estado: 'A' | 'R'
   id_Areas: null | number
   id_Cargo: null | number
   id_Grupo_Horario: null | number
