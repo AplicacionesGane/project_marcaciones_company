@@ -55,34 +55,33 @@ export const getMarcaciones = async (req: Request, res: Response) => {
 
 export const getAuditMarcacion = async (req: Request, res: Response) => {
   try {
+
     const result = await Marcacion.findAll({
       attributes: ['Id', 'Hora', 'estado'],
-      where: { Fecha: { [Op.eq]: fn('CURDATE') } },
-      include: [{
+      where: { Fecha: { [Op.eq]: fn('CURDATE') }, estado: { [Op.or]: ['Entrada', 'Salida'] } },
+      include: {
         attributes: ['nombres', 'apellidos'],
-        model: Persona,
-        as: 'Persona',
         where: { id_Grupo_Horario: { [Op.ne]: null } },
+        model: Persona,
         include: [{
-          attributes: ['diaSeman'],
           model: GrupoTurnoVsHorario,
-          where: { diaSeman: getDayOfWeekString() },
+          attributes: ['diaSeman'],
           include: [{
-            attributes: ['descripcion', 'hora_inicio'],
-            model: Turnos
+            model: Turnos,
+            attributes: ['hora_inicio', 'hora_fin']
           }]
         }]
-      }]
-    });
+      },
+    })
 
-    const marcaciones = result.map(marcacion => {
+    const marcaciones = result.map(m => {
       return {
-        id: marcacion.Id,
-        nombres: marcacion.Persona.nombres,
-        apellidos: marcacion.Persona.apellidos,
-        hora: marcacion.Hora.toString().slice(0, 5),
-        estado: marcacion.estado,
-        hora_inicio: marcacion.Persona.GrupoTurnoVsHorarios[0].Turno.hora_inicio
+        id: m.Id,
+        hora: m.Hora,
+        estado: m.estado,
+        nombres: m.Persona.nombres,
+        apellidos: m.Persona.apellidos,
+        turno: m.Persona.GrupoTurnoVsHorarios !== undefined ? m.Persona.GrupoTurnoVsHorarios.filter(t => t.diaSeman === getDayOfWeekString())[0].Turno : []
       }
     })
 

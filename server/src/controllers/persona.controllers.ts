@@ -1,12 +1,12 @@
 import { GrupoHorario } from '../models/gphorario.model';
 import { Persona } from '../models/persona.model';
 import { Cargo } from '../models/cargos.model';
-import { Request, Response } from 'express';
 import { Area } from '../models/areas.model';
+import { Request, Response } from 'express';
 
 export const getPersonas = async (req: Request, res: Response) => {
   try {
-    const personas = await Persona.findAll({ attributes: ['id', 'identificacion', 'nombres', 'apellidos'] });
+    const personas = await Persona.findAll({ where: { estado: 'A'} });
     
     res.status(200).json(personas);
   } catch (error) {
@@ -20,7 +20,7 @@ export const getPersonaById = async (req: Request, res: Response) => {
     const { id } = req.params;
     const persona = await Persona.findByPk(
       id, 
-      { attributes: ['id', 'identificacion', 'nombres', 'apellidos', 'id_Areas', 'id_Cargo', 'id_Grupo_Horario'] }
+      { attributes: ['id', 'identificacion', 'nombres', 'apellidos', 'estado', 'id_Areas', 'id_Cargo', 'id_Grupo_Horario'] }
     );
 
     if (!persona) {
@@ -28,6 +28,7 @@ export const getPersonaById = async (req: Request, res: Response) => {
       return;
     }
 
+    // TODO: Estos campos los solicita para llenar los select de los formularios en update persona
     const Areas = await Area.findAll();
     const Cargos = await Cargo.findAll();
     const GruposHorario = await GrupoHorario.findAll();
@@ -55,6 +56,35 @@ export const updatePersona = async (req: Request, res: Response) => {
     await persona.update({ nombres, apellidos, id_Areas, id_Cargo, id_Grupo_Horario, id_Empresa, id_Ciudad, id_Centro_Costos });
 
     res.status(200).json({ message: 'Persona actualizada' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Error en el servidor', error });
+  }
+}
+
+export const deletePersona = async (req: Request, res: Response) => {
+  const { id, estado } = req.body;
+
+  if  (!id || !estado) {
+    res.status(400).json({ message: 'Petición inválida' });
+    return;
+  }
+
+  if (estado !== 'R') {
+    res.status(400).json({ message: 'Petición inválida' });
+    return;
+  }
+
+  try {
+    const persona = await Persona.findByPk(id);
+    if (!persona) {
+      res.status(404).json({ message: 'Persona no encontrada' });
+      return;
+    }
+
+    await persona.update({ estado: 'R' });
+
+    res.status(200).json({ message: 'Persona eliminada' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Error en el servidor', error });
