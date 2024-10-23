@@ -6,7 +6,7 @@ import { Area } from '../models/areas.model';
 
 export const getPersonas = async (req: Request, res: Response) => {
   try {
-    const personas = await Persona.findAll({ attributes: ['id', 'identificacion', 'nombres', 'apellidos'] });
+    const personas = await Persona.findAll();
     
     res.status(200).json(personas);
   } catch (error) {

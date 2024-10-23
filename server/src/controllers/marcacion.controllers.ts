@@ -82,7 +82,7 @@ export const getAuditMarcacion = async (req: Request, res: Response) => {
         apellidos: marcacion.Persona.apellidos,
         hora: marcacion.Hora.toString().slice(0, 5),
         estado: marcacion.estado,
-        hora_inicio: marcacion.Persona.GrupoTurnoVsHorarios[0].Turno.hora_inicio
+        hora_inicio: marcacion.Persona.GrupoTurnoVsHorario?.Turno.hora_inicio
       }
     })
 
