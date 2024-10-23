@@ -81,7 +81,7 @@ export const getAuditMarcacion = async (req: Request, res: Response) => {
         estado: m.estado,
         nombres: m.Persona.nombres,
         apellidos: m.Persona.apellidos,
-        turno: m.Persona.GrupoTurnoVsHorarios !== undefined ? m.Persona.GrupoTurnoVsHorarios.filter(t => t.diaSeman === getDayOfWeekString())[0] : []
+        turno: m.Persona.GrupoTurnoVsHorarios !== undefined ? m.Persona.GrupoTurnoVsHorarios.filter(t => t.diaSeman === getDayOfWeekString())[0].Turno : []
       }
     })
 
