@@ -34,7 +34,7 @@ function PersonasView() {
             <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
               <thead className='text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400 sticky top-0'>
                 <tr>
-                  <th className='px-1 py-2 text-center'>Id</th>
+                  <th className='px-1 py-2 text-center'>N°</th>
                   <th className='px-1 py-2'>N° Identicación</th>
                   <th className='px-1 py-2'>Apellidos</th>
                   <th className='px-1 py-2'>Nombres</th>
@@ -43,9 +43,9 @@ function PersonasView() {
               </thead>
               <tbody>
                 {
-                  personas.map((p) => (
-                    <tr key={p.identificacion} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
-                      <td className='px-1 py-1 text-center'>{p.id}</td>
+                  personas.map((p, index) => (
+                    <tr key={p.id} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
+                      <td className='px-1 py-1 text-center'>{index + 1}</td>
                       <td className='px-1 py-1 font-medium text-gray-900 dark:text-white'>{p.identificacion}</td>
                       <td className='px-1 py-1'>{p.apellidos}</td>
                       <td className='px-1 py-1'>{p.nombres}</td>

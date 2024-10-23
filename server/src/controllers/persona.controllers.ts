@@ -61,3 +61,32 @@ export const updatePersona = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error en el servidor', error });
   }
 }
+
+export const deletePersona = async (req: Request, res: Response) => {
+  const { id, estado } = req.body;
+
+  if  (!id || !estado) {
+    res.status(400).json({ message: 'Petición inválida' });
+    return;
+  }
+
+  if (estado !== 'R') {
+    res.status(400).json({ message: 'Petición inválida' });
+    return;
+  }
+
+  try {
+    const persona = await Persona.findByPk(id);
+    if (!persona) {
+      res.status(404).json({ message: 'Persona no encontrada' });
+      return;
+    }
+
+    await persona.update({ estado: 'R' });
+
+    res.status(200).json({ message: 'Persona eliminada' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Error en el servidor', error });
+  }
+}

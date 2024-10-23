@@ -65,6 +65,22 @@ export default function InfoPersona() {
       });
   }
 
+  const handleDelete = () => {
+    axios.patch(`${URL_API}/deletepersona`, { estado: 'R', id })
+    .then(response => {
+      if (response.status === 200) {
+        toast.success('Usuario Eliminado Correctamente', { description: 'Empleado actualizado, será refirigido a lista empleados' });
+        setTimeout(() => {
+          navigate('/empleados')
+        }, 4000);
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      toast.error('Error al actualizar datos', { description: 'Ocurrió un error al intentar actualizar los datos del empleado' });
+    });
+  }
+
   return (
     <section className='p-12 h-[90vh]'>
 
@@ -91,6 +107,7 @@ export default function InfoPersona() {
 
 
         </section>
+
         <section className='w-96 mx-auto'>
           <div className='w-full mb-5'>
             <article className='flex gap-2 items-center'>
@@ -148,6 +165,11 @@ export default function InfoPersona() {
           <span>Guardar Información</span>
         </button>
       </form>
+
+      <button onClick={() => handleDelete()}
+        className='absolute bottom-12 left-64 px-4 py-2 text-white bg-red-700 rounded-lg font-semibold hover:bg-red-600'>
+        <span>Eliminar Empleado</span>
+      </button>
 
       <button onClick={() => navigate('/empleados')}
         className='absolute bottom-12 right-64 px-4 py-2 text-white bg-red-700 rounded-lg font-semibold hover:bg-red-600'>
