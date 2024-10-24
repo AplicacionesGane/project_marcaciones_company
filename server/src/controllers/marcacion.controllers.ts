@@ -77,7 +77,7 @@ export const getAuditMarcacion = async (req: Request, res: Response) => {
     const marcaciones = result.map(m => {
       return {
         id: m.Id,
-        hora: m.Hora,
+        hora: m.Hora.toString().substring(0, 5),
         estado: m.estado,
         nombres: m.Persona.nombres,
         apellidos: m.Persona.apellidos,

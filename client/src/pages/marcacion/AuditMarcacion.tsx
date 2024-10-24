@@ -17,7 +17,7 @@ export default function AuditMarcacion() {
         console.error(error);
       });
   }, []);
-
+  
   return (
     <section className='p-6 bg-white shadow-md rounded-lg'>
       <h1 className='text-2xl font-semibold mb-4 text-center'>Lista de Marcaciones {FechaHoy} </h1>
@@ -40,10 +40,10 @@ export default function AuditMarcacion() {
                 <td className='py-2 px-4 text-sm text-gray-700'>{item.apellidos}</td>
                 <td className='py-2 px-4 text-sm text-gray-700'>{item.hora}</td>
                 <td className='py-2 px-4 text-sm text-gray-700'>{item.estado}</td>
-                <td className='py-2 px-4 text-sm text-gray-700'>{item.hora_inicio}</td>
+                <td className='py-2 px-4 text-sm text-gray-700'>{item.turno.hora_inicio}</td>
                 <td className='py-2 px-4 text-sm text-gray-700'>
                   {
-                    item.estado === 'Entrada' && item.hora > item.hora_inicio
+                    item.estado === 'Entrada' && item.hora > item.turno.hora_inicio
                       ? (<span className='text-red-500 font-semibold'>Tarde</span>)
                       : (<span className='text-green-500 font-semibold'>A tiempo</span>)
                   }

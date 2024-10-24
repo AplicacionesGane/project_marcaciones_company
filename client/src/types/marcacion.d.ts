@@ -1,5 +1,3 @@
-import { Area } from "./Interfaces"
-
 export interface Marcacion {
   id: number
   nombres: string
@@ -35,5 +33,8 @@ export interface AuditMarcaciones {
   apellidos: string
   hora: string
   estado: string
-  hora_inicio: string
+  turno: {
+    hora_inicio: string
+    hora_fin: string
+  }
 }
