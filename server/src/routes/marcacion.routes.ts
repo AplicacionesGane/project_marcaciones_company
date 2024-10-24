@@ -5,4 +5,4 @@ export const marcacionRouter = Router();
 
 marcacionRouter.get('/marcaciones', getMarcaciones);
 
-marcacionRouter.get('/audit-marcacion', getAuditMarcacion);
+marcacionRouter.get('/audit-marcacion:fecha', getAuditMarcacion);
