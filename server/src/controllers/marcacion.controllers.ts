@@ -6,11 +6,16 @@ import { Area } from '../models/areas.model';
 import { Request, Response } from 'express';
 import { fn, Op } from 'sequelize';
 
-const getDayOfWeekString = (): string => {
-  const dayIndex = new Date().getDay();
+const getDayOfWeekString = (fecha: string): string => {
+  if (!fecha) 
+    fecha = new Date().toISOString().split('T')[0];
+
+  const date = new Date(fecha);
+  const dayIndex = date.getDay();
   const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
   return daysOfWeek[dayIndex];
-};
+};;
+
 
 export const getMarcaciones = async (req: Request, res: Response) => {
 
@@ -81,7 +86,7 @@ export const getAuditMarcacion = async (req: Request, res: Response) => {
     })
 
     const marcaciones = result.map(m => {
-      const turno = m.Persona.GrupoTurnoVsHorarios !== undefined ? m.Persona.GrupoTurnoVsHorarios.filter(t => t.diaSeman === getDayOfWeekString())[0].Turno : null;
+      const turno = m.Persona.GrupoTurnoVsHorarios !== undefined ? m.Persona.GrupoTurnoVsHorarios.filter(t => t.diaSeman === getDayOfWeekString(fecha))[0].Turno : null;
       const horaMarcacion = m.Hora.toString().substring(0, 5);
 
       let horaInicio = '';

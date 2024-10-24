@@ -72,6 +72,11 @@ export default function AuditMarcacion() {
           </tbody>
         </table>
       </div>
+
+      <p className='text-sm pt-2'>
+        <span className="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">NOTA</span>
+        Las estimaciones de cálculo de esta vista de auditoría están en fase beta. El aplicativo realiza en el backend la respectiva comparación entre la hora de marcación y la hora estimada, dependiendo del tipo de marcación <span className='font-semibold'>(Estado).</span> Es importante que el empleado tenga asignado un Grupo Turno, donde cada grupo contiene una cantidad específica de turnos entre la semana, de lunes a domingo. Para el correcto funcionamiento, por el momento, solo se debe tener un turno por día.
+      </p>
     </section>
   )
 }
