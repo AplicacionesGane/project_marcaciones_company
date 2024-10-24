@@ -1,6 +1,6 @@
 export enum Estado {
   Entrada = 'Entrada',
-  SalidaIntermedia = 'Salida_intermedia',
-  EntradaIntermedia = 'Entrada_intermedia',
+  SalidaIntermedia = 'Salida Intermedia',
+  EntradaIntermedia = 'Entrada Intermedia',
   Salida = 'Salida'
 }
