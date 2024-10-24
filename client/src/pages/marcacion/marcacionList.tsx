@@ -44,22 +44,26 @@ const MarcacionesList = () => {
       <div className='flex justify-around items-cente'>
         <h1 className='text-gray-700 text-lg font-semibold flex items-center'>Listado de marcaciones</h1>
 
-        <p className='flex items-center'>N° Datos: {filterData.length}</p>
+        <p className='flex items-center gap-1'>N° Datos:
+          <span className="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">
+            {filterData.length}
+          </span>
+        </p>
 
         <div className='flex items-center gap-2 text-xs py-1'>
-        <div className='flex items-center gap-1'>
-          <label htmlFor="">Filtrar:</label>
-          <input type="text" placeholder='N° Doc | Nombres' value={filter} onChange={(e) => setFilter(e.target.value)} className='p-1  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'/>
-        </div>
+          <div className='flex items-center gap-1'>
+            <label className='font-semibold'>Filtrar:</label>
+            <input type="text" placeholder='N° Doc | Nombres | Área ' value={filter} onChange={(e) => setFilter(e.target.value)} className='p-1  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+          </div>
 
           <div className='flex items-center gap-2'>
-            <label className='w-full'>Fecha Inicial</label>
+            <label className='w-full font-semibold'>Fecha Inicial</label>
             <input type='date' value={fechaInitial} onChange={(e) => setFechaInitial(e.target.value)}
               className='p-1 text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
           </div>
 
           <div className='flex items-center gap-2'>
-            <label className='w-full'>Fecha Final</label>
+            <label className='w-full font-semibold'>Fecha Final</label>
             <input type='date' value={fechaFinal} onChange={(e) => setFechaFinal(e.target.value)}
               className=' p-1 text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
           </div>
