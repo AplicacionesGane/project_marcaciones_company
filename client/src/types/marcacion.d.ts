@@ -22,19 +22,17 @@ export interface MarcacionPersonaArea {
   nombres: string
   apellidos: string
   fecha: string
-  hora: string
+  horaMarcacion: string
   estado: string
   area: string
 }
 
 export interface AuditMarcaciones {
   id: number
+  horaMarcacion: string
+  estado: string
   nombres: string
   apellidos: string
-  hora: string
-  estado: string
-  turno: {
-    hora_inicio: string
-    hora_fin: string
-  }
+  horaEstimada: string
+  audit: string
 }

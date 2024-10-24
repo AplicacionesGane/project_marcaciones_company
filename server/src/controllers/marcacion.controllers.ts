@@ -40,7 +40,7 @@ export const getMarcaciones = async (req: Request, res: Response) => {
         nombres: m.Persona!.nombres,
         apellidos: m.Persona!.apellidos,
         fecha: m.Fecha,
-        hora: m.Hora,
+        horaMarcacion: m.Hora,
         estado: m.estado,
         area: m.Persona!.Area ? m.Persona!.Area!.descripcion : 'Sin área'
       }
@@ -72,16 +72,41 @@ export const getAuditMarcacion = async (req: Request, res: Response) => {
           }]
         }]
       },
+      order: [['Id', 'DESC']]
     })
 
     const marcaciones = result.map(m => {
-      return {
-        id: m.Id,
-        hora: m.Hora.toString().substring(0, 5),
-        estado: m.estado,
-        nombres: m.Persona.nombres,
-        apellidos: m.Persona.apellidos,
-        turno: m.Persona.GrupoTurnoVsHorarios !== undefined ? m.Persona.GrupoTurnoVsHorarios.filter(t => t.diaSeman === getDayOfWeekString())[0].Turno : []
+      const turno = m.Persona.GrupoTurnoVsHorarios !== undefined ? m.Persona.GrupoTurnoVsHorarios.filter(t => t.diaSeman === getDayOfWeekString())[0].Turno : null;
+      const horaMarcacion = m.Hora.toString().substring(0, 5);
+
+      let horaInicio = '';
+      let horaFin = '';
+
+      if(turno !== null){
+        horaInicio = turno.hora_inicio.toString()
+        horaFin = turno.hora_fin.toString()
+      }
+
+      if(m.estado === 'Entrada'){
+        return {
+          id: m.Id,
+          horaMarcacion: m.Hora.toString().substring(0, 5),
+          estado: m.estado,
+          nombres: m.Persona.nombres,
+          apellidos: m.Persona.apellidos,
+          horaEstimada: horaInicio,
+          audit: horaMarcacion > horaInicio ? 'Tarde' : 'A tiempo'
+        }
+      } else if (m.estado === 'Salida'){
+        return {
+          id: m.Id,
+          horaMarcacion: m.Hora.toString().substring(0, 5),
+          estado: m.estado,
+          nombres: m.Persona.nombres,
+          apellidos: m.Persona.apellidos,
+          horaEstimada: horaFin, 
+          audit: horaMarcacion < horaFin ? 'Temprano' : 'A tiempo'
+        }
       }
     })
 

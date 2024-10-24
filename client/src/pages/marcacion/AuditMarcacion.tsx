@@ -29,7 +29,7 @@ export default function AuditMarcacion() {
               <th className='py-2 px-4 text-left text-sm font-medium text-gray-600'>Apellidos</th>
               <th className='py-2 px-4 text-left text-sm font-medium text-gray-600'>Hora Marcación</th>
               <th className='py-2 px-4 text-left text-sm font-medium text-gray-600'>Estado Marcación</th>
-              <th className='py-2 px-4 text-left text-sm font-medium text-gray-600'>Hora Inicio</th>
+              <th className='py-2 px-4 text-left text-sm font-medium text-gray-600'>Hora Estimada</th>
               <th className='py-2 px-4 text-left text-sm font-medium text-gray-600'>Audit</th>
             </tr>
           </thead>
@@ -38,12 +38,12 @@ export default function AuditMarcacion() {
               <tr key={index} className='border-b hover:bg-gray-50'>
                 <td className='py-2 px-4 text-sm text-gray-700'>{item.nombres}</td>
                 <td className='py-2 px-4 text-sm text-gray-700'>{item.apellidos}</td>
-                <td className='py-2 px-4 text-sm text-gray-700'>{item.hora}</td>
+                <td className='py-2 px-4 text-sm text-gray-700'>{item.horaMarcacion}</td>
                 <td className='py-2 px-4 text-sm text-gray-700'>{item.estado}</td>
-                <td className='py-2 px-4 text-sm text-gray-700'>{item.turno.hora_inicio}</td>
+                <td className='py-2 px-4 text-sm text-gray-700'>{item.horaEstimada}</td>
                 <td className='py-2 px-4 text-sm text-gray-700'>
                   {
-                    item.estado === 'Entrada' && item.hora > item.turno.hora_inicio
+                    item.audit === 'Tarde' || item.audit === 'Temprano'
                       ? (<span className='text-red-500 font-semibold'>Tarde</span>)
                       : (<span className='text-green-500 font-semibold'>A tiempo</span>)
                   }

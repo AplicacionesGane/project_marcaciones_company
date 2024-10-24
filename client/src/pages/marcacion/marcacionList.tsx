@@ -95,8 +95,8 @@ const MarcacionesList = () => {
               <td className='border px-2 py-1'>{marcacion.documento}</td>
               <td className='border px-2 py-1'>{marcacion.nombres}</td>
               <td className='border px-2 py-1'>{marcacion.apellidos}</td>
-              <td className='border px-2 py-1'>{marcacion.fecha.toString()}</td>
-              <td className='border px-2 py-1'>{marcacion.hora.toString()}</td>
+              <td className='border px-2 py-1'>{marcacion.fecha}</td>
+              <td className='border px-2 py-1'>{marcacion.horaMarcacion.slice(0, 5)}</td>
               <td className='border px-2 py-1'>{marcacion.estado}</td>
               <td className='border px-2 py-1'>{marcacion.area}</td>
             </tr>
