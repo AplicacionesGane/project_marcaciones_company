@@ -24,7 +24,7 @@ export function BasicPie({ datos }: { datos: any }) {
           highlightScope: { fade: 'global', highlight: 'item' },
           faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
           innerRadius: 40,
-          outerRadius: 150,
+          outerRadius: 130,
           paddingAngle: 2,
           cornerRadius: 5,
           startAngle: -90,
@@ -39,7 +39,7 @@ export function BasicPie({ datos }: { datos: any }) {
         legend: {
           direction: 'row',
           position: { vertical: 'bottom', horizontal: 'left' },
-          padding: 2,
+          padding: 20,
           labelStyle: {
             fontSize: 17,
             textAlign: 'left'
