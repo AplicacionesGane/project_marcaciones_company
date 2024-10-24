@@ -29,7 +29,7 @@ const generateExcelData = (datos: MarcacionPersonaArea[], time1?: string, time2?
     C: it.nombres,
     D: it.apellidos,
     E: it.fecha,
-    F: it.hora,
+    F: it.horaMarcacion,
     G: it.estado,
     I: it.area
   }))
