@@ -25,8 +25,8 @@ export default function AuditMarcacion() {
 
       <div className='flex justify-around'>
         <div className='flex justify-center gap-4 mb-4 items-center'>
-          <label htmlFor="">Fecha:</label>
-          <input type="date" value={fecha} onChange={e => setFecha(e.target.value)} />
+          <label className='font-semibold' htmlFor="">Fecha:</label>
+          <input className='border px-2 py-1 rounded-md' type="date" value={fecha} onChange={e => setFecha(e.target.value)} />
         </div>
 
         <div className='flex justify-center gap-4 mb-4 items-center'>
