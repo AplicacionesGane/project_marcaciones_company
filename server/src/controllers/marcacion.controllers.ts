@@ -54,11 +54,16 @@ export const getMarcaciones = async (req: Request, res: Response) => {
 }
 
 export const getAuditMarcacion = async (req: Request, res: Response) => {
+
+  const fecha = req.query.fecha as string;
+
+  const opc = fecha ? { [Op.eq]: fecha } : { [Op.eq]: fn('CURDATE') };
+  
   try {
 
     const result = await Marcacion.findAll({
       attributes: ['Id', 'Hora', 'estado'],
-      where: { Fecha: { [Op.eq]: fn('CURDATE') }, estado: { [Op.or]: ['Entrada', 'Salida'] } },
+      where: { Fecha: opc, estado: { [Op.or]: ['Entrada', 'Salida'] } },
       include: {
         attributes: ['nombres', 'apellidos'],
         where: { id_Grupo_Horario: { [Op.ne]: null } },
