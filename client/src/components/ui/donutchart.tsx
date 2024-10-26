@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { InfoMarcacion } from '../../types/marcacion';
 import { PieChart } from '@mui/x-charts/PieChart';
 
-export function BasicPie({ datos }: { datos: any }) {
-  console.log('datos', datos)
-
+export function BasicPie({ datos }: { datos: InfoMarcacion}) {
   const colores = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#e414fd', '#fd1429'];
 
   const estadosData = datos.stados ? Object.entries(datos.stados).map(([label, value], index) => ({
