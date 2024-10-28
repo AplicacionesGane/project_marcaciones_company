@@ -7,11 +7,11 @@ import { Request, Response } from 'express';
 import { fn, Op } from 'sequelize';
 
 const getDayOfWeekString = (fecha: string): string => {
-  if (!fecha) 
+  if (!fecha)
     fecha = new Date().toISOString().split('T')[0];
 
   const date = new Date(fecha);
-  const dayIndex = date.getDay();
+  const dayIndex = date.getDay() + 1;
   const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
   return daysOfWeek[dayIndex];
 };;
@@ -63,7 +63,7 @@ export const getAuditMarcacion = async (req: Request, res: Response) => {
   const fecha = req.query.fecha as string;
 
   const opc = fecha ? { [Op.eq]: fecha } : { [Op.eq]: fn('CURDATE') };
-  
+
   try {
 
     const result = await Marcacion.findAll({
@@ -87,17 +87,18 @@ export const getAuditMarcacion = async (req: Request, res: Response) => {
 
     const marcaciones = result.map(m => {
       const turno = m.Persona.GrupoTurnoVsHorarios !== undefined ? m.Persona.GrupoTurnoVsHorarios.filter(t => t.diaSeman === getDayOfWeekString(fecha))[0].Turno : null;
+
       const horaMarcacion = m.Hora.toString().substring(0, 5);
 
       let horaInicio = '';
       let horaFin = '';
 
-      if(turno !== null){
+      if (turno !== null) {
         horaInicio = turno.hora_inicio.toString()
         horaFin = turno.hora_fin.toString()
       }
 
-      if(m.estado === 'Entrada'){
+      if (m.estado === 'Entrada') {
         return {
           id: m.Id,
           horaMarcacion: m.Hora.toString().substring(0, 5),
@@ -107,14 +108,14 @@ export const getAuditMarcacion = async (req: Request, res: Response) => {
           horaEstimada: horaInicio,
           audit: horaMarcacion > horaInicio ? 'Tarde' : 'A tiempo'
         }
-      } else if (m.estado === 'Salida'){
+      } else if (m.estado === 'Salida') {
         return {
           id: m.Id,
           horaMarcacion: m.Hora.toString().substring(0, 5),
           estado: m.estado,
           nombres: m.Persona.nombres,
           apellidos: m.Persona.apellidos,
-          horaEstimada: horaFin, 
+          horaEstimada: horaFin,
           audit: horaMarcacion < horaFin ? 'Temprano' : 'A tiempo'
         }
       }
