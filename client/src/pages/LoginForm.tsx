@@ -1,38 +1,22 @@
 import { useAuth } from '@context/auth/AuthProvider'
 import { FormEvent, useState } from 'react'
+import { loginService } from '@services/login'
 import { toast, Toaster } from 'sonner'
-import axios from 'axios'
-
-import { URL_API_LOGIN, APP_NAME } from '@config/enviroments'
 
 function LoginPage() {
   const { setIsAuthenticated } = useAuth()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleSubmit = (ev: FormEvent) => {
+  const handleSubmit = async (ev: FormEvent) => {
     ev.preventDefault();
-
-    axios.post(`${URL_API_LOGIN}/login`, { username, password, app: APP_NAME })
-      .then(res => {
-        if (res.status === 200) {
-          setIsAuthenticated(true)
-        }
-      })
-      .catch(error => {
-        console.log(error)
-        if (error.message === 'Network Error') {
-          toast.error('Error de conexión, y/o Red, contacte al administrador del sistema', { description: 'No se pudo iniciar session' })
-          return
-        }
-
-        if (error.response.status === 400 || error.response.status === 401) {
-          toast.error(error.response.data.message, { description: error.response.data.description })
-          return
-        }
-
-      })
-  }
+    const result = await loginService(username, password);
+    if (result?.success) {
+      setIsAuthenticated(true);
+    } else {
+      toast.error('Error al iniciar sesión', { description: result.msg });
+    }
+  };
 
   return (
     <section className=''>

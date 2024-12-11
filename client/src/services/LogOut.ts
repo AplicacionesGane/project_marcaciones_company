@@ -1,4 +1,4 @@
-import { URL_API_LOGIN } from '../config/enviroments'
+import { URL_API_LOGIN } from '@config/enviroments'
 import axios from 'axios'
 
 export const LogoutAndDeleteToken = () => {
