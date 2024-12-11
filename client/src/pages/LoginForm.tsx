@@ -1,7 +1,7 @@
-import { useAuth } from '@context/auth/AuthProvider'
-import { FormEvent, useState } from 'react'
-import { loginService } from '@services/login'
-import { toast, Toaster } from 'sonner'
+import { useAuth } from '@context/auth/AuthProvider';
+import { loginService } from '@services/login';
+import { FormEvent, useState } from 'react';
+import { toast, Toaster } from 'sonner';
 
 function LoginPage() {
   const { setIsAuthenticated } = useAuth()
@@ -20,16 +20,13 @@ function LoginPage() {
 
   return (
     <section className=''>
-      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
+      <div className='absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]'></div>
       <div className='flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0'>
         <div className='w-full bg-transparent/15 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700'>
           <div className='px-14 py-16'>
             <figure className='flex justify-center mb-6 text-2xl font-semibold text-gray-900 '>
               <img width={180} src='/gane.webp' alt='logo' />
             </figure>
-            <h1 className='text-lg pb-2 font-bold leading-tight tracking-tight text-gray-900 md:text-2xl '>
-              Iniciar sesión en tu cuenta
-            </h1>
             <form className='space-y-4 md:space-y-6' onSubmit={handleSubmit}>
               <div>
                 <label className='block mb-2 text-sm font-medium text-gray-900 '>Usuario:</label>
