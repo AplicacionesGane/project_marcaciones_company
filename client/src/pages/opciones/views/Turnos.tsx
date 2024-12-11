@@ -1,9 +1,9 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
-import { ModalDelete } from '../../../components/ModalDelete';
-import { type Turnos } from '../../../types/Interfaces';
-import { Label } from '../../../components/ui/Label';
-import { Input } from '../../../components/ui/Input';
-import { URL_API } from '../../../utils/contants';
+import { ModalDelete } from '@components/ModalDelete';
+import { type Turnos } from '@interface/Interfaces';
+import { Label } from '@components/ui/Label';
+import { Input } from '@components/ui/Input';
+import { URL_API } from '@utils/contants';
 import axios from 'axios';
 import { toast } from 'sonner';
 

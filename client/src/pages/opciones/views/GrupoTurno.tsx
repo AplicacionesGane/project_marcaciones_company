@@ -1,8 +1,8 @@
-import { PlusIcon } from '../../../components/icons/PlusIcon';
-import { ModalDelete } from '../../../components/ModalDelete';
-import { GrupoTurnos } from '../../../types/Interfaces';
+import { PlusIcon } from '@components/icons/PlusIcon';
+import { ModalDelete } from '@components/ModalDelete';
+import { GrupoTurnos } from '@interface/Interfaces';
 import { FormEvent, useEffect, useState } from 'react';
-import { URL_API } from '../../../utils/contants';
+import { URL_API } from '@utils/contants';
 import { toast } from 'sonner';
 import axios from 'axios';
 

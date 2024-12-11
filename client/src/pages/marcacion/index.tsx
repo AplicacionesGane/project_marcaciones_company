@@ -1,4 +1,4 @@
-import { type Marcacion } from '../../types/marcacion'
+import { type Marcacion } from '@interface/marcacion'
 import MarcacionesList from './marcacionList'
 
 export default function Marcacion() {

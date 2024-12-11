@@ -1,6 +1,7 @@
-import { WarningIcon, CheckIcon } from '../../components/icons'
-import { usePersonas } from '../../hooks/usePersonas'
-import { Loading } from '../../components/ui/Loading'
+import { WarningIcon } from '@components/icons/WarningIcons'
+import { CheckIcon } from '@components/icons/CheckIcon'
+import { usePersonas } from '@hooks/usePersonas'
+import { Loading } from '@components/ui/Loading'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
