@@ -1,4 +1,3 @@
-import { BasicPie } from '@components/ui/donutchart'
 import { InfoMarcacion } from '@interface/marcacion'
 import { useEffect, useState } from 'react'
 import { URL_API } from '@config/enviroments'
@@ -16,9 +15,9 @@ export default function Home() {
   return (
 
     <main className='h-[90vh] 5cont_main flex flex-row items-center justify-center dark:text-white'>
-      {
+      {/*
         data && <BasicPie datos={data}></BasicPie>
-      }
+      */}
     </main>
   )
 }

@@ -1,5 +1,4 @@
 import { LogoutAndDeleteToken } from '@services/LogOut';
-import ThemeToggleButton from '@components/ThemeToggle';
 import { useAuth } from '@context/auth/AuthProvider';
 import { LinkNav } from '@components/NavBar/LinkNav';
 import { useNavigate } from 'react-router-dom';
@@ -33,7 +32,7 @@ const NavBar = () => {
         </div>
 
         <div className='flex items-center justify-center'>
-          <ThemeToggleButton />
+          change theme
         </div>
 
         <div>
