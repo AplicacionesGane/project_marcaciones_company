@@ -1,7 +1,7 @@
-import { PlusIcon } from '../../../components/icons/PlusIcon'
-import { GrupoVsTurno } from '../../../types/Interfaces'
+import { PlusIcon } from '@components/icons/PlusIcon'
+import { GrupoVsTurno } from '@interface/Interfaces'
 import { useEffect, useRef, useState } from 'react'
-import { URL_API } from '../../../utils/contants'
+import { URL_API } from '@config/enviroments'
 import { toast } from 'sonner'
 import axios from 'axios'
 

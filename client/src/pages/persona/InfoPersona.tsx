@@ -1,7 +1,7 @@
-import { ResponsePersona, PersonaFields } from '../../types/Persona';
+import { ResponsePersona, PersonaFields } from '@interface/Persona';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState, ChangeEvent } from 'react';
-import { URL_API } from '../../utils/contants';
+import { URL_API } from '@config/enviroments';
 import { toast } from 'sonner';
 import axios from 'axios';
 
