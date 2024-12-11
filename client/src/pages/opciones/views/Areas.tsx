@@ -4,7 +4,7 @@ import { EditIcon } from '@components/icons/EditIcon';
 import { ModalDelete } from '@components/ModalDelete';
 import { FormEvent, useEffect, useState } from 'react';
 import { type Area } from '@interface/Interfaces';
-import { URL_API } from '@utils/contants';
+import { URL_API } from '@config/enviroments';
 import { toast } from 'sonner';
 import axios from 'axios';
 

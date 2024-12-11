@@ -3,7 +3,7 @@ import { FormEvent, useState } from 'react'
 import { toast, Toaster } from 'sonner'
 import axios from 'axios'
 
-import { URL_API_LOGIN, APP_NAME } from '@utils/contants'
+import { URL_API_LOGIN, APP_NAME } from '@config/enviroments'
 
 function LoginPage() {
   const { setIsAuthenticated } = useAuth()

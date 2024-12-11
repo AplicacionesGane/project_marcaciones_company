@@ -3,7 +3,7 @@ import { ModalDelete } from '@components/ModalDelete';
 import { type Turnos } from '@interface/Interfaces';
 import { Label } from '@components/ui/Label';
 import { Input } from '@components/ui/Input';
-import { URL_API } from '@utils/contants';
+import { URL_API } from '@config/enviroments';
 import axios from 'axios';
 import { toast } from 'sonner';
 

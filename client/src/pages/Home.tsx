@@ -1,7 +1,7 @@
 import { BasicPie } from '@components/ui/donutchart'
 import { InfoMarcacion } from '@interface/marcacion'
 import { useEffect, useState } from 'react'
-import { URL_API } from '@utils/contants'
+import { URL_API } from '@config/enviroments'
 import axios from 'axios'
 
 export default function Home() {

@@ -1,7 +1,7 @@
 import { MarcacionPersonaArea } from '@interface/marcacion';
 import { BottonExporCartera } from '@components/ExportExcel';
 import { useState, useEffect } from 'react';
-import { URL_API } from '@utils/contants';
+import { URL_API } from '@config/enviroments';
 import axios from 'axios';
 
 const MarcacionesList = () => {
