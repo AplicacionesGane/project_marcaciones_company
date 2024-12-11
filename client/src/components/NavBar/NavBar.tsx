@@ -1,8 +1,8 @@
-import { LogoutAndDeleteToken } from '../../services/LogOut'
-import { useAuth } from '../../auth/AuthContext'
-import ThemeToggleButton from '../ThemeToggle'
-import { useNavigate } from 'react-router-dom'
-import { LinkNav } from './LinkNav'
+import { LogoutAndDeleteToken } from '@services/LogOut';
+import ThemeToggleButton from '@components/ThemeToggle';
+import { useAuth } from '@context/auth/AuthProvider';
+import { LinkNav } from '@components/NavBar/LinkNav';
+import { useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
   const { setIsAuthenticated } = useAuth()

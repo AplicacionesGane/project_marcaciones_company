@@ -1,6 +1,6 @@
+import { useAuth } from '@context/auth/AuthProvider';
+import LoginPage from '@pages/LoginForm';
 import { Suspense, lazy } from 'react';
-import { useAuth } from '../auth/AuthContext';
-import LoginPage from '../pages/LoginForm';
 
 const NavBar = lazy(() => import('../components/NavBar/NavBar'));
 const Outlet = lazy(() => import('react-router-dom').then(module => ({ default: module.Outlet })));

@@ -29,6 +29,7 @@
       "@interface/*": ["src/types/*"],
       "@context/*": ["src/context/*"],
       "@routes/*": ["src/routes/*"],
+      "@pages/*": ["src/pages/*"],
     }
   },
   "include": ["src"]
