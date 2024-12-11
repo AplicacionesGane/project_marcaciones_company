@@ -26,8 +26,9 @@
       "@utils/*": ["src/utils/*"],
       "@hooks/*": ["src/hooks/*"],
       "@services/*": ["src/services/*"],
-      "@types/*": ["src/types/*"],
+      "@interface/*": ["src/types/*"],
       "@context/*": ["src/context/*"],
+      "@routes/*": ["src/routes/*"],
     }
   },
   "include": ["src"]

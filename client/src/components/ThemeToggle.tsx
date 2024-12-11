@@ -1,4 +1,4 @@
-import { useTheme } from "../context/ThemeProvider";
+import { useTheme } from "../context/theme/ThemeProvider";
 import { styled } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';

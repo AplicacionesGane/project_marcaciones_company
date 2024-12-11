@@ -1,9 +1,9 @@
-import { useAuth } from '../auth/AuthContext'
+import { useAuth } from '@context/auth/AuthProvider'
 import { FormEvent, useState } from 'react'
 import { toast, Toaster } from 'sonner'
 import axios from 'axios'
 
-import { URL_API_LOGIN, APP_NAME } from '../utils/contants'
+import { URL_API_LOGIN, APP_NAME } from '@utils/contants'
 
 function LoginPage() {
   const { setIsAuthenticated } = useAuth()
