@@ -1,10 +1,10 @@
-import { CloseIcon } from '@components/icons/CloseIcon';
-import { PlusIcon } from '@components/icons/PlusIcon';
-import { EditIcon } from '@components/icons/EditIcon';
-import { ModalDelete } from '@components/ModalDelete';
+import { CloseIcon } from '../../../components/icons/CloseIcon';
+import { PlusIcon } from '../../../components/icons/PlusIcon';
+import { EditIcon } from '../../../components/icons/EditIcon';
+import { ModalDelete } from '../../../components/ModalDelete';
 import { FormEvent, useEffect, useState } from 'react';
-import { type Area } from '@interface/Interfaces';
-import { URL_API } from '@config/enviroments';
+import { type Area } from '../../../types/Interfaces';
+import { URL_API } from '../../../utils/contants';
 import { toast } from 'sonner';
 import axios from 'axios';
 

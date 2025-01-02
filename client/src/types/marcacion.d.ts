@@ -1,3 +1,5 @@
+import { Area } from "./Interfaces"
+
 export interface Marcacion {
   id: number
   nombres: string
@@ -22,28 +24,16 @@ export interface MarcacionPersonaArea {
   nombres: string
   apellidos: string
   fecha: string
-  horaMarcacion: string
+  hora: string
   estado: string
   area: string
 }
 
 export interface AuditMarcaciones {
   id: number
-  horaMarcacion: string
-  estado: string
   nombres: string
   apellidos: string
-  horaEstimada: string
-  audit: string
-}
-
-export interface InfoMarcacion {
-  count: number
-  stados: {
-    Entrada: number
-    "Salida Intermedia": number
-    "Entrada Intermedia": number
-    Salida: number
-  },
-  totalPersona: number
+  hora: string
+  estado: string
+  hora_inicio: string
 }

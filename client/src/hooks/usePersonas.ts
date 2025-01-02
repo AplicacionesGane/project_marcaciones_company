@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { URL_API } from '../config/enviroments';
+import { URL_API } from '../utils/contants';
 import { Persona } from '../types/Persona';
 import axios from 'axios';
 

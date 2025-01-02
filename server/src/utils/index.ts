@@ -5,8 +5,8 @@ function reduceStates (marcacion: Marcacion[]) {
 
   const estadosMap: { [key: string]: Estado } = {
     'Entrada': Estado.Entrada,
-    'Salida Intermedia': Estado.SalidaIntermedia,
-    'Entrada Intermedia': Estado.EntradaIntermedia,
+    'Salida_intermedia': Estado.SalidaIntermedia,
+    'Entrada_intermedia': Estado.EntradaIntermedia,
     'Salida': Estado.Salida
   };
 

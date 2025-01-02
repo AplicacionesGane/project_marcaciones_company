@@ -39,4 +39,4 @@ Marcacion.init(
   }
 );
 
-Marcacion.hasOne(Persona, { foreignKey: 'identificacion', sourceKey: 'codigo' });
+Marcacion.belongsTo(Persona, {  foreignKey: 'codigo',  targetKey: 'identificacion'});

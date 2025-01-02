@@ -1,4 +1,4 @@
-import { NavBarOpciones } from '@components/NavBar/NavBarOpciones';
+import { NavBarOpciones } from '../../components/NavBar/NavBarOpciones';
 import { Outlet } from 'react-router-dom';
 
 export default function Opciones() {

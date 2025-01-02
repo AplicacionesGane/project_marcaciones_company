@@ -1,9 +1,9 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
-import { ModalDelete } from '@components/ModalDelete';
-import { type Turnos } from '@interface/Interfaces';
-import { Label } from '@components/ui/Label';
-import { Input } from '@components/ui/Input';
-import { URL_API } from '@config/enviroments';
+import { ModalDelete } from '@/components/ModalDelete';
+import { type Turnos } from '@/types/Interfaces';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { URL_API } from '@/utils/contants';
 import axios from 'axios';
 import { toast } from 'sonner';
 
@@ -130,42 +130,42 @@ export default function Turnos() {
 
           <section className='grid grid-cols-4 gap-1 px-2'>
             <div>
-              <Label name='codigo'>Codigo</Label>
+              <Label>Codigo</Label>
               <Input type='text' name='codigo' id='codigo' required />
             </div>
 
             <div>
-              <Label name='nombre_turno' >Nombre Turno</Label>
+              <Label>Nombre Turno</Label>
               <Input type='text' name='nombre_turno' id='nombre_turno' required />
             </div>
 
             <div>
-              <Label name='hora_inicio' >Hora Inicio turno</Label>
+              <Label>Hora Inicio turno</Label>
               <Input type='time' name='hora_inicio' id='hora_inicio' required />
             </div>
 
             <div>
-              <Label name='hora_fin' >Hora Fin turno</Label>
+              <Label>Hora Fin turno</Label>
               <Input type='time' name='hora_fin' id='hora_fin' required />
             </div>
 
             <div>
-              <Label name='teorico' >Horas Total Día</Label>
+              <Label>Horas Total Día</Label>
               <Input type='text' name='teorico' id='teorico' required />
             </div>
 
             <div>
-              <Label name='hora_inicio_break' >Hora Inicio Break</Label>
+              <Label>Hora Inicio Break</Label>
               <Input type='time' name='hora_inicio_break' id='hora_inicio_break' />
             </div>
 
             <div>
-              <Label name='hora_fin_break' >Hora Final Break</Label>
+              <Label>Hora Final Break</Label>
               <Input type='time' name='hora_fin_break' id='hora_fin_break' />
             </div>
 
             <div>
-              <Label name='tiempo_breack' >Tiempo Break</Label>
+              <Label>Tiempo Break</Label>
               <Input type='text' name='tiempo_breack' id='tiempo_breack' />
             </div>
 

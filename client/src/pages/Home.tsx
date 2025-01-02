@@ -1,24 +1,16 @@
-import { InfoMarcacion } from '@interface/marcacion'
-import { useEffect, useState } from 'react'
-import { URL_API } from '@config/enviroments'
-import axios from 'axios'
+import { Button } from '@/components/ui/button'
+import { useNavigate } from 'react-router-dom'
 
 export default function Home() {
-  const [data, setData] = useState<InfoMarcacion | undefined>(undefined)
-
-  useEffect(() => {
-    axios.get<InfoMarcacion>(`${URL_API}/infoMarcacion`)
-      .then(res => setData(res.data))
-      .catch(error => console.error(error))
-  }, [])
+  const navigate = useNavigate()
 
   return (
-
-    <main className='h-[90vh] 5cont_main flex flex-row items-center justify-center dark:text-white'>
-      {/*
-        data && <BasicPie datos={data}></BasicPie>
-      */}
+    <main className='h-[90vh] cont_main flex flex-col items-center justify-center dark:text-white'>
+      <h1 className='text-5xl font-bold mb-4 animate-bounce'>Welcome to Our Website!</h1>
+      <p className='text-lg mb-8 text-center max-w-md'>
+        Aplicativo en desarrollo para la gestión de empleados y sus marcaciones. generación de reportes y auditorias.
+      </p>
+      <Button onClick={() => navigate('/empleados')} >Ver Empleados</Button>
     </main>
   )
 }
-

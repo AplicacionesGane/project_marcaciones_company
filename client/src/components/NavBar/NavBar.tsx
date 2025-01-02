@@ -1,7 +1,8 @@
-import { LogoutAndDeleteToken } from '@services/LogOut';
-import { useAuth } from '@context/auth/AuthProvider';
-import { LinkNav } from '@components/NavBar/LinkNav';
-import { useNavigate } from 'react-router-dom';
+import { LogoutAndDeleteToken } from '../../services/LogOut'
+import { useAuth } from '../../auth/AuthContext'
+import ThemeToggleButton from '../ThemeToggle'
+import { useNavigate } from 'react-router-dom'
+import { LinkNav } from './LinkNav'
 
 const NavBar = () => {
   const { setIsAuthenticated } = useAuth()
@@ -32,7 +33,7 @@ const NavBar = () => {
         </div>
 
         <div className='flex items-center justify-center'>
-          change theme
+          <ThemeToggleButton />
         </div>
 
         <div>

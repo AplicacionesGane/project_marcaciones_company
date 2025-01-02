@@ -1,28 +1,43 @@
-import { WarningIcon } from '@components/icons/WarningIcons'
-import { CheckIcon } from '@components/icons/CheckIcon'
-import { usePersonas } from '@hooks/usePersonas'
-import { Loading } from '@components/ui/Loading'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { WarningIcon, CheckIcon } from '@/components/icons'
+import { Separator } from '@/components/ui/separator'
+import { usePersonas } from '@/hooks/usePersonas'
+import { Loading } from '@/components/ui/Loading'
+import { Button } from '@/components/ui/button'
 import { useNavigate } from 'react-router-dom'
-import { toast } from 'sonner'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Badge } from '@/components/ui/badge'
 
 function PersonasView() {
-  const { personas, setSearch, search, loading, error, fechtDataAgain } = usePersonas()
+  const { personas, setSearch, search, loading, fechtDataAgain } = usePersonas()
   const navigate = useNavigate()
 
   return (
-    <section className='h-[92vh] overflow-y-auto'>
-
-      <div className='flex items-center justify-around py-2 px-8 bg-gray-700 text-xs'>
-        <form className='space-x-2'>
-          <label htmlFor='search' className='w-36 text-white font-semibold'>Buscar empleado:</label>
-          <input type='text' id='search' className='w-96 py-2 rounded-md px-2' placeholder='N° Identificación / Nombres' value={search} onChange={ev => setSearch(ev.target.value)} />
+    <section>
+      <header className='flex items-center justify-around p-1 px-4'>
+        <form className='flex items-center gap-2'>
+          <Label className='min-w-36'>Buscar empleado:</Label>
+          <Input
+            type='text'
+            id='search'
+            value={search}
+            className='w-96'
+            placeholder='N° Documento / Nombres'
+            onChange={ev => setSearch(ev.target.value)}
+          />
         </form>
-        <div className='flex items-center gap-2 text-white'>
-          <p>N° Empleados Registrados:</p>
-          <p className='text-base font-semibold'>{personas.length}</p>
+        <div className='flex items-center gap-2'>
+          <p className='font-semibold'>N° Empleados Activos:</p>
+          <Badge className='text-base font-semibold'>{personas.length}</Badge>
         </div>
-        <button className='bg-blue-700 rounded-lg px-4 py-2 text-white hover:bg-blue-600 font-semibold' onClick={() => fechtDataAgain()}>Recargar Empleados</button>
-      </div>
+        <Button
+          onClick={() => fechtDataAgain()}>
+          Recargar Empleados
+        </Button>
+      </header>
+
+      <Separator />
 
       {
         loading
@@ -32,43 +47,43 @@ function PersonasView() {
             </section>
           )
           : (
-            <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
-              <thead className='text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400 sticky top-0'>
-                <tr>
-                  <th className='px-1 py-2 text-center'>N°</th>
-                  <th className='px-1 py-2'>N° Identicación</th>
-                  <th className='px-1 py-2'>Apellidos</th>
-                  <th className='px-1 py-2'>Nombres</th>
-                  <th className='px-1 py-2'>Opciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  personas.map((p, index) => (
-                    <tr key={p.id} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
-                      <td className='px-1 py-1 text-center'>{index + 1}</td>
-                      <td className='px-1 py-1 font-medium text-gray-900 dark:text-white'>{p.identificacion}</td>
-                      <td className='px-1 py-1'>{p.apellidos}</td>
-                      <td className='px-1 py-1'>{p.nombres}</td>
-                      <td className='px-1 py-1 flex items-center gap-2'>
-                        {
-                          p.identificacion === p.apellidos && p.apellidos === p.nombres
-                            ? <p className='text-red-600' title='El empleado le faltan datos básicos. Edite la información para agregarlos'><WarningIcon /></p>
-                            : <p className='text-green-600'><CheckIcon /></p>
-                        }
-                        <button className='p-1 bg-blue-500 text-white rounded-md' onClick={() => navigate(`/empleado/${p.id}`)}>
-                          Editar
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                }
-              </tbody>
-            </table>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className='w-[40px]'>ID</TableHead>
+                  <TableHead>N° Identificación</TableHead>
+                  <TableHead>Apellidos</TableHead>
+                  <TableHead>Nombres</TableHead>
+                  <TableHead>Estado</TableHead>
+                  <TableHead>Opciones</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {personas.map((p) => (
+                  <TableRow key={p.id}>
+                    <TableCell >{p.id}</TableCell>
+                    <TableCell >{p.identificacion}</TableCell>
+                    <TableCell>{p.nombres}</TableCell>
+                    <TableCell>{p.apellidos}</TableCell>
+                    <TableCell >
+                      {
+                        p.identificacion === p.apellidos && p.apellidos === p.nombres
+                          ? <p className='text-red-600' title='El empleado le faltan datos básicos. Edite la información para agregarlos'><WarningIcon /></p>
+                          : <p className='text-green-600'><CheckIcon /></p>
+                      }
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        onClick={() => navigate(`/empleado/${p.id}`)}>
+                        Editar
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           )
       }
-
-      {error && toast.error(error, { description: 'Error al cargar los empleados' })}
 
     </section>
   )

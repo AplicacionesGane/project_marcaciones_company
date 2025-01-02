@@ -1,22 +1,25 @@
-import { ResponsePersona, PersonaFields } from '@interface/Persona';
+import { ResponsePersona, PersonaFields } from '@/types/Persona';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState, ChangeEvent } from 'react';
-import { URL_API } from '@config/enviroments';
+import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
+import { URL_API } from '@/utils/contants';
 import { toast } from 'sonner';
 import axios from 'axios';
 
 export default function InfoPersona() {
   const { id } = useParams();
+
   const [persona, setPersona] = useState<PersonaFields>({
     id: 0,
     identificacion: '',
     nombres: '',
-    estado: 'A',
     apellidos: '',
     id_Areas: 0,
     id_Cargo: 0,
     id_Grupo_Horario: 0
   });
+
   const [data, setData] = useState<ResponsePersona | null>(null);
   const navigate = useNavigate();
   const [reload, setReload] = useState(false);
@@ -67,25 +70,24 @@ export default function InfoPersona() {
 
   const handleDelete = () => {
     axios.patch(`${URL_API}/deletepersona`, { estado: 'R', id })
-    .then(response => {
-      if (response.status === 200) {
-        toast.success('Usuario Eliminado Correctamente', { description: 'Empleado actualizado, será refirigido a lista empleados' });
-        setTimeout(() => {
-          navigate('/empleados')
-        }, 4000);
-      }
-    })
-    .catch(error => {
-      console.log(error);
-      toast.error('Error al actualizar datos', { description: 'Ocurrió un error al intentar actualizar los datos del empleado' });
-    });
+      .then(response => {
+        if (response.status === 200) {
+          toast.success('Usuario Eliminado Correctamente', { description: 'Empleado actualizado, será refirigido a lista empleados' });
+          setTimeout(() => {
+            navigate('/empleados')
+          }, 4000);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        toast.error('Error al actualizar datos', { description: 'Ocurrió un error al intentar actualizar los datos del empleado' });
+      });
   }
-
   return (
-    <section className='p-12 h-[90vh]'>
+    <section className='flex flex-col items-center justify-center h-full relative'>
 
       <form className='flex' onSubmit={handleSubmit}>
-        <section className='max-w-md mx-auto'>
+        <section className='w-96 mx-auto px-4'>
           <h2 className='pb-6 text-center font-semibold text-2xl'>Datos Básicos Empleado</h2>
           <div className='relative z-0 w-full mb-5 group'>
             <input type='text' name='nombres' value={persona.nombres} id='nombres' onChange={ev => handleInputChange(ev)}
@@ -104,19 +106,11 @@ export default function InfoPersona() {
               <label className='peer-focus:font-medium absolute text-xl dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>Identificación</label>
             </div>
           </div>
-
-
         </section>
 
-        <section className='w-96 mx-auto'>
-          <div className='w-full mb-5'>
-            <article className='flex gap-2 items-center'>
-              <h1>Estado:</h1>
-              <span className='bg-green-100 text-green-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300'>
-                { persona.estado === 'A' ? 'Activo' : 'Inactivo' }
-              </span>
-            </article>
-          </div>
+        <Separator orientation='vertical' />
+
+        <section className='w-96 mx-auto px-4'>
           <div className='w-full mb-5 group'>
             <label htmlFor='id_Areas' className='block mb-2 text-xl font-medium text-gray-900 dark:text-white'>Área del empleado</label>
             <select id='id_Areas' name='id_Areas' value={persona.id_Areas || 0} onChange={ev => handleSelectChange(ev)}
@@ -159,22 +153,22 @@ export default function InfoPersona() {
               }
             </select>
           </div>
+          <Button className='' type='submit'>
+            <span>Guardar Información</span>
+          </Button>
         </section>
 
-        <button className='absolute bottom-12 right-12 px-4 py-2 text-white bg-green-700 rounded-lg font-semibold hover:bg-green-600'>
-          <span>Guardar Información</span>
-        </button>
       </form>
 
-      <button onClick={() => handleDelete()}
-        className='absolute bottom-12 left-64 px-4 py-2 text-white bg-red-700 rounded-lg font-semibold hover:bg-red-600'>
+      <Button className='absolute bottom-2 left-2'
+        onClick={() => handleDelete()}>
         <span>Eliminar Empleado</span>
-      </button>
+      </Button>
 
-      <button onClick={() => navigate('/empleados')}
-        className='absolute bottom-12 right-64 px-4 py-2 text-white bg-red-700 rounded-lg font-semibold hover:bg-red-600'>
+      <Button className='absolute bottom-2 right-2'
+        onClick={() => navigate('/empleados')}>
         <span>Cancelar</span>
-      </button>
+      </Button>
 
     </section>
   );

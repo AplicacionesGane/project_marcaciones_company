@@ -6,16 +6,11 @@ import { Area } from '../models/areas.model';
 import { Request, Response } from 'express';
 import { fn, Op } from 'sequelize';
 
-const getDayOfWeekString = (fecha: string): string => {
-  if (!fecha)
-    fecha = new Date().toISOString().split('T')[0];
-
-  const date = new Date(fecha);
-  const dayIndex = date.getDay() + 1;
+const getDayOfWeekString = (): string => {
+  const dayIndex = new Date().getDay();
   const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
   return daysOfWeek[dayIndex];
-};;
-
+};
 
 export const getMarcaciones = async (req: Request, res: Response) => {
 
@@ -45,7 +40,7 @@ export const getMarcaciones = async (req: Request, res: Response) => {
         nombres: m.Persona!.nombres,
         apellidos: m.Persona!.apellidos,
         fecha: m.Fecha,
-        horaMarcacion: m.Hora,
+        hora: m.Hora,
         estado: m.estado,
         area: m.Persona!.Area ? m.Persona!.Area!.descripcion : 'Sin área'
       }
@@ -59,65 +54,35 @@ export const getMarcaciones = async (req: Request, res: Response) => {
 }
 
 export const getAuditMarcacion = async (req: Request, res: Response) => {
-
-  const fecha = req.query.fecha as string;
-
-  const opc = fecha ? { [Op.eq]: fecha } : { [Op.eq]: fn('CURDATE') };
-
   try {
-
     const result = await Marcacion.findAll({
       attributes: ['Id', 'Hora', 'estado'],
-      where: { Fecha: opc, estado: { [Op.or]: ['Entrada', 'Salida'] } },
-      include: {
+      where: { Fecha: { [Op.eq]: fn('CURDATE') } },
+      include: [{
         attributes: ['nombres', 'apellidos'],
-        where: { id_Grupo_Horario: { [Op.ne]: null } },
         model: Persona,
+        as: 'Persona',
+        where: { id_Grupo_Horario: { [Op.ne]: null } },
         include: [{
-          model: GrupoTurnoVsHorario,
           attributes: ['diaSeman'],
+          model: GrupoTurnoVsHorario,
+          where: { diaSeman: getDayOfWeekString() },
           include: [{
-            model: Turnos,
-            attributes: ['hora_inicio', 'hora_fin']
+            attributes: ['descripcion', 'hora_inicio'],
+            model: Turnos
           }]
         }]
-      },
-      order: [['Id', 'DESC']]
-    })
+      }]
+    });
 
-    const marcaciones = result.map(m => {
-      const turno = m.Persona.GrupoTurnoVsHorarios !== undefined ? m.Persona.GrupoTurnoVsHorarios.filter(t => t.diaSeman === getDayOfWeekString(fecha))[0].Turno : null;
-
-      const horaMarcacion = m.Hora.toString().substring(0, 5);
-
-      let horaInicio = '';
-      let horaFin = '';
-
-      if (turno !== null) {
-        horaInicio = turno.hora_inicio.toString()
-        horaFin = turno.hora_fin.toString()
-      }
-
-      if (m.estado === 'Entrada') {
-        return {
-          id: m.Id,
-          horaMarcacion: m.Hora.toString().substring(0, 5),
-          estado: m.estado,
-          nombres: m.Persona.nombres,
-          apellidos: m.Persona.apellidos,
-          horaEstimada: horaInicio,
-          audit: horaMarcacion > horaInicio ? 'Tarde' : 'A tiempo'
-        }
-      } else if (m.estado === 'Salida') {
-        return {
-          id: m.Id,
-          horaMarcacion: m.Hora.toString().substring(0, 5),
-          estado: m.estado,
-          nombres: m.Persona.nombres,
-          apellidos: m.Persona.apellidos,
-          horaEstimada: horaFin,
-          audit: horaMarcacion < horaFin ? 'Temprano' : 'A tiempo'
-        }
+    const marcaciones = result.map(marcacion => {
+      return {
+        id: marcacion.Id,
+        nombres: marcacion.Persona.nombres,
+        apellidos: marcacion.Persona.apellidos,
+        hora: marcacion.Hora.toString().slice(0, 5),
+        estado: marcacion.estado,
+        hora_inicio: marcacion.Persona.GrupoTurnoVsHorarios[0].Turno.hora_inicio
       }
     })
 

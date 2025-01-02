@@ -1,5 +1,6 @@
 import { MarcacionPersonaArea } from '../types/marcacion'
 import { utils, ColInfo, writeFile } from 'xlsx'
+import { Button } from './ui/button'
 import { toast } from 'sonner'
 
 interface Props {
@@ -29,7 +30,7 @@ const generateExcelData = (datos: MarcacionPersonaArea[], time1?: string, time2?
     C: it.nombres,
     D: it.apellidos,
     E: it.fecha,
-    F: it.horaMarcacion,
+    F: it.hora,
     G: it.estado,
     I: it.area
   }))
@@ -78,8 +79,8 @@ export const BottonExporCartera = ({ datos, time1, time2 }: Props): JSX.Element 
   }
 
   return (
-    <button className='px-2 py-1 bg-green-600 rounded-lg font-semibold text-white hover:bg-green-500' onClick={handleDownload}>
+    <Button onClick={handleDownload}>
       Exportar Excel
-    </button>
+    </Button>
   )
 }
