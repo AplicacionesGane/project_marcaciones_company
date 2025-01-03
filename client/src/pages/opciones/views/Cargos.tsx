@@ -1,10 +1,10 @@
-import { CloseIcon } from '../../../components/icons/CloseIcon';
-import { EditIcon } from '../../../components/icons/EditIcon';
-import { PlusIcon } from '../../../components/icons/PlusIcon';
-import { ModalDelete } from '../../../components/ModalDelete';
+import { CloseIcon } from '@/components/icons/CloseIcon';
+import { EditIcon } from '@/components/icons/EditIcon';
+import { PlusIcon } from '@/components/icons/PlusIcon';
+import { ModalDelete } from '@/components/ModalDelete';
 import { FormEvent, useEffect, useState } from 'react';
-import { URL_API } from '../../../utils/contants';
-import { Cargo } from '../../../types/Interfaces';
+import { URL_API } from '@/utils/contants';
+import { Cargo } from '@/types/Interfaces';
 import { toast } from 'sonner';
 import axios from 'axios';
 
@@ -36,7 +36,7 @@ export default function Cargos() {
   const handleNewCargo = (e: FormEvent) => {
     e.preventDefault();
 
-    axios.post(`${URL_API}/cargo`, { codigo, nombre: nombreCargo })
+    axios.post(`${URL_API}/cargo`, { codigo, descripcion: nombreCargo })
       .then(response => {
         console.log(response.data)
         if (response.status === 201) {
