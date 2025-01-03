@@ -1,8 +1,11 @@
-import { CloseIcon } from '@/components/icons/CloseIcon';
-import { EditIcon } from '@/components/icons/EditIcon';
-import { PlusIcon } from '@/components/icons/PlusIcon';
-import { ModalDelete } from '@/components/ModalDelete';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { FormEvent, useEffect, useState } from 'react';
+import { ModalDelete } from '@/components/ModalDelete';
+import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card } from '@/components/ui/card';
 import { URL_API } from '@/utils/contants';
 import { Cargo } from '@/types/Interfaces';
 import { toast } from 'sonner';
@@ -10,7 +13,6 @@ import axios from 'axios';
 
 export default function Cargos() {
   const [cargos, setCargos] = useState<Cargo[]>([]);
-  const [activeNewCargo, setActiveNewCargo] = useState<boolean>(false);
   const [cargoDelete, setCargoDelete] = useState<number | null>(null);
   const [activeUpdate, setActiveUpdate] = useState<boolean>(false);
 
@@ -43,7 +45,6 @@ export default function Cargos() {
           toast.success('El cargo se creo correctamente', { description: 'cargo creada' })
           setCodigo('')
           setNombreCargo('')
-          setActiveNewCargo(false)
           setRequest(true)
         }
       })
@@ -61,8 +62,8 @@ export default function Cargos() {
           toast.success('El área se actualizó correctamente', { description: 'Área actualizada' })
           setCodigo('')
           setNombreCargo('')
-          setActiveNewCargo(false)
           setRequest(true)
+          setActiveUpdate(false)
         }
       })
       .catch(error => {
@@ -103,107 +104,125 @@ export default function Cargos() {
   const updateCargo = (cargo: Cargo) => {
     const { ID, codigo, descripcion } = cargo;
     setActiveUpdate(true);
-    setActiveNewCargo(true);
     setId(ID);
     setCodigo(codigo);
     setNombreCargo(descripcion);
-
   }
 
   const cancelarUpdate = () => {
     setActiveUpdate(false);
-    setActiveNewCargo(false);
     setId(0);
     setCodigo('');
     setNombreCargo('');
   }
 
   return (
-    <section className='p-1 flex flex-col'>
+    <section className='flex flex-col h-screen'>
 
-      <div className='h-[83vh] overflow-y-auto'>
-        <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
-          <thead className='text-xs text-gray-700 uppercase bg-blue-100 dark:bg-gray-700 dark:text-gray-400'>
-            <tr>
-              <th scope='col' className='px-4 py-2'>
+      <h1 className='text-2xl text-center text-gray-700 dark:text-gray-200 font-semibold mb-1'>
+        Gestionar Cargos
+      </h1>
+
+      <Separator />
+
+      <div className='h-[80vh] overflow-y-auto'>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>
                 CODIGO
-              </th>
-              <th scope='col' className='px-4 py-2'>
+              </TableHead>
+              <TableHead>
                 Nombre Cargo
-              </th>
-              <th scope='col' className='px-4 py-2'>
+              </TableHead>
+              <TableHead>
                 Acciones
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {
               cargos.map(cargo => (
-                <tr key={cargo.ID} className='bg-white border-b dark:bg-gray-800 dark:border-gray-700  '>
-                  <td className='px-4 py-2'>
+                <TableRow key={cargo.ID}>
+                  <TableCell className='px-4 py-2'>
                     {cargo.codigo}
-                  </td>
-                  <td className='px-4 py-2'>
+                  </TableCell>
+                  <TableCell className='px-4 py-2'>
                     {cargo.descripcion}
-                  </td>
-                  <td className='px-4 py-2 flex gap-2'>
-                    <button className='bg-yellow-300 hover:bg-yellow-400 text-black px-2 py-1 rounded-md' onClick={() => updateCargo(cargo)}
-                    >Editar</button>
-                    <button className='bg-red-400 hover:bg-red-600 text-white px-2 py-1 rounded-md' onClick={() => openModal(cargo.ID)}
-                    >Eliminar</button>
-                  </td>
-                </tr>
+                  </TableCell>
+                  <TableCell className='px-4 py-2 flex gap-2'>
+                    <Button
+                      className='hover:bg-yellow-100'
+                      variant={'secondary'}
+                      onClick={() => updateCargo(cargo)}>
+                      Editar</Button>
+                    <Button
+                      className='hover:bg-red-200'
+                      variant={'secondary'}
+                      onClick={() => openModal(cargo.ID)}>
+                      Eliminar</Button>
+                  </TableCell>
+                </TableRow>
               ))
             }
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
 
 
-      <section className='bg-gray-200 flex items-center py-2 rounded-md' onSubmit={ev => activeUpdate ? handleUpdateCargo(ev) : handleNewCargo(ev)}>
-        <form className='flex justify-end items-center relative'>
-          <div className={`flex items-center mb-4 absolute left-4 top-2 ${activeNewCargo ? 'hidden' : ''}`}>
-            <input checked={activeNewCargo} type='checkbox' value='' onChange={() => setActiveNewCargo(!activeNewCargo)} className='h-5 w-5 text-blue-600 border rounded-md mr-2' />
-            <label>Nuevo cargo</label>
-          </div>
-          <div className='flex items-center'>
-            <label className={`${!activeNewCargo ? 'hidden' : 'block'} text-gray-700 dark:text-gray-400 w-72 text-center `}>
-              Código:
-            </label>
-            <input type='text' disabled={!activeNewCargo} value={codigo} onChange={(e) => setCodigo(e.target.value)}
-              className='w-full px-4 py-1 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500' />
-          </div>
-          <div className='flex items-center'>
-            <label className={`${!activeNewCargo ? 'hidden' : 'block'} text-gray-700 dark:text-gray-400 w-72 text-center `}>
-              Nombre del cargo:
-            </label>
-            <input type='text' disabled={!activeNewCargo} value={nombreCargo} onChange={(e) => setNombreCargo(e.target.value)}
-              className='w-full px-4 py-1 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500' />
-          </div>
+      <Card className='p-4 m-1 mt-auto'>
+        <form className='flex items-center gap-2 w-full'>
+          <Label className='min-w-12'>Código</Label>
+          <Input
+            type='text'
+            className='w-40'
+            placeholder='01, 12, 35 ...'
+            value={codigo}
+            onChange={e => setCodigo(e.target.value)}
+            required
+          />
+          <Label className='min-w-24'>Nombre Cargo</Label>
+          <Input
+            type='text'
+            className='w-72 2xl:w-96'
+            placeholder='Técnico, Analista, Asistente, Jefe ...'
+            value={nombreCargo}
+            onChange={e => setNombreCargo(e.target.value)}
+            required
+          />
           {
             activeUpdate ? (
-              <>
-                <button type='submit' title='cancelar edicion' onClick={() => cancelarUpdate()}
-                  className={`bg-red-500 hover:bg-red-700 text-white font-bold py-1 mx-4 px-4 rounded h-8 ${!activeNewCargo ? 'hidden' : 'block'}`}>
-                  <CloseIcon />
-                </button>
-                <button type='submit' title='editar cargos'
-                  className={`bg-green-500 hover:bg-green-700 text-white font-bold py-1 mx-4 px-4 rounded h-8 ${!activeNewCargo ? 'hidden' : 'block'}`}>
-                  <EditIcon />
-                </button>
-              </>
+              <div className='flex items-center gap-2 ml-auto'>
+                <Button
+                  onClick={() => cancelarUpdate()}
+                  className='bg-red-500 hover:bg-red-600'>
+                  Cancelar
+                </Button>
+
+                <Button
+                  type='submit'
+                  onClick={handleUpdateCargo}
+                  className='bg-green-500 hover:bg-green-600'>
+                  Actualizar
+                </Button>
+
+              </div>
             ) : (
-              <button type='submit' title='crear cargos'
-                className={`bg-green-500 hover:bg-green-700 text-white font-bold py-1 mx-4 px-4 rounded h-8 ${!activeNewCargo ? 'hidden' : 'block'}`}>
-                <PlusIcon />
-              </button>
+              <div className='flex items-center gap-2 ml-auto'>
+                <Button
+                  type='submit'
+                  onClick={handleNewCargo}
+                  className='bg-blue-500 hover:bg-blue-600'>
+                  Crear Área
+                </Button>
+              </div>
             )
           }
         </form>
-      </section>
+      </Card>
 
       {modalIsOpen && <ModalDelete funAction={confirmDeletecargo} onCancel={closeModal} />}
 
-    </section>
+    </section >
   );
 }

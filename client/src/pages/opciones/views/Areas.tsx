@@ -119,7 +119,9 @@ export default function Areas() {
 
   return (
     <section className='flex flex-col h-screen'>
-      <h1 className='text-center text-2xl font-semibold pb-1'>Gestionar Áreas</h1>
+      <h1 className='text-2xl text-center text-gray-700 dark:text-gray-200 font-semibold mb-1'>
+        Gestionar Áreas
+      </h1>
 
       <Separator />
 
@@ -127,13 +129,13 @@ export default function Areas() {
         <Table>
           <TableHeader >
             <TableRow>
-              <TableHead scope='col' className='px-4 py-2'>
+              <TableHead>
                 CODIGO
               </TableHead>
-              <TableHead scope='col' className='px-4 py-2'>
+              <TableHead>
                 Nombre área
               </TableHead>
-              <TableHead scope='col' className='px-4 py-2'>
+              <TableHead>
                 Acciones
               </TableHead>
             </TableRow>
@@ -176,8 +178,8 @@ export default function Areas() {
             type='text'
             value={codigo}
             onChange={ev => setCodigo(ev.target.value)}
-            className='w-64'
-            placeholder='Código del área'
+            className='w-40'
+            placeholder='01, 24, 56 ...'
             required
           />
           <Label className='min-w-24'>Nombre del área:</Label>
@@ -186,7 +188,7 @@ export default function Areas() {
             value={nombreA}
             onChange={ev => setNombreA(ev.target.value)}
             className='w-72 2xl:w-96'
-            placeholder='Nombre del área'
+            placeholder='Administración, Contabilidad, Recursos Humanos ...'
             required
           />
 
