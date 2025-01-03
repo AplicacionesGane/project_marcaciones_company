@@ -1,8 +1,8 @@
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@/components/ui/sidebar'
-import { Frame, Map, PieChart, Settings2 } from 'lucide-react'
 import { TeamSwitcher } from '@/components/team-switcher'
 import { NavMain } from '@/components/nav-main'
 import { NavUser } from '@/components/nav-user'
+import { Settings2 } from 'lucide-react'
 
 // This is sample data.
 const data = {
@@ -25,33 +25,16 @@ const data = {
           url: '/turnos',
         },
         {
-          title: 'Grupo Turnos',
+          title: 'Grupos',
           url: '/grupoturno',
         },
         {
-          title: 'Grupo Turno - Turno',
+          title: 'Asignación Turnos',
           url: '/grupo-turno'
         }
       ],
     },
-  ],
-  projects: [
-    {
-      name: 'Design Engineering',
-      url: '#',
-      icon: Frame,
-    },
-    {
-      name: 'Sales & Marketing',
-      url: '#',
-      icon: PieChart,
-    },
-    {
-      name: 'Travel',
-      url: '#',
-      icon: Map,
-    },
-  ],
+  ]
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {

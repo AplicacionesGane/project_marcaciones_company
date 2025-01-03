@@ -84,7 +84,7 @@ export default function GrupoTurno() {
   return (
     <section className='p-1 flex flex-col h-screen'>
       <h1 className='text-2xl text-center text-gray-700 dark:text-gray-200 font-semibold mb-1'>
-        Gestionar Grupos Turnos
+        Gestionar Grupos
       </h1>
 
       <Separator />
