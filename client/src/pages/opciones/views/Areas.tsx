@@ -1,16 +1,18 @@
-import { CloseIcon } from '../../../components/icons/CloseIcon';
-import { PlusIcon } from '../../../components/icons/PlusIcon';
-import { EditIcon } from '../../../components/icons/EditIcon';
-import { ModalDelete } from '../../../components/ModalDelete';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { ModalDelete } from '@/components/ModalDelete';
 import { FormEvent, useEffect, useState } from 'react';
-import { type Area } from '../../../types/Interfaces';
-import { URL_API } from '../../../utils/contants';
+import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
+import { type Area } from '@/types/Interfaces';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card } from '@/components/ui/card';
+import { URL_API } from '@/utils/contants';
 import { toast } from 'sonner';
 import axios from 'axios';
 
 export default function Areas() {
   const [areas, setAreas] = useState<Area[]>([]);
-  const [activeNewArea, setActiveNewArea] = useState<boolean>(false);
   const [areaToDelete, setAreaToDelete] = useState<number | null>(null);
   const [activeUpdate, setActiveUpdate] = useState<boolean>(false);
 
@@ -43,7 +45,6 @@ export default function Areas() {
           toast.success('El área se creo correctamente', { description: 'Área creada' })
           setCodigo('')
           setNombreA('')
-          setActiveNewArea(false)
           setRequest(true)
         }
       })
@@ -51,7 +52,7 @@ export default function Areas() {
         console.log(error)
         toast.error(error.response.data.message || 'Error ', { description: 'Error al crear el área' })
       })
-  }
+  };
 
   const handleUpdateArea = (ev: FormEvent) => {
     ev.preventDefault();
@@ -61,15 +62,15 @@ export default function Areas() {
           toast.success('El área se actualizó correctamente', { description: 'Área actualizada' })
           setCodigo('')
           setNombreA('')
-          setActiveNewArea(false)
           setRequest(true)
+          setActiveUpdate(false)
         }
       })
       .catch(error => {
         console.log(error)
         toast.error(error.response.data.message || 'Error ', { description: 'Error al actualizar el área' })
       })
-  }
+  };
 
   const confirmDeleteArea = () => {
     if (areaToDelete !== null) {
@@ -102,103 +103,124 @@ export default function Areas() {
 
   const updateArea = (area: Area) => {
     const { id, codigo, descripcion } = area;
-    setActiveUpdate(true);
-    setActiveNewArea(true);
-    setId(id);
-    setCodigo(codigo);
     setNombreA(descripcion);
+    setActiveUpdate(true);
+    setCodigo(codigo);
+    setId(id);
 
-  }
+  };
 
   const cancelarUpdate = () => {
     setActiveUpdate(false);
-    setActiveNewArea(false);
     setId(0);
     setCodigo('');
     setNombreA('');
-  }
-
+  };
 
   return (
-    <section className='p-1 flex flex-col'>
+    <section className='flex flex-col h-screen'>
+      <h1 className='text-center text-2xl font-semibold pb-1'>Gestionar Áreas</h1>
 
-      <div className='h-[83vh] overflow-y-auto'>
-        <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
-          <thead className='text-xs text-gray-700 uppercase bg-blue-100 dark:bg-gray-700 dark:text-gray-400'>
-            <tr>
-              <th scope='col' className='px-4 py-2'>
+      <Separator />
+
+      <section className='h-[80vh] overflow-y-auto'>
+        <Table>
+          <TableHeader >
+            <TableRow>
+              <TableHead scope='col' className='px-4 py-2'>
                 CODIGO
-              </th>
-              <th scope='col' className='px-4 py-2'>
+              </TableHead>
+              <TableHead scope='col' className='px-4 py-2'>
                 Nombre área
-              </th>
-              <th scope='col' className='px-4 py-2'>
+              </TableHead>
+              <TableHead scope='col' className='px-4 py-2'>
                 Acciones
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {
               areas.map(area => (
-                <tr key={area.id} className='bg-white border-b dark:bg-gray-800 dark:border-gray-700  '>
-                  <td className='px-4 py-2'>
+                <TableRow key={area.id} className='bg-white border-b dark:bg-gray-800 dark:border-gray-700  '>
+                  <TableCell className='px-4 py-2'>
                     {area.codigo}
-                  </td>
-                  <td className='px-4 py-2'>
+                  </TableCell>
+                  <TableCell className='px-4 py-2'>
                     {area.descripcion}
-                  </td>
-                  <td className='px-4 py-2 flex gap-2'>
-                    <button className='bg-yellow-300 hover:bg-yellow-400 text-black px-2 py-1 rounded-md' onClick={() => updateArea(area)}>Editar</button>
-                    <button className='bg-red-400 hover:bg-red-600 text-white px-2 py-1 rounded-md' onClick={() => openModal(area.id)}>Eliminar</button>
-                  </td>
-                </tr>
+                  </TableCell>
+                  <TableCell className='px-4 py-2 flex gap-2'>
+                    <Button
+                      className='hover:bg-yellow-100'
+                      variant={'secondary'}
+                      onClick={() => updateArea(area)} >
+                      Editar
+                    </Button>
+                    <Button
+                      className='hover:bg-red-200'
+                      variant={'secondary'}
+                      onClick={() => openModal(area.id)} >
+                      Eliminar
+                    </Button>
+                  </TableCell>
+                </TableRow>
               ))
             }
-          </tbody>
-        </table>
-      </div>
+          </TableBody>
+        </Table>
+      </section>
 
-      <section className='bg-gray-200 flex items-center py-2 rounded-md'>
-        <form className='flex justify-end items-center relative' onSubmit={ev => activeUpdate ? handleUpdateArea(ev) : handleNewArea(ev)}>
-          <div className={`flex items-center mb-4 absolute left-4 top-2 ${activeNewArea ? 'hidden' : ''}`}>
-            <input checked={activeNewArea} type='checkbox' value='' onChange={() => setActiveNewArea(!activeNewArea)} className='h-5 w-5 text-blue-600 border rounded-md mr-2' />
-            <label>Nueva área</label>
-          </div>
-          <div className='flex items-center'>
-            <label className={`${!activeNewArea ? 'hidden' : 'block'} text-gray-700 dark:text-gray-400 w-72 text-center `}>
-              Código:
-            </label>
-            <input type='text' disabled={!activeNewArea} value={codigo} onChange={(e) => setCodigo(e.target.value)}
-              className='w-full px-4 py-1 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500' />
-          </div>
-          <div className='flex items-center'>
-            <label className={`${!activeNewArea ? 'hidden' : 'block'} text-gray-700 dark:text-gray-400 w-72 text-center `}>
-              Nombre del área:
-            </label>
-            <input type='text' disabled={!activeNewArea} value={nombreA} onChange={(e) => setNombreA(e.target.value)}
-              className='w-full px-4 py-1 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500' />
-          </div>
+      <Card className='p-4 m-1 mt-auto'>
+        <form className='flex items-center gap-2 w-full'>
+          <Label className='min-w-12'>Código:</Label>
+          <Input
+            type='text'
+            value={codigo}
+            onChange={ev => setCodigo(ev.target.value)}
+            className='w-64'
+            placeholder='Código del área'
+            required
+          />
+          <Label className='min-w-24'>Nombre del área:</Label>
+          <Input
+            type='text'
+            value={nombreA}
+            onChange={ev => setNombreA(ev.target.value)}
+            className='w-72 2xl:w-96'
+            placeholder='Nombre del área'
+            required
+          />
+
           {
             activeUpdate ? (
-              <>
-                <button type='submit' title='cancelar edicion' onClick={() => cancelarUpdate()}
-                  className={`bg-red-500 hover:bg-red-700 text-white font-bold py-1 mx-4 px-4 rounded h-8 ${!activeNewArea ? 'hidden' : 'block'}`}>
-                  <CloseIcon />
-                </button>
-                <button type='submit' title='editar área'
-                  className={`bg-green-500 hover:bg-green-700 text-white font-bold py-1 mx-4 px-4 rounded h-8 ${!activeNewArea ? 'hidden' : 'block'}`}>
-                  <EditIcon />
-                </button>
-              </>
+              <div className='flex items-center gap-2 ml-auto'>
+                <Button
+                  onClick={() => cancelarUpdate()}
+                  className='bg-red-500 hover:bg-red-600'>
+                  Cancelar
+                </Button>
+
+                <Button
+                  type='submit'
+                  onClick={handleUpdateArea}
+                  className='bg-green-500 hover:bg-green-600'>
+                  Actualizar
+                </Button>
+
+              </div>
             ) : (
-              <button type='submit' title='crear área'
-                className={`bg-green-500 hover:bg-green-700 text-white font-bold py-1 mx-4 px-4 rounded h-8 ${!activeNewArea ? 'hidden' : 'block'}`}>
-                <PlusIcon />
-              </button>
+              <div className='flex items-center gap-2 ml-auto'>
+                <Button
+                  type='submit'
+                  onClick={handleNewArea}
+                  className='bg-blue-500 hover:bg-blue-600'>
+                  Crear Área
+                </Button>
+              </div>
             )
           }
+
         </form>
-      </section>
+      </Card>
 
       {modalIsOpen && <ModalDelete funAction={confirmDeleteArea} onCancel={closeModal} />}
 
