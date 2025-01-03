@@ -1,16 +1,42 @@
-import { Button } from '@/components/ui/button'
-import { useNavigate } from 'react-router-dom'
+import { URL_API } from "@/utils/contants"
+import { useEffect, useState } from "react"
+import axios from "axios"
+
+interface InfoMarcacion {
+  count: number
+  stados: {
+    [key: string]: number
+  }
+  totalPersona: number
+}
 
 export default function Home() {
-  const navigate = useNavigate()
+  const [infoMarcacion, setInfoMarcacion] = useState<InfoMarcacion>()
+
+  useEffect(() => {
+    axios.get(`${URL_API}/infoMarcacion`)
+      .then(res => setInfoMarcacion(res.data))
+      .catch(err => console.error(err))
+  }, [])
 
   return (
-    <main className='h-[90vh] cont_main flex flex-col items-center justify-center dark:text-white'>
-      <h1 className='text-5xl font-bold mb-4 animate-bounce'>Welcome to Our Website!</h1>
-      <p className='text-lg mb-8 text-center max-w-md'>
-        Aplicativo en desarrollo para la gestión de empleados y sus marcaciones. generación de reportes y auditorias.
-      </p>
-      <Button onClick={() => navigate('/empleados')} >Ver Empleados</Button>
+    <main className='flex flex-col items-center justify-center first:space-y-8 h-screen'>
+      <h1 className='text-4xl font-bold'>Información de marcaciones</h1>
+      <div className='flex flex-col items-center justify-center space-y-4'>
+        <p>Total de marcaciones: {infoMarcacion?.count}</p>
+        <p>Total de personas: {infoMarcacion?.totalPersona}</p>
+      </div>
+      {
+        infoMarcacion && (
+          <div className='flex flex-col items-center justify-center space-y-4'>
+            {
+              Object.keys(infoMarcacion.stados).map((key, index) => (
+                <p key={index}>{key}: {infoMarcacion.stados[key]}</p>
+              ))
+            }
+          </div>
+        )
+      }
     </main>
   )
 }

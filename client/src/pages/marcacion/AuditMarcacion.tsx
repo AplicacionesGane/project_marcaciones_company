@@ -91,7 +91,11 @@ export default function AuditMarcacion() {
                     - El estado empleado esté activo <br />
                     - El empleado tenga asignado un Grupo, el cual continene los horarios de los diferentes días de la semana<br />
                   </li>
+                  <li>
+                    La realización de una correcta marcación por parte del empleado mejorará la veraicidad de los cálculos realizados.
+                  </li>
                 </ul>
+
               </DialogDescription>
             </DialogHeader>
             <DialogFooter className="sm:justify-start">
@@ -148,6 +152,11 @@ export default function AuditMarcacion() {
         </Table>
       </div>
 
+      <footer className='flex justify-center items-center p-4 bg-gray-100 dark:bg-gray-800 mt-auto'>
+        <span className='text-sm text-gray-600 dark:text-gray-300'>
+          Esta funcionalidad está en fase beta mientras se realizan pruebas exhaustivas en todos los tipos de marcaciones y sus respectivos cálculos.
+        </span>
+      </footer>
     </section>
   )
 }
