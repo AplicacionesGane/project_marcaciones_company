@@ -1,8 +1,13 @@
-import { PlusIcon } from '../../../components/icons/PlusIcon';
-import { ModalDelete } from '../../../components/ModalDelete';
-import { GrupoTurnos } from '../../../types/Interfaces';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { ModalDelete } from '@/components/ModalDelete';
 import { FormEvent, useEffect, useState } from 'react';
-import { URL_API } from '../../../utils/contants';
+import { Separator } from '@/components/ui/separator';
+import { GrupoTurnos } from '@/types/Interfaces';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Card } from '@/components/ui/card';
+import { URL_API } from '@/utils/contants';
 import { toast } from 'sonner';
 import axios from 'axios';
 
@@ -77,61 +82,81 @@ export default function GrupoTurno() {
 
 
   return (
-    <section className='p-1 flex flex-col h-full'>
-      <div className='h-[84vh] overflow-y-auto'>
-        <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 overflow-x-auto'>
-          <thead className='text-xs text-gray-700 uppercase bg-blue-100 dark:bg-gray-700 dark:text-gray-400'>
-            <tr>
-              <th className='px-4 py-2'>CODIGO</th>
-              <th className='px-4 py-2'>grupo turno</th>
-              <th className='px-4 py-2'>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
+    <section className='p-1 flex flex-col h-screen'>
+      <h1 className='text-2xl text-center text-gray-700 dark:text-gray-200 font-semibold mb-1'>
+        Gestionar Grupos
+      </h1>
+
+      <Separator />
+
+      <div className='h-[80vh] overflow-y-auto'>
+        <Table >
+          <TableHeader>
+            <TableRow>
+              <TableHead>Código</TableHead>
+              <TableHead>Grupo Turno</TableHead>
+              <TableHead>Opciones</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {
               turnoGrupo.map(turno => (
-                <tr key={turno.id} className='bg-white border-b dark:bg-gray-800 dark:border-gray-700  '>
-                  <td className='px-4 py-2'>{turno.codigo}</td>
-                  <td className='px-4 py-2'>{turno.descripcion}</td>
-                  <td className='px-4 py-2 flex gap-2'>
-                    <button className='bg-red-400 hover:bg-red-600 text-white px-2 py-1 rounded-md' onClick={() => openModal(turno.id)}
-                    >Eliminar</button>
-                  </td>
-                </tr>
+                <TableRow key={turno.id} >
+                  <TableCell>{turno.codigo}</TableCell>
+                  <TableCell>{turno.descripcion}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant={'secondary'}
+                      className=' hover:bg-red-200'
+                      onClick={() => openModal(turno.id)}
+                    >
+                      Eliminar</Button>
+                  </TableCell>
+                </TableRow>
               ))
             }
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
 
-      <section className='m-auto border rounded-md bg-gray-200 py-1'>
-        <form className='flex justify-around items-center' onSubmit={handleNewGrupoTurno}>
+      <Card className='p-4'>
+        <form
+          className='flex items-center gap-2 w-full'
+          onSubmit={handleNewGrupoTurno}
+        >
+          <Label className='min-w-12'>Código:</Label>
+          <Input
+            type='text'
+            className='w-28'
+            placeholder='01, 12, 35 ...'
+            value={codigo}
+            onChange={(e) => setCodigo(e.target.value)}
+          />
 
-          <div className='flex items-center'>
-            <label className={`text-gray-700 dark:text-gray-400 w-72 text-center `}>
-              Código:
-            </label>
-            <input type='text' value={codigo} onChange={(e) => setCodigo(e.target.value)}
-              className='w-full px-2 py-1 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500' />
+          <Label className='min-w-36'>Nombre Grupo Turno:</Label>
+          <Input
+            type='text'
+            className='w-80'
+            placeholder='Informatica, Administracion, Cartera ...'
+            value={nombreGrupoTurno}
+            onChange={(e) => setNombreGrupoTurno(e.target.value)}
+          />
+          <div className='flex items-center gap-2 ml-auto'>
+            <Button
+              type='submit'
+              title='crear grupo turno'
+              variant={'secondary'}
+              className='hover:bg-green-200'
+            >
+              Crear Grupo Turno
+            </Button>
           </div>
-          <div className='flex items-center'>
-            <label className={`text-gray-700 dark:text-gray-400 w-72 text-center `}>
-              Nombre Grupo Turno:
-            </label>
-            <input type='text' value={nombreGrupoTurno} onChange={(e) => setNombreGrupoTurno(e.target.value)}
-              className='w-full px-2 py-1 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500' />
-          </div>
-
-          <button type='submit' title='crear grupo turno'
-            className={`bg-green-500 hover:bg-green-700 text-white font-bold py-1 mx-4 px-4 rounded h-8`}>
-            <PlusIcon />
-          </button>
 
         </form>
-      </section>
+      </Card>
 
       {modalIsOpen && <ModalDelete funAction={confirmDeleteGrupoTurno} onCancel={closeModal} />}
 
-    </section>
+    </section >
   );
 }

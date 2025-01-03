@@ -5,7 +5,6 @@ import { reduceStates } from '../utils';
 import { fn, Op } from 'sequelize';
 
 export async function infoMarcaciones(req: Request, res: Response) {
-
   try {
     const { rows, count } = await Marcacion.findAndCountAll({
       where: { Fecha: { [Op.eq]: fn('CURDATE') } }

@@ -1,7 +1,12 @@
-import { PlusIcon } from '../../../components/icons/PlusIcon'
-import { GrupoVsTurno } from '../../../types/Interfaces'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { PlusIcon } from '@/components/icons/PlusIcon'
+import { Separator } from '@/components/ui/separator'
 import { useEffect, useRef, useState } from 'react'
-import { URL_API } from '../../../utils/contants'
+import { GrupoVsTurno } from '@/types/Interfaces'
+import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
+import { Card } from '@/components/ui/card'
+import { URL_API } from '@/utils/contants'
 import { toast } from 'sonner'
 import axios from 'axios'
 
@@ -73,25 +78,33 @@ export default function GrupovsTurno() {
     : options?.asignados;
 
   return (
-    <section className='flex flex-col h-[92vh]'>
+    <section className='flex flex-col h-screen'>
 
-      <section className='flex justify-around py-2'>
-        <div className='flex flex-col gap-2 justify-center border rounded-md px-4 shadow-md'>
-          <p className='text-center'>Filtrar Grupos Horarios</p>
-          <select onChange={handleChangeFiltro} className='border p-1 rounded-md'>
-            <option value="">Seleccione un Grupo Horario</option>
+      <h1 className='text-2xl text-center text-gray-700 dark:text-gray-200 font-semibold mb-1'>
+        Asignación Turnos - Grupos
+      </h1>
+
+      <Card className='flex gap-2'>
+        <section className='flex flex-col gap-2 justify-center px-2'>
+          <Label className='text-center'>Filtrar Grupos</Label>
+          <select onChange={handleChangeFiltro} className='border px-4 py-2 rounded-md'>
+            <option value="">Seleccione Grupo</option>
             {options?.grupoHorario.map(grupo => (
               <option key={grupo.id} value={grupo.id}>
                 {grupo.descripcion}
               </option>
             ))}
           </select>
-        </div>
+        </section>
 
-        <form ref={formRef} className='overflow-y-auto flex max-h-32 w-max px-4 gap-8 border rounded-md shadow-md' onSubmit={handleSubmit}>
+        <Separator orientation='vertical' />
 
+        <form
+          ref={formRef}
+          onSubmit={handleSubmit}
+          className='flex gap-2'
+        >
           <section className='flex flex-col gap-2 justify-center'>
-
             <select name='grupoHorario' id='grupoHorario' className='border px-4 py-2 rounded-md'>
               <option value=''>
                 Seleccione Grupo
@@ -131,45 +144,49 @@ export default function GrupovsTurno() {
           </button>
 
         </form>
-      </section>
+      </Card>
 
-      <section className='shadow-md overflow-y-auto'>
-        <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
-          <thead className='text-xs text-blue-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400'>
-            <tr>
-              <th className='px-4 py-2'>ID</th>
-              <th className='px-4 py-2'>Día</th>
-              <th className='px-4 py-2'>Grupo Horario</th>
-              <th className='px-4 py-2'>Turno</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
+      <Separator />
+
+      <section className='h-[80vh] overflow-y-auto'>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>ID</TableHead>
+              <TableHead>Día</TableHead>
+              <TableHead>Grupo Horario</TableHead>
+              <TableHead>Turno</TableHead>
+              <TableHead>Acciones</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {filteredAsignados?.map(asign => (
-              <tr key={asign.id} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
-                <th className='px-3 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+              <TableRow key={asign.id}>
+                <TableCell>
                   {asign.id}
-                </th>
-                <th scope='row' className='px-3 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                </TableCell>
+                <TableCell>
                   {asign.diaSeman}
-                </th>
-                <td className='px-3 py-2'>
+                </TableCell>
+                <TableCell>
                   {asign.GrupoHorario.descripcion}
-                </td>
-                <td className='px-3 py-2'>
+                </TableCell>
+                <TableCell>
                   {asign.Turno.descripcion}
-                </td>
-                <td className='px-3 py-2'>
-                  <button onClick={() => handleDelete(asign.id)} className='bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded'>
+                </TableCell>
+                <TableCell>
+                  <Button
+                    className='hover:bg-red-200'
+                    variant={'secondary'}
+                    onClick={() => handleDelete(asign.id)}>
                     Eliminar
-                  </button>
-                </td>
-              </tr>
+                  </Button>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </section>
-
 
     </section>
   )
