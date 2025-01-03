@@ -38,7 +38,7 @@ export default function Areas() {
   const handleNewArea = (e: FormEvent) => {
     e.preventDefault();
 
-    axios.post(`${URL_API}/area`, { codigo, nombre: nombreA })
+    axios.post(`${URL_API}/area`, { codigo, descripcion: nombreA })
       .then(response => {
         console.log(response.data)
         if (response.status === 201) {
