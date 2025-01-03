@@ -26,7 +26,7 @@ export default function Root() {
           <Outlet />
         </main>
       </SidebarProvider>
-      <Toaster duration={4000} richColors position='top-right' visibleToasts={3} closeButton />
+      <Toaster duration={4000} richColors position='top-right' visibleToasts={3} />
     </Suspense>
   );
 }
