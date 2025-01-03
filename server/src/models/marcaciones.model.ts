@@ -1,26 +1,15 @@
-import { DataTypes, Model, Optional } from 'sequelize';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes } from 'sequelize';
 import { db_connection } from '../connections';
 import { Persona } from './persona.model';
 
-interface MarcacionAttributes {
-  Id: number;
-  codigo: string;
-  Fecha: Date;
-  Hora: Date;
-  estado: string;
-  dispositivo: string;
-}
-
-type MarcacionCreationAttributes = Optional<MarcacionAttributes, 'Id'>;
-
-export class Marcacion extends Model<MarcacionAttributes, MarcacionCreationAttributes> implements MarcacionAttributes {
-  declare Id: number;
+export class Marcacion extends Model<InferAttributes<Marcacion>, InferCreationAttributes<Marcacion>> {
+  declare Id?: number;
   declare codigo: string;
   declare Fecha: Date;
   declare Hora: Date;
   declare estado: string;
   declare dispositivo: string;
-  declare Persona: Persona;
+  declare Persona?: Persona;
 }
 
 Marcacion.init(
@@ -39,4 +28,4 @@ Marcacion.init(
   }
 );
 
-Marcacion.belongsTo(Persona, {  foreignKey: 'codigo',  targetKey: 'identificacion'});
+Marcacion.belongsTo(Persona, { foreignKey: 'codigo', targetKey: 'identificacion' });

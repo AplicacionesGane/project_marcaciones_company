@@ -54,10 +54,19 @@ export const getMarcaciones = async (req: Request, res: Response) => {
 }
 
 export const getAuditMarcacion = async (req: Request, res: Response) => {
+  const { fecha, estado } = req.body;
+
+  console.log(fecha);
+
+  if (!fecha || !estado) {
+    res.status(400).json({ message: 'Estado y fecha son requeridos' });
+    return
+  }
+
   try {
     const result = await Marcacion.findAll({
       attributes: ['Id', 'Hora', 'estado'],
-      where: { Fecha: { [Op.eq]: fn('CURDATE') } },
+      where: { Fecha: { [Op.eq]: fecha }, estado: { [Op.eq]: estado } },
       include: [{
         attributes: ['nombres', 'apellidos'],
         model: Persona,
@@ -68,7 +77,7 @@ export const getAuditMarcacion = async (req: Request, res: Response) => {
           model: GrupoTurnoVsHorario,
           where: { diaSeman: getDayOfWeekString() },
           include: [{
-            attributes: ['descripcion', 'hora_inicio'],
+            attributes: ['descripcion', 'hora_inicio', 'hora_fin'],
             model: Turnos
           }]
         }]
@@ -78,11 +87,12 @@ export const getAuditMarcacion = async (req: Request, res: Response) => {
     const marcaciones = result.map(marcacion => {
       return {
         id: marcacion.Id,
-        nombres: marcacion.Persona.nombres,
-        apellidos: marcacion.Persona.apellidos,
+        nombres: marcacion.Persona?.nombres,
+        apellidos: marcacion.Persona?.apellidos,
         hora: marcacion.Hora.toString().slice(0, 5),
         estado: marcacion.estado,
-        hora_inicio: marcacion.Persona.GrupoTurnoVsHorarios[0].Turno.hora_inicio
+        hora_inicio: marcacion.Persona?.GrupoTurnoVsHorarios[0].Turno.hora_inicio,
+        hora_fin: marcacion.Persona?.GrupoTurnoVsHorarios[0].Turno.hora_fin
       }
     })
 

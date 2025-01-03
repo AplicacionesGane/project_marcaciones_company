@@ -41,7 +41,7 @@ export function NavMain({ items }: {
       <SidebarMenuSubButton asChild className="my-1">
         <Link to="/audit-marcacion">
           <CheckCircle className="w-6 h-6" />
-          Auditoria Marcaciones
+          Auditoría Marcaciones
         </Link>
       </SidebarMenuSubButton>
 
