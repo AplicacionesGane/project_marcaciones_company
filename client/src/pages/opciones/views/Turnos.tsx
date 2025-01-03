@@ -1,12 +1,15 @@
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { ModalDelete } from '@/components/ModalDelete';
+import { Separator } from '@/components/ui/separator';
 import { type Turnos } from '@/types/Interfaces';
+import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { URL_API } from '@/utils/contants';
-import axios from 'axios';
 import { toast } from 'sonner';
-
+import axios from 'axios';
+import { Card } from '@/components/ui/card';
 
 export default function Turnos() {
   const [turnos, setturnos] = useState<Turnos[]>([]);
@@ -87,98 +90,89 @@ export default function Turnos() {
 
 
   return (
-    <section className='p-1 flex flex-col h-[92vh]'>
-      <div className='h-[84vh] overflow-y-auto'>
-        <table className='w-full text-left rtl:text-right text-gray-500 dark:text-gray-400 overflow-x-auto'>
-          <thead className='text-xs text-gray-700 uppercase bg-blue-100 dark:bg-gray-700 dark:text-gray-400'>
-            <tr>
-              <th className='px-3 py-2 text-xs'>CODIGO</th>
-              <th className='px-3 py-2 text-xs'>Nombre turno</th>
-              <th className='px-3 py-2 text-xs'>Horas Total Día</th>
-              <th className='px-3 py-2 text-xs'>Hora Inicio</th>
-              <th className='px-3 py-2 text-xs'>Hora Fin</th>
-              <th className='px-3 py-2 text-xs'>Hora Inicio Break</th>
-              <th className='px-3 py-2 text-xs'>Hora Final Break</th>
-              <th className='px-3 py-2 text-xs'>Tiempo Breack</th>
-              <th className='px-3 py-2 text-xs'>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
+    <section className='p-1 flex flex-col h-screen'>
+
+      <h1 className='text-2xl text-center text-gray-700 dark:text-gray-200 font-semibold mb-1'>
+        Gestionar Horarios Laborales
+      </h1>
+
+      <Separator />
+
+      <section className='h-[80vh] overflow-y-auto'>
+
+        <Table>
+          <TableHeader >
+            <TableRow>
+              <TableHead>Código</TableHead>
+              <TableHead>Nombre turno</TableHead>
+              <TableHead>Horas Total Día</TableHead>
+              <TableHead>Hora Inicio</TableHead>
+              <TableHead>Hora Fin</TableHead>
+              <TableHead>Hora Inicio Break</TableHead>
+              <TableHead>Hora Final Break</TableHead>
+              <TableHead>Tiempo Breack</TableHead>
+              <TableHead>Acciones</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {
               turnos.map(turno => (
-                <tr key={turno.id} className='bg-white border-b dark:bg-gray-800 dark:border-gray-700  '>
-                  <td className='px-3 py-1 text-xs'>{turno.codigo}</td>
-                  <td className='px-3 py-1 text-xs'>{turno.descripcion}</td>
-                  <td className='px-3 py-1 text-xs'>{turno.teorico.split(':', 1)} h</td>
-                  <td className='px-3 py-1 text-xs'>{turno.hora_inicio}</td>
-                  <td className='px-3 py-1 text-xs'>{turno.hora_fin}</td>
-                  <td className='px-3 py-1 text-xs'>{turno.hora_inicio_break}</td>
-                  <td className='px-3 py-1 text-xs'>{turno.hora_fin_break}</td>
-                  <td className='px-3 py-1 text-xs'>{turno.tiempo_breack}</td>
-                  <td className='px-3 py-1 text-xs flex gap-2'>
-                    <button className='bg-red-400 hover:bg-red-600 text-white px-2 py-1 rounded-md' onClick={() => openModal(turno.id)}>Eliminar</button>
-                  </td>
-                </tr>
+                <TableRow key={turno.id} >
+                  <TableCell>{turno.codigo}</TableCell>
+                  <TableCell>{turno.descripcion}</TableCell>
+                  <TableCell>{turno.teorico.split(':', 1)} h</TableCell>
+                  <TableCell>{turno.hora_inicio}</TableCell>
+                  <TableCell>{turno.hora_fin}</TableCell>
+                  <TableCell>{turno.hora_inicio_break}</TableCell>
+                  <TableCell>{turno.hora_fin_break}</TableCell>
+                  <TableCell>{turno.tiempo_breack}</TableCell>
+                  <TableCell>
+                    <Button
+                      className='hover:bg-red-200'
+                      variant={'secondary'}
+                      onClick={() => openModal(turno.id)}>
+                      Eliminar
+                    </Button>
+                  </TableCell>
+                </TableRow>
               ))
             }
-          </tbody>
-        </table>
-      </div>
-
-      <section className='mt-auto border rounded-md bg-gray-200 py-2 shadow-md'>
-        <form ref={formRef} onSubmit={ev => handleSubmit(ev)}>
-
-          <section className='grid grid-cols-4 gap-1 px-2'>
-            <div>
-              <Label>Codigo</Label>
-              <Input type='text' name='codigo' id='codigo' required />
-            </div>
-
-            <div>
-              <Label>Nombre Turno</Label>
-              <Input type='text' name='nombre_turno' id='nombre_turno' required />
-            </div>
-
-            <div>
-              <Label>Hora Inicio turno</Label>
-              <Input type='time' name='hora_inicio' id='hora_inicio' required />
-            </div>
-
-            <div>
-              <Label>Hora Fin turno</Label>
-              <Input type='time' name='hora_fin' id='hora_fin' required />
-            </div>
-
-            <div>
-              <Label>Horas Total Día</Label>
-              <Input type='text' name='teorico' id='teorico' required />
-            </div>
-
-            <div>
-              <Label>Hora Inicio Break</Label>
-              <Input type='time' name='hora_inicio_break' id='hora_inicio_break' />
-            </div>
-
-            <div>
-              <Label>Hora Final Break</Label>
-              <Input type='time' name='hora_fin_break' id='hora_fin_break' />
-            </div>
-
-            <div>
-              <Label>Tiempo Break</Label>
-              <Input type='text' name='tiempo_breack' id='tiempo_breack' />
-            </div>
-
-          </section>
-
-          <button type='submit' className='bg-green-600 mt-1 text-white text-xl font-semibold rounded-md hover:bg-green-700 py-1 mx-2 px-4'>
-            Crear Turno
-          </button>
-        </form>
+          </TableBody>
+        </Table>
       </section>
+
+      <Card className='p-4'>
+        <form
+          ref={formRef}
+          onSubmit={ev => handleSubmit(ev)}
+          className='grid grid-cols-6 place-content-center place-items-center gap-2'
+        >
+          <Label>Codigo</Label>
+          <Input type='text' name='codigo' id='codigo' required />
+          <Label>Nombre Turno</Label>
+          <Input type='text' name='nombre_turno' id='nombre_turno' required />
+          <Label>Hora Inicio turno</Label>
+          <Input type='time' name='hora_inicio' id='hora_inicio' required />
+          <Label>Hora Fin turno</Label>
+          <Input type='time' name='hora_fin' id='hora_fin' required />
+          <Label>Horas Total Día</Label>
+          <Input type='text' name='teorico' id='teorico' required />
+          <Label>Hora Inicio Break</Label>
+          <Input type='time' name='hora_inicio_break' id='hora_inicio_break' />
+          <Label>Hora Final Break</Label>
+          <Input type='time' name='hora_fin_break' id='hora_fin_break' />
+          <Label>Tiempo Break</Label>
+          <Input type='text' name='tiempo_breack' id='tiempo_breack' />
+
+          <Button
+            type='submit'>
+            Crear Turno
+          </Button>
+        </form>
+      </Card>
 
       {modalIsOpen && <ModalDelete funAction={confirmDeleteTurno} onCancel={closeModal} />}
 
-    </section>
+    </section >
   );
 }

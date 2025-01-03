@@ -1,16 +1,8 @@
-import { DataTypes, Model, Optional } from "sequelize";
+import { DataTypes, Model, InferAttributes, InferCreationAttributes } from 'sequelize';
 import { db_connection } from '../connections';
 
-interface CargoAttributes {
-  ID: number;
-  codigo: string;
-  descripcion: string;
-}
-
-type CargoCreationAttributes = Optional<CargoAttributes, "ID">;
-
-export class Cargo extends Model<CargoAttributes, CargoCreationAttributes> implements CargoAttributes {
-  declare ID: number;
+export class Cargo extends Model<InferAttributes<Cargo>, InferCreationAttributes<Cargo>> {
+  declare ID?: number;
   declare codigo: string;
   declare descripcion: string;
 }
@@ -18,11 +10,11 @@ export class Cargo extends Model<CargoAttributes, CargoCreationAttributes> imple
 Cargo.init(
   {
     ID: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true, },
-    codigo: { type: DataTypes.STRING, allowNull: false },
-    descripcion: { type: DataTypes.STRING, allowNull: false },
+    codigo: { type: DataTypes.STRING(200), allowNull: false },
+    descripcion: { type: DataTypes.STRING(200), allowNull: false },
   },
   {
-    tableName: "cargos",
+    tableName: 'cargos',
     sequelize: db_connection,
     timestamps: false,
   }

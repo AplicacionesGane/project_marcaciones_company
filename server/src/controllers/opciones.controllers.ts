@@ -6,6 +6,8 @@ import { Turnos } from '../models/turnos.model';
 import { Cargo } from '../models/cargos.model';
 import { Request, Response } from 'express';
 import { Area } from '../models/areas.model';
+import { verifyArea } from '../schemas/areas';
+import { verifyCargo } from '../schemas/cargos';
 
 // TODO: este codigo está muy extenso y se puede refactorizar en funciones más pequeñas
 
@@ -21,7 +23,9 @@ export const gellAllEmpresas = async (req: Request, res: Response) => {
 
 export const getAreas = async (req: Request, res: Response) => {
   try {
-    const areas = await Area.findAll();
+    const areas = await Area.findAll({
+      attributes: ['id', 'codigo', 'descripcion'],
+    });
     res.status(200).json(areas);
   } catch (error) {
     console.log(error);
@@ -30,24 +34,24 @@ export const getAreas = async (req: Request, res: Response) => {
 }
 
 export const newArea = async (req: Request, res: Response) => {
-  const { codigo, nombre } = req.body;
+  const { success, data, error } = await verifyArea(req.body);
 
-  if (!codigo || !nombre) {
-    res.status(400).json({ message: 'código y nombre área son requeridos' });
+  if (!success) {
+    res.status(400).json({
+      message: error.errors[0].message,
+    });
     return;
   }
 
   try {
-    const exist = await Area.findOne({ where: { codigo } });
-
-    console.log(exist);
+    const exist = await Area.findOne({ where: { codigo: data.codigo } });
 
     if (exist) {
       res.status(400).json({ message: 'El código de área ya existe' });
       return;
     }
 
-    const result = await Area.create({ codigo, descripcion: nombre });
+    const result = await Area.create({ codigo: data.codigo.toString(), descripcion: data.descripcion });
 
     if (!result) {
       res.status(400).json({ message: 'No se pudo crear el área' });
@@ -119,22 +123,27 @@ export const getAllCargos = async (req: Request, res: Response) => {
 }
 
 export const newCargo = async (req: Request, res: Response) => {
-  const { codigo, nombre } = req.body;
+  const { success, data, error } = await verifyCargo(req.body);
 
-  if (!codigo || !nombre) {
-    res.status(400).json({ message: 'código y nombre cargo son requeridos' });
+  if (!success) {
+    res.status(400).json({
+      message: error.errors[0].message,
+    });
     return;
   }
 
   try {
-    const exist = await Cargo.findOne({ where: { codigo } });
+    const exist = await Cargo.findOne({ where: { codigo: data.codigo } });
 
     if (exist) {
       res.status(400).json({ message: 'El código de cargo ya existe' });
       return;
     }
 
-    const result = await Cargo.create({ codigo, descripcion: nombre });
+    const result = await Cargo.create({
+      codigo: data.codigo.toString(),
+      descripcion: data.descripcion
+    });
 
     if (!result) {
       res.status(400).json({ message: 'No se pudo crear el cargo' });
@@ -388,7 +397,7 @@ export const createNewGrupovsTurnos = async (req: Request, res: Response) => {
   const { grupoHorario, turno, dias } = req.body;
 
   console.log(req.body);
-  
+
   if (!grupoHorario || !turno || !Array.isArray(dias) || dias.length === 0) {
     res.status(400).json({ message: 'grupoHorario, turno y días son requeridos y días debe ser un array no vacío' });
     return;
