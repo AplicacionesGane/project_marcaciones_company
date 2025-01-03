@@ -1,4 +1,4 @@
-import { PORT, CORS } from './config';
+import { PORT, CORS_ORIGINS } from './config';
 import express from 'express';
 import logs from 'morgan';
 import cors from 'cors';
@@ -11,7 +11,7 @@ import { db_connection } from './connections';
 
 const app = express();
 
-app.use(cors({ origin: CORS, credentials: true }));
+app.use(cors({ origin: CORS_ORIGINS, credentials: true }));
 app.use(express.json());
 app.use(logs('dev'));
 
