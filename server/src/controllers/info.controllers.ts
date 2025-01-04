@@ -14,7 +14,15 @@ export async function infoMarcaciones(req: Request, res: Response) {
 
     const stados = reduceStates(rows);
 
-    res.status(200).json({ count, stados, totalPersona: personas.length });
+    const arrayMarcaciones = Object.entries(stados).map(([key, value], index) => {
+      return {
+        id: index + 1,
+        marcacion: key,
+        cantidad: value
+      }
+    })
+
+    res.status(200).json({ count, marcaciones: arrayMarcaciones, totalPersona: personas.length });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Internal server error' })
