@@ -1,35 +1,25 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
 import { Label, Pie, PieChart } from 'recharts'
-import { TrendingUp } from 'lucide-react'
-import { useMemo } from 'react'
-
-const chartData = [
-  { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
-  { browser: 'safari', visitors: 200, fill: 'var(--color-safari)' },
-  { browser: 'firefox', visitors: 287, fill: 'var(--color-firefox)' },
-  { browser: 'edge', visitors: 173, fill: 'var(--color-edge)' },
-  { browser: 'other', visitors: 190, fill: 'var(--color-other)' },
-]
 
 const chartConfig = {
   visitors: {
     label: 'Visitors',
   },
   chrome: {
-    label: 'Chrome',
+    label: 'Entrada',
     color: 'hsl(var(--chart-1))',
   },
   safari: {
-    label: 'Safari',
+    label: 'Salida Intermedia',
     color: 'hsl(var(--chart-2))',
   },
   firefox: {
-    label: 'Firefox',
+    label: 'Entrada Intermedia',
     color: 'hsl(var(--chart-3))',
   },
   edge: {
-    label: 'Edge',
+    label: 'Salida',
     color: 'hsl(var(--chart-4))',
   },
   other: {
@@ -38,16 +28,23 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function Component() {
-  const totalVisitors = useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.visitors, 0)
-  }, [])
+export function Component({ items, count }: { items: { id: number, marcacion: string, cantidad: number }[] | undefined, count: number | undefined }) {
+
+  const itemsAddColor = items?.map((item) =>
+    item.marcacion === 'Entrada' ? { ...item, fill: 'var(--color-chrome)' } :
+      item.marcacion === 'Salida Intermedia' ? { ...item, fill: 'var(--color-safari)' } :
+        item.marcacion === 'Entrada Intermedia' ? { ...item, fill: 'var(--color-firefox)' } :
+          item.marcacion === 'Salida' ? { ...item, fill: 'var(--color-edge)' } :
+            { ...item, fill: 'var(--color-other)' }
+  )
+
+  console.log(itemsAddColor);
 
   return (
     <Card className='flex flex-col'>
       <CardHeader className='items-center pb-0'>
-        <CardTitle>Pie Chart - Donut with Text</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Cantidad De Marcaciones</CardTitle>
+        <CardDescription>{new Date().toDateString()}</CardDescription>
       </CardHeader>
       <CardContent className='flex-1 pb-0'>
         <ChartContainer
@@ -60,11 +57,11 @@ export function Component() {
               content={<ChartTooltipContent hideLabel />}
             />
             <Pie
-              data={chartData}
-              dataKey='visitors'
-              nameKey='browser'
-              innerRadius={60}
-              strokeWidth={5}
+              data={itemsAddColor}
+              dataKey='cantidad'
+              nameKey='marcacion'
+              innerRadius={65}
+              strokeWidth={15}
             >
               <Label
                 content={({ viewBox }) => {
@@ -79,16 +76,16 @@ export function Component() {
                         <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className='fill-foreground text-3xl font-bold'
+                          className='fill-foreground text-xl font-bold'
                         >
-                          {totalVisitors.toLocaleString()}
+                          {count?.toLocaleString()}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 24}
                           className='fill-muted-foreground'
                         >
-                          Visitors
+                          Total Marcaciones
                         </tspan>
                       </text>
                     )
@@ -100,12 +97,14 @@ export function Component() {
         </ChartContainer>
       </CardContent>
       <CardFooter className='flex-col gap-2 text-sm'>
-        <div className='flex items-center gap-2 font-medium leading-none'>
-          Trending up by 5.2% this month <TrendingUp className='h-4 w-4' />
-        </div>
-        <div className='leading-none text-muted-foreground'>
-          Showing total visitors for the last 6 months
-        </div>
+        {
+          itemsAddColor?.map(item => (
+            <div key={item.id} className='flex items-center justify-between w-[250px]'>
+              <h1>{item.marcacion}</h1>
+              <p>{item.cantidad}</p>
+            </div>
+          ))
+        }
       </CardFooter>
     </Card>
   )

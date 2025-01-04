@@ -1,13 +1,18 @@
-import { URL_API } from "@/utils/contants"
-import { useEffect, useState } from "react"
-import axios from "axios"
 import { Component } from "@/components/DonoutChart"
+import { useEffect, useState } from "react"
+import { URL_API } from "@/utils/contants"
+import axios from "axios"
+import { Card } from "@/components/ui/card"
+
+interface Marcacion {
+  id: number
+  marcacion: string
+  cantidad: number
+}
 
 interface InfoMarcacion {
   count: number
-  stados: {
-    [key: string]: number
-  }
+  marcaciones: Marcacion[]
   totalPersona: number
 }
 
@@ -20,10 +25,25 @@ export default function Home() {
       .catch(err => console.error(err))
   }, [])
 
+
   return (
-    <main className='flex flex-col items-center justify-center first:space-y-8 h-screen'>
-      <h1 className='text-4xl font-bold'>Información de marcaciones</h1>
-      <Component />
+    <main className=''>
+      <Component items={infoMarcacion?.marcaciones} count={infoMarcacion?.count} />
+      <Card>
+        test 1
+      </Card>
+      <Card>
+        test 2
+      </Card>
+      <Card>
+        test 1
+      </Card>
+      <Card>
+        test 2
+      </Card>
+      <Card>
+        test 1
+      </Card>
     </main>
   )
 }
