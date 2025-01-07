@@ -13,50 +13,37 @@ const getDayOfWeekString = (): string => {
 };
 
 export const getMarcaciones = async (req: Request, res: Response) => {
-
   const fechaInitial = req.query.fechaInitial as string;
   const fechaFinal = req.query.fechaFinal as string;
 
-  const opc = { [Op.between]: [fechaInitial, fechaFinal] };
-  const opc1 = { [Op.eq]: fechaInitial };
-  const opc3 = { [Op.eq]: fn('CURDATE') };
-
   try {
-    const results = await Marcacion.findAll({
-      attributes: ['Id', 'codigo', 'Fecha', 'Hora', 'estado'],
-      where: { Fecha: fechaInitial && fechaFinal ? opc : fechaInitial ? opc1 : opc3 },
+    const marcaciones = await Marcacion.findAll({
+      where: {
+        Fecha: fechaInitial && fechaFinal
+          ? { [Op.between]: [fechaInitial, fechaFinal] } : fechaInitial
+            ? { [Op.eq]: fechaInitial } : { [Op.eq]: fn('CURDATE') }
+      },
       include: [{
         attributes: ['nombres', 'apellidos'],
         model: Persona,
-        include: [{ model: Area, attributes: ['descripcion'] }]
-      }],
-      order: [['Id', 'DESC']],
-    });
+        include: [{
+          attributes: ['descripcion'],
+          model: Area,
+        }]
+      }]
+    })
 
-    const marcaciones = results.map(m => {
-      return {
-        id: m.Id,
-        documento: m.codigo,
-        nombres: m.Persona!.nombres,
-        apellidos: m.Persona!.apellidos,
-        fecha: m.Fecha,
-        hora: m.Hora,
-        estado: m.estado,
-        area: m.Persona!.Area ? m.Persona!.Area!.descripcion : 'Sin área'
-      }
-    }).sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
-
-    res.status(200).json(marcaciones);
+    res.status(200).json(marcaciones)
+    return
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: 'Error on execute get all Marcaciones' })
+    return
   }
+
 }
 
 export const getAuditMarcacion = async (req: Request, res: Response) => {
   const { fecha, estado } = req.body;
-
-  console.log(fecha);
 
   if (!fecha || !estado) {
     res.status(400).json({ message: 'Estado y fecha son requeridos' });
@@ -64,35 +51,33 @@ export const getAuditMarcacion = async (req: Request, res: Response) => {
   }
 
   try {
-    const result = await Marcacion.findAll({
+    const auditMarcaciones = await Marcacion.findAll({
       attributes: ['Id', 'Hora', 'estado'],
       where: { Fecha: { [Op.eq]: fecha }, estado: { [Op.eq]: estado } },
       include: [{
         attributes: ['nombres', 'apellidos'],
         model: Persona,
-        as: 'Persona',
         where: { id_Grupo_Horario: { [Op.ne]: null } },
         include: [{
-          attributes: ['diaSeman'],
-          model: GrupoTurnoVsHorario,
+          attributes: ['id', 'IdGrupoHorario', 'diaSeman'],
           where: { diaSeman: getDayOfWeekString() },
+          model: GrupoTurnoVsHorario,
           include: [{
-            attributes: ['descripcion', 'hora_inicio', 'hora_fin'],
             model: Turnos
           }]
         }]
       }]
     });
 
-    const marcaciones = result.map(marcacion => {
+    const marcaciones = auditMarcaciones.map(m => {
       return {
-        id: marcacion.Id,
-        nombres: marcacion.Persona?.nombres,
-        apellidos: marcacion.Persona?.apellidos,
-        hora: marcacion.Hora.toString().slice(0, 5),
-        estado: marcacion.estado,
-        hora_inicio: marcacion.Persona?.GrupoTurnoVsHorarios[0].Turno.hora_inicio,
-        hora_fin: marcacion.Persona?.GrupoTurnoVsHorarios[0].Turno.hora_fin
+        id: m.Id,
+        nombres: m.Persona?.nombres,
+        apellidos: m.Persona?.apellidos,
+        hora: m.Hora.toString().slice(0, 5),
+        estado: m.estado,
+        hora_inicio: m.Persona?.GrupoTurnoVsHorarios?.[0].Turno?.hora_inicio,
+        hora_fin: m.Persona?.GrupoTurnoVsHorarios?.[0].Turno?.hora_fin
       }
     })
 
