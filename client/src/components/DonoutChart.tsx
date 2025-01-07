@@ -38,10 +38,8 @@ export function ChartDonutMar({ items, count }: { items: { id: number, marcacion
             { ...item, fill: 'var(--color-other)' }
   )
 
-  console.log(itemsAddColor);
-
   return (
-    <Card className='flex flex-col'>
+    <Card className='row-span-3 flex flex-col'>
       <CardHeader className='items-center pb-0'>
         <CardTitle>Cantidad De Marcaciones</CardTitle>
         <CardDescription>{new Date().toDateString()}</CardDescription>
