@@ -3,12 +3,11 @@ import { db_connection } from '../connections';
 import { Persona } from './persona.model';
 
 export class Marcacion extends Model<InferAttributes<Marcacion>, InferCreationAttributes<Marcacion>> {
-  declare Id?: number;
+  declare Id: number;
   declare codigo: string;
   declare Fecha: Date;
   declare Hora: Date;
   declare estado: string;
-  declare dispositivo: string;
   declare Persona?: Persona;
 }
 
@@ -19,7 +18,6 @@ Marcacion.init(
     Fecha: { type: DataTypes.DATE, allowNull: false, },
     Hora: { type: DataTypes.TIME, allowNull: false, },
     estado: { type: DataTypes.STRING, allowNull: false, },
-    dispositivo: { type: DataTypes.STRING, allowNull: false, },
   },
   {
     tableName: 'registrostiempos',
