@@ -1,24 +1,14 @@
-import { db_connection } from '../connections';
-import { DataTypes, Model, Optional } from 'sequelize';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes } from 'sequelize';
 import { GrupoHorario } from './gphorario.model';
+import { db_connection } from '../connections';
 import { Turnos } from './turnos.model';
 
-interface gpTurnoHorarioI {
-  id: number;
-  IdGrupoHorario: number;
-  IdHorario: number;
-  diaSeman: string;
-  Turno?: Turnos;
-}
-
-type gpTurnoHorarioICreationAttributes = Optional<gpTurnoHorarioI, 'id'>;
-
-export class GrupoTurnoVsHorario extends Model<gpTurnoHorarioI, gpTurnoHorarioICreationAttributes> {
+export class GrupoTurnoVsHorario extends Model<InferAttributes<GrupoTurnoVsHorario>, InferCreationAttributes<GrupoTurnoVsHorario>> {
   declare id: number;
   declare IdGrupoHorario: number;
   declare IdHorario: number;
   declare diaSeman: string;
-  declare Turno: Turnos;
+  declare Turno?: Turnos;
 }
 
 GrupoTurnoVsHorario.init(
@@ -35,5 +25,5 @@ GrupoTurnoVsHorario.init(
   }
 );
 
-GrupoTurnoVsHorario.belongsTo(GrupoHorario, { foreignKey: 'IdGrupoHorario', targetKey: 'id'})
-GrupoTurnoVsHorario.belongsTo(Turnos, { foreignKey: 'IdHorario', targetKey: 'id'})
+GrupoTurnoVsHorario.belongsTo(GrupoHorario, { foreignKey: 'IdGrupoHorario', targetKey: 'id' })
+GrupoTurnoVsHorario.belongsTo(Turnos, { foreignKey: 'IdHorario', targetKey: 'id' })
