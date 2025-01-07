@@ -1,15 +1,7 @@
-import { DataTypes, Model, Optional } from "sequelize";
+import { DataTypes, Model, InferAttributes, InferCreationAttributes } from 'sequelize';
 import { db_connection } from '../connections';
 
-interface gpHorario {
-  id: number;
-  codigo: string;
-  descripcion: string;
-}
-
-type gpHorarioCreationAttributes = Optional<gpHorario, "id">;
-
-export class GrupoHorario extends Model<gpHorario, gpHorarioCreationAttributes>{
+export class GrupoHorario extends Model<InferAttributes<GrupoHorario>, InferCreationAttributes<GrupoHorario>> {
   declare id: number;
   declare codigo: string;
   declare descripcion: string;
@@ -22,7 +14,7 @@ GrupoHorario.init(
     descripcion: { type: DataTypes.STRING, allowNull: false },
   },
   {
-    tableName: "grupohorario",
+    tableName: 'grupohorario',
     sequelize: db_connection,
     timestamps: false,
   }

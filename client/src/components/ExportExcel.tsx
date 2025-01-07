@@ -1,15 +1,15 @@
-import { MarcacionPersonaArea } from '../types/marcacion'
+import { Marcaciones } from '@/types/Marcaciones'
 import { utils, ColInfo, writeFile } from 'xlsx'
 import { Button } from './ui/button'
 import { toast } from 'sonner'
 
 interface Props {
-  datos: MarcacionPersonaArea[]
+  datos: Marcaciones[]
   time1?: string
   time2?: string
 }
 
-const generateExcelData = (datos: MarcacionPersonaArea[], time1?: string, time2?: string): unknown[] => {
+const generateExcelData = (datos: Marcaciones[], time1?: string, time2?: string): unknown[] => {
   const titulo = [{ A: `Reporte Marcaciones Fecha Inicial: ${time1} - Fecha Final: ${time2}` }]
   const headers = [
     {
@@ -25,14 +25,14 @@ const generateExcelData = (datos: MarcacionPersonaArea[], time1?: string, time2?
   ]
 
   const rows = datos.map((it) => ({
-    A: it.id,
-    B: it.documento,
-    C: it.nombres,
-    D: it.apellidos,
-    E: it.fecha,
-    F: it.hora,
+    A: it.Id,
+    B: it.codigo,
+    C: it.Persona.nombres,
+    D: it.Persona.apellidos,
+    E: it.Fecha,
+    F: it.Hora,
     G: it.estado,
-    I: it.area
+    I: it.Persona.Area?.descripcion
   }))
 
   return [...titulo, ...headers, ...rows]

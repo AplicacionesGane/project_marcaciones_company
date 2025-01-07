@@ -83,6 +83,7 @@ export default function InfoPersona() {
         toast.error('Error al actualizar datos', { description: 'Ocurrió un error al intentar actualizar los datos del empleado' });
       });
   }
+
   return (
     <section className='flex flex-col items-center justify-center h-full relative'>
 
@@ -112,7 +113,7 @@ export default function InfoPersona() {
 
         <section className='w-96 mx-auto px-4'>
           <div className='w-full mb-5 group'>
-            <label htmlFor='id_Areas' className='block mb-2 text-xl font-medium text-gray-900 dark:text-white'>Área del empleado</label>
+            <label htmlFor='id_Areas' className='block mb-2 text-xl font-medium text-gray-900 dark:text-white'>Área Empleado</label>
             <select id='id_Areas' name='id_Areas' value={persona.id_Areas || 0} onChange={ev => handleSelectChange(ev)}
               className='bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
               <option value={0} disabled >Seleccione Área</option>
@@ -126,7 +127,7 @@ export default function InfoPersona() {
             </select>
           </div>
           <div className='w-full mb-5 group'>
-            <label htmlFor='id_Cargo' className='block mb-2 text-xl font-medium text-gray-900 dark:text-white'>Cargo del empleado</label>
+            <label htmlFor='id_Cargo' className='block mb-2 text-xl font-medium text-gray-900 dark:text-white'>Cargo Empleado</label>
             <select id='id_Cargo' name='id_Cargo' value={persona.id_Cargo || 0} onChange={ev => handleSelectChange(ev)}
               className='bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
               <option value={0} disabled >Seleccione Cargo</option>
@@ -140,7 +141,7 @@ export default function InfoPersona() {
             </select>
           </div>
           <div className='w-full mb-5 group'>
-            <label className='block mb-2 text-xl font-medium text-gray-900 dark:text-white'>Grupo Horario del empleado</label>
+            <label className='block mb-2 text-xl font-medium text-gray-900 dark:text-white'>Grupo Asignado Empleado</label>
             <select id='id_Grupo_Horario' name='id_Grupo_Horario' value={persona.id_Grupo_Horario || 0} onChange={ev => handleSelectChange(ev)}
               className='bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
               <option value={0} disabled>Seleccione Grupo</option>

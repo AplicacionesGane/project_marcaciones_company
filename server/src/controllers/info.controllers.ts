@@ -10,7 +10,9 @@ export async function infoMarcaciones(req: Request, res: Response) {
       where: { Fecha: { [Op.eq]: fn('CURDATE') } }
     })
 
-    const personas = await Persona.findAll({})
+    const personas = await Persona.findAll({
+      where: { estado: 'A' }
+    })
 
     const stados = reduceStates(rows);
 

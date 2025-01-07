@@ -1,42 +1,25 @@
+import { Model, DataTypes, InferAttributes, InferCreationAttributes } from 'sequelize';
 import { GrupoTurnoVsHorario } from './gpTurnoVsHorario.model';
-import { Model, DataTypes, Optional } from 'sequelize';
 import { db_connection } from '../connections';
 import { Area } from './areas.model';
 
-interface PersonaAttributes {
-  id: number;
-  identificacion: string;
-  nombres: string;
-  apellidos: string;
-  id_Empresa: number;
-  estado: string;
-  id_Grupo_Horario: number | null;
-  id_Areas: number;
-  id_Ciudad: number;
-  id_Centro_Costos: number;
-  id_Cargo: number;
-}
-
-type PersonaCreationAttributes = Optional<PersonaAttributes, 'id'>;
-
-class Persona extends Model<PersonaAttributes, PersonaCreationAttributes> implements PersonaAttributes {
+class Persona extends Model<InferAttributes<Persona>, InferCreationAttributes<Persona>> {
   declare id: number;
   declare identificacion: string;
   declare nombres: string;
   declare apellidos: string;
-  declare id_Empresa: number;
-  declare estado: string;
+  declare id_Empresa: number | null;
+  declare estado: 'A' | 'R';
   declare id_Grupo_Horario: number | null;
-  declare id_Areas: number;
-  declare id_Ciudad: number;
-  declare id_Centro_Costos: number;
-  declare id_Cargo: number;
-  declare GrupoTurnoVsHorarios: GrupoTurnoVsHorario[];
-  declare Area: Area | null;
+  declare id_Areas: number | null;
+  declare id_Ciudad: number | null;
+  declare id_Centro_Costos: number | null;
+  declare id_Cargo: number | null;
+  declare GrupoTurnoVsHorarios?: GrupoTurnoVsHorario[]
 }
 
 Persona.init({
-  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true, },
+  id: { type: DataTypes.INTEGER.UNSIGNED, autoIncrement: true, primaryKey: true, },
   identificacion: { type: DataTypes.STRING, allowNull: false },
   nombres: { type: DataTypes.STRING, allowNull: false },
   apellidos: { type: DataTypes.STRING, allowNull: false },

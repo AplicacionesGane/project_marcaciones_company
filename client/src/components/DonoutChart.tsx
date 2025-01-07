@@ -28,7 +28,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function Component({ items, count }: { items: { id: number, marcacion: string, cantidad: number }[] | undefined, count: number | undefined }) {
+export function ChartDonutMar({ items, count }: { items: { id: number, marcacion: string, cantidad: number }[] | undefined, count: number | undefined }) {
 
   const itemsAddColor = items?.map((item) =>
     item.marcacion === 'Entrada' ? { ...item, fill: 'var(--color-chrome)' } :

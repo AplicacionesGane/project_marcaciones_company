@@ -53,7 +53,7 @@ export interface GrupoHorarioAsignado {
 
 export interface GrupoVsTurno {
   grupoHorario: { id: number; descripcion: string }[];
-  horario: {id: number; descripcion: string}[];
+  horario: { id: number; descripcion: string }[];
   asignados: GrupoHorarioAsignado[];
 }
 
@@ -66,4 +66,16 @@ export interface User {
   company: string,
   process: string,
   sub_process: string,
+}
+
+interface Marcacion {
+  id: number
+  marcacion: string
+  cantidad: number
+}
+
+export interface InfoMarcacion {
+  count: number
+  marcaciones: Marcacion[]
+  totalPersona: number
 }
