@@ -1,17 +1,17 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { MarcacionPersonaArea, type Marcacion } from '@/types/marcacion'
 import { BottonExporCartera } from '@/components/ExportExcel';
 import { Separator } from '@/components/ui/separator';
+import { Marcaciones } from '@/types/Marcaciones';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@radix-ui/react-label';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { URL_API } from '@/utils/contants';
 import { Trash2 } from 'lucide-react';
 import axios from 'axios';
 
 export default function Marcacion() {
-  const [marcaciones, setMarcaciones] = useState<MarcacionPersonaArea[]>([]);
+  const [marcaciones, setMarcaciones] = useState<Marcaciones[]>([]);
   const [fechaInitial, setFechaInitial] = useState('');
   const [fechaFinal, setFechaFinal] = useState('');
   const [filter, setFilter] = useState('');
@@ -34,15 +34,17 @@ export default function Marcacion() {
     setFechaFinal('')
   }
 
-  const filterData = marcaciones.filter((m) => {
+  const filterData = useMemo(() => {
     const lowerCaseFilter = filter.toLowerCase();
-    return (
-      m.documento.toLowerCase().includes(lowerCaseFilter) ||
-      m.nombres.toLowerCase().includes(lowerCaseFilter) ||
-      m.apellidos.toLowerCase().includes(lowerCaseFilter) ||
-      m.area.toLowerCase().includes(lowerCaseFilter)
-    );
-  });
+    return marcaciones.filter((m) => {
+      return (
+        m.codigo.toLowerCase().includes(lowerCaseFilter) ||
+        m.Persona.nombres.toLowerCase().includes(lowerCaseFilter) ||
+        m.Persona.apellidos.toLowerCase().includes(lowerCaseFilter) ||
+        m.Persona?.Area?.descripcion.toLowerCase().includes(lowerCaseFilter)
+      );
+    });
+  }, [filter, marcaciones]);
 
   return (
     <section>
@@ -69,6 +71,13 @@ export default function Marcacion() {
         <Button onClick={cleanDates} title='Limpiar Fechas'>
           <Trash2 />
         </Button>
+
+        <div className='flex items-center gap-1 border p-2 rounded-md'>
+          <p>N° Marcaciones:</p>
+          <span className='bg-indigo-100 text-indigo-800 font-medium px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300'>
+            {filterData.length}
+          </span>
+        </div>
 
         <div className='ml-auto'>
           <BottonExporCartera datos={filterData} time1={fechaInitial} time2={fechaFinal} />
@@ -104,15 +113,15 @@ export default function Marcacion() {
           </TableHeader>
           <TableBody>
             {filterData.map((m) => (
-              <TableRow key={m.id}>
-                <TableCell >{m.id}</TableCell>
-                <TableCell >{m.documento}</TableCell>
-                <TableCell >{m.nombres}</TableCell>
-                <TableCell>{m.apellidos}</TableCell>
-                <TableCell>{m.fecha}</TableCell>
-                <TableCell>{m.hora.slice(0, 5)}</TableCell>
+              <TableRow key={m.Id}>
+                <TableCell >{m.Id}</TableCell>
+                <TableCell >{m.codigo}</TableCell>
+                <TableCell >{m.Persona.nombres}</TableCell>
+                <TableCell>{m.Persona.apellidos}</TableCell>
+                <TableCell>{m.Fecha}</TableCell>
+                <TableCell>{m.Hora.slice(0, 5)}</TableCell>
                 <TableCell>{m.estado}</TableCell>
-                <TableCell>{m.area}</TableCell>
+                <TableCell>{m.Persona.Area?.descripcion}</TableCell>
               </TableRow>
             ))}
           </TableBody>
