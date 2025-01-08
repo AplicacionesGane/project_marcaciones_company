@@ -23,7 +23,7 @@ pipeline {
         stage('Install dependencies frontend') {
             steps {
                 script {
-                    dir('client') {
+                    dir('./client') {
                         // Install dependencies
                         node {
                             def npmInstall = 'npm install'
