@@ -24,7 +24,7 @@ pipeline {
         steps {
           script {
             sh 'cd client && npm install'
-            // sh 'cd client && node --run build'
+            sh 'cd client && node --run build'
           }
         }
       }

@@ -1,11 +1,10 @@
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar';
 import { useAuth } from '@/auth/AuthContext';
+import { Outlet } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import { Toaster } from 'sonner';
 
-
-const Outlet = lazy(() => import('react-router-dom').then(module => ({ default: module.Outlet })));
 const LoginForm = lazy(() => import('@/components/login-form').then(module => ({ default: module.LoginForm })));
 
 export default function Root() {

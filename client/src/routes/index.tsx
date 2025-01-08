@@ -7,11 +7,11 @@ const PersonasView = lazy(() => import('@/pages/persona/index'));
 const InfoPersona = lazy(() => import('@/pages/persona/InfoPersona'));
 const Marcacion = lazy(() => import('@/pages/marcacion/index'));
 const AuditMarcacion = lazy(() => import('@/pages/marcacion/AuditMarcacion'));
-const Areas = lazy(() => import('@/pages/opciones/views/Areas'));
-const Cargos = lazy(() => import('@/pages/opciones/views/Cargos'));
-const GrupoTurno = lazy(() => import('@/pages/opciones/views/GrupoTurno'));
-const Turnos = lazy(() => import('@/pages/opciones/views/Turnos'));
-const GrupovsTurno = lazy(() => import('@/pages/opciones/views/GrupovsTurno'));
+const Areas = lazy(() => import('@/pages/views/Areas'));
+const Cargos = lazy(() => import('@/pages/views/Cargos'));
+const GrupoTurno = lazy(() => import('@/pages/views/GrupoTurno'));
+const Turnos = lazy(() => import('@/pages/views/Turnos'));
+const GrupovsTurno = lazy(() => import('@/pages/views/GrupovsTurno'));
 
 
 import Root from './root';
