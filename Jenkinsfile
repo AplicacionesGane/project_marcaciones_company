@@ -23,20 +23,15 @@ pipeline {
         stage('Install dependencies frontend') {
             steps {
                 script {
-                    dir('./client') {
+                    dir('client') {
                         // Install dependencies
-                        node {
-                            def npmInstall = 'npm install'
-                            def npmBuild = 'npm run build'
-
-                            sh npmInstall
-                            sh npmBuild
-                        }
+                        sh 'npm install'
+                        // Build the project
+                        sh 'npm run build'
                     }
                 }
             }
         }
-
 
       stage('down docker compose'){
         steps {
