@@ -1,4 +1,4 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
 import { Label, Pie, PieChart } from 'recharts'
 
@@ -39,7 +39,7 @@ export function ChartDonutMar({ items, count }: { items: { id: number, marcacion
   )
 
   return (
-    <Card className='row-span-3 flex flex-col'>
+    <>
       <CardHeader className='items-center pb-0'>
         <CardTitle>Cantidad De Marcaciones</CardTitle>
         <CardDescription>{new Date().toDateString()}</CardDescription>
@@ -104,6 +104,6 @@ export function ChartDonutMar({ items, count }: { items: { id: number, marcacion
           ))
         }
       </CardFooter>
-    </Card>
+    </>
   )
 }

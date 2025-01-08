@@ -1,6 +1,7 @@
 import { Card, CardContent, CardTitle } from '@/components/ui/card'
 import { ChartDonutMar } from '@/components/DonoutChart'
 import { InfoMarcacion } from '@/types/Interfaces'
+import { Input } from '@/components/ui/input'
 import { useEffect, useState } from 'react'
 import { URL_API } from '@/utils/contants'
 import { Users } from 'lucide-react'
@@ -8,32 +9,21 @@ import axios from 'axios'
 
 export default function Home() {
   const [infoMarcacion, setInfoMarcacion] = useState<InfoMarcacion>()
+  const [date, setDate] = useState<string>('')
 
   useEffect(() => {
-    axios.get(`${URL_API}/infoMarcacion`)
+    axios.get(`${URL_API}/infoMarcacion`, { params: { fecha: date } })
       .then(res => setInfoMarcacion(res.data))
       .catch(err => console.error(err))
-  }, [])
-
-  const totalPArea = infoMarcacion?.areas.reduce((acc, ccr) => {
-    return ccr.cant + acc
-  }, 0)
+  }, [date])
 
   return (
     <main className='grid grid-rows-3 grid-flow-col gap-1'>
-      <ChartDonutMar items={infoMarcacion?.marcaciones} count={infoMarcacion?.count} />
-
-      <Card className='col-span-2 flex items-center justify-around gap-2 p-4'>
-        <CardTitle className='text-center py-1'>
-          N° Empleados Activos:
-        </CardTitle>
-
-        <Users size={30} />
-        <span className='bg-indigo-100 px-2 py-1 rounded-md text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300'>
-          {infoMarcacion?.totalPersona}
-        </span>
-
+      <Card className='row-span-3 flex flex-col'>
+        <Input type='date' className='w-36' value={date} onChange={ev => setDate(ev.target.value)} />
+        <ChartDonutMar items={infoMarcacion?.marcaciones} count={infoMarcacion?.count} />
       </Card>
+
 
       <Card className='row-span-2 col-span-2 p-4'>
         <div className='flex justify-between px-6 font-semibold'>
@@ -50,13 +40,22 @@ export default function Home() {
               </div>
             ))
           }
-          <div className='flex w-full justify-between'>
-            <p>Total:</p>
-            <p>{totalPArea}</p>
-          </div>
 
         </CardContent>
       </Card>
+
+      <Card className='col-span-2 flex items-center justify-around gap-2 p-4'>
+        <CardTitle className='text-center py-1'>
+          N° Empleados Activos:
+        </CardTitle>
+
+        <span className='bg-indigo-100 px-2 py-1 rounded-md text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300 text-3xl'>
+          {infoMarcacion?.totalPersona}
+        </span>
+        <Users size={80} />
+
+      </Card>
+
     </main >
   )
 }

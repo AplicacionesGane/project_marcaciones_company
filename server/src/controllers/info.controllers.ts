@@ -4,11 +4,17 @@ import { Area } from '../models/areas.model';
 import { Request, Response } from 'express';
 import { reduceStates } from '../utils';
 import { fn, Op, col } from 'sequelize';
+import { z } from 'zod';
 
 export async function infoMarcaciones(req: Request, res: Response) {
+  const { fecha } = req.query
+
+  const strValidate = z.string().min(6)
+  const { success, data, error } = strValidate.safeParse(fecha)
+
   try {
     const { rows, count } = await Marcacion.findAndCountAll({
-      where: { Fecha: { [Op.eq]: fn('CURDATE') } }
+      where: { Fecha: { [Op.eq]: success ? data : fn('CURDATE') } }
     })
 
     const { count: countPer } = await Persona.findAndCountAll({
