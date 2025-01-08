@@ -2,7 +2,7 @@ import { DataTypes, Model, InferAttributes, InferCreationAttributes } from 'sequ
 import { db_connection } from '../connections';
 
 export class GrupoHorario extends Model<InferAttributes<GrupoHorario>, InferCreationAttributes<GrupoHorario>> {
-  declare id: number;
+  declare id?: number;
   declare codigo: string;
   declare descripcion: string;
 }

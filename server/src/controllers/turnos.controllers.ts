@@ -1,3 +1,4 @@
+import { GrupoTurnoVsHorario } from '../models/gpTurnoVsHorario.model';
 import { Turnos } from '../models/turnos.model';
 import { Request, Response } from 'express';
 

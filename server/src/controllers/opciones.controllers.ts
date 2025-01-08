@@ -140,8 +140,6 @@ export const deleteGrupovsTurnos = async (req: Request, res: Response) => {
 export const createNewGrupovsTurnos = async (req: Request, res: Response) => {
   const { grupoHorario, turno, dias } = req.body;
 
-  console.log(req.body);
-
   if (!grupoHorario || !turno || !Array.isArray(dias) || dias.length === 0) {
     res.status(400).json({ message: 'grupoHorario, turno y días son requeridos y días debe ser un array no vacío' });
     return;
