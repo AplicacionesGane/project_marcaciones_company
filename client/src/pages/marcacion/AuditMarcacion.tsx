@@ -1,13 +1,13 @@
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
 
-import { Separator } from '@/components/ui/separator';
+import { Separator } from '../../components/ui/separator';
 import { AuditMarcaciones } from '@/types/marcacion';
-import { Button } from "@/components/ui/button";
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Card } from '@/components/ui/card';
+import { Button } from "../../components/ui/button";
+import { Label } from '../../components/ui/label';
+import { Input } from '../../components/ui/input';
+import { Card } from '../../components/ui/card';
 import { FormEvent, useState } from 'react';
 import { URL_API } from '@/utils/contants';
 import { InfoIcon } from "lucide-react";

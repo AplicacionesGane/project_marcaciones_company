@@ -1,5 +1,5 @@
-import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
+import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../components/ui/card'
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '../components/ui/chart'
 import { Label, Pie, PieChart } from 'recharts'
 
 const chartConfig = {

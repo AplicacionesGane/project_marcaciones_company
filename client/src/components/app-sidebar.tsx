@@ -1,7 +1,7 @@
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@/components/ui/sidebar'
-import { TeamSwitcher } from '@/components/team-switcher'
-import { NavMain } from '@/components/nav-main'
-import { NavUser } from '@/components/nav-user'
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '../components/ui/sidebar'
+import { TeamSwitcher } from '../components/team-switcher'
+import { NavMain } from '../components/nav-main'
+import { NavUser } from '../components/nav-user'
 import { Settings2 } from 'lucide-react'
 
 // This is sample data.

@@ -1,13 +1,13 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { WarningIcon, CheckIcon } from '@/components/icons'
-import { Separator } from '@/components/ui/separator'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
+import { WarningIcon, CheckIcon } from '../../components/icons'
+import { Separator } from '../../components/ui/separator'
 import { usePersonas } from '@/hooks/usePersonas'
-import { Loading } from '@/components/ui/Loading'
-import { Button } from '@/components/ui/button'
+import { Loading } from '../../components/ui/Loading'
+import { Button } from '../../components/ui/button'
 import { useNavigate } from 'react-router-dom'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
+import { Label } from '../../components/ui/label'
+import { Input } from '../../components/ui/input'
+import { Badge } from '../../components/ui/badge'
 
 function PersonasView() {
   const { personas, setSearch, search, loading, fechtDataAgain } = usePersonas()

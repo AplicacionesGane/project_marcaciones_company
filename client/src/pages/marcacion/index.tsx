@@ -1,16 +1,16 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { BottonExporCartera } from '@/components/ExportExcel';
-import { Separator } from '@/components/ui/separator';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
+import { BottonExporCartera } from '../../components/ExportExcel';
+import { Separator } from '../../components/ui/separator';
 import { Marcaciones } from '@/types/Marcaciones';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Button } from '../../components/ui/button';
+import { Input } from '../../components/ui/input';
 import { Label } from '@radix-ui/react-label';
 import { useEffect, useMemo, useState } from 'react';
 import { URL_API } from '@/utils/contants';
 import { Trash2 } from 'lucide-react';
 import axios from 'axios';
 
-function Marcacion () {
+function Marcacion() {
   const [marcaciones, setMarcaciones] = useState<Marcaciones[]>([]);
   const [fechaInitial, setFechaInitial] = useState('');
   const [fechaFinal, setFechaFinal] = useState('');

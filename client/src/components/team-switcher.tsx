@@ -1,5 +1,5 @@
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, } from '@/components/ui/sidebar'
-import { DropdownMenu, DropdownMenuTrigger, } from '@/components/ui/dropdown-menu'
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, } from '../components/ui/sidebar'
+import { DropdownMenu, DropdownMenuTrigger, } from '../components/ui/dropdown-menu'
 export function TeamSwitcher() {
 
   return (
