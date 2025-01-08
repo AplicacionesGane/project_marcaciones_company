@@ -11,7 +11,7 @@ import { Cargo } from '@/types/Interfaces';
 import { toast } from 'sonner';
 import axios from 'axios';
 
-export default function Cargos() {
+function Cargos() {
   const [cargos, setCargos] = useState<Cargo[]>([]);
   const [cargoDelete, setCargoDelete] = useState<number | null>(null);
   const [activeUpdate, setActiveUpdate] = useState<boolean>(false);
@@ -226,3 +226,5 @@ export default function Cargos() {
     </section >
   );
 }
+
+export default Cargos;

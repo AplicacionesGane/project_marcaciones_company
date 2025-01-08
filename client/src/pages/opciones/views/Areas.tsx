@@ -11,7 +11,7 @@ import { URL_API } from '@/utils/contants';
 import { toast } from 'sonner';
 import axios from 'axios';
 
-export default function Areas() {
+function Areas() {
   const [areas, setAreas] = useState<Area[]>([]);
   const [areaToDelete, setAreaToDelete] = useState<number | null>(null);
   const [activeUpdate, setActiveUpdate] = useState<boolean>(false);
@@ -229,3 +229,5 @@ export default function Areas() {
     </section>
   );
 }
+
+export default Areas;

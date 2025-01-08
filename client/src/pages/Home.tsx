@@ -19,11 +19,11 @@ export default function Home() {
 
   return (
     <main className='grid grid-rows-3 grid-flow-col gap-1'>
+
       <Card className='row-span-3 flex flex-col'>
-        <Input type='date' className='w-36' value={date} onChange={ev => setDate(ev.target.value)} />
+        <Input type='date' className='w-36 m-2' value={date} onChange={ev => setDate(ev.target.value)} />
         <ChartDonutMar items={infoMarcacion?.marcaciones} count={infoMarcacion?.count} />
       </Card>
-
 
       <Card className='row-span-2 col-span-2 p-4'>
         <div className='flex justify-between px-6 font-semibold'>
