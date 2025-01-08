@@ -1,9 +1,8 @@
 import { DataTypes, Model, InferAttributes, InferCreationAttributes } from 'sequelize';
 import { db_connection } from '../connections';
 
-
 export class Turnos extends Model<InferAttributes<Turnos>, InferCreationAttributes<Turnos>> {
-  declare id: number;
+  declare id?: number;
   declare codigo: string;
   declare descripcion: string;
   declare hora_inicio: string;

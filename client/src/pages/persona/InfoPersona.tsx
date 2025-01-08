@@ -7,7 +7,7 @@ import { URL_API } from '@/utils/contants';
 import { toast } from 'sonner';
 import axios from 'axios';
 
-export default function InfoPersona() {
+function InfoPersona() {
   const { id } = useParams();
 
   const [persona, setPersona] = useState<PersonaFields>({
@@ -174,3 +174,5 @@ export default function InfoPersona() {
     </section>
   );
 }
+
+export default InfoPersona;

@@ -11,7 +11,7 @@ import { URL_API } from '@/utils/contants';
 import { toast } from 'sonner';
 import axios from 'axios';
 
-export default function GrupoTurno() {
+function GrupoTurno() {
   const [turnoGrupo, setTurnoGrupo] = useState<GrupoTurnos[]>([]);
   const [areaToDelete, setAreaToDelete] = useState<number | null>(null);
 
@@ -160,3 +160,5 @@ export default function GrupoTurno() {
     </section >
   );
 }
+
+export default GrupoTurno;

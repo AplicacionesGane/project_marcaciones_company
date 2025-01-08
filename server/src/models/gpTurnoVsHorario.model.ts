@@ -4,7 +4,7 @@ import { db_connection } from '../connections';
 import { Turnos } from './turnos.model';
 
 export class GrupoTurnoVsHorario extends Model<InferAttributes<GrupoTurnoVsHorario>, InferCreationAttributes<GrupoTurnoVsHorario>> {
-  declare id: number;
+  declare id?: number;
   declare IdGrupoHorario: number;
   declare IdHorario: number;
   declare diaSeman: string;

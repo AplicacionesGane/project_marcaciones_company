@@ -1,18 +1,20 @@
 import { createBrowserRouter } from 'react-router-dom';
-
-import GrupovsTurno from '@/pages/opciones/views/GrupovsTurno';
-import GrupoTurno from '@/pages/opciones/views/GrupoTurno';
-import Cargos from '@/pages/opciones/views/Cargos';
-import Turnos from '@/pages/opciones/views/Turnos';
-import Areas from '@/pages/opciones/views/Areas';
-import PersonasView from '@/pages/persona';
-import Marcacion from '@/pages/marcacion';
 import NotFound from '@/pages/NotFound';
-import Home from '@/pages/Home';
+import { Suspense, lazy } from 'react';
+
+const Home = lazy(() => import('@/pages/Home'));
+const PersonasView = lazy(() => import('@/pages/persona/index'));
+const InfoPersona = lazy(() => import('@/pages/persona/InfoPersona'));
+const Marcacion = lazy(() => import('@/pages/marcacion/index'));
+const AuditMarcacion = lazy(() => import('@/pages/marcacion/AuditMarcacion'));
+const Areas = lazy(() => import('@/pages/opciones/views/Areas'));
+const Cargos = lazy(() => import('@/pages/opciones/views/Cargos'));
+const GrupoTurno = lazy(() => import('@/pages/opciones/views/GrupoTurno'));
+const Turnos = lazy(() => import('@/pages/opciones/views/Turnos'));
+const GrupovsTurno = lazy(() => import('@/pages/opciones/views/GrupovsTurno'));
+
 
 import Root from './root';
-import InfoPersona from '@/pages/persona/InfoPersona';
-import AuditMarcacion from '@/pages/marcacion/AuditMarcacion';
 
 export const Router = createBrowserRouter([
   {
@@ -22,7 +24,7 @@ export const Router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <Suspense fallback={<div>Loading...</div>}><Home /></Suspense>,
       },
       {
         path: '/empleados',

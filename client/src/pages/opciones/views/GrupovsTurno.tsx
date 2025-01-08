@@ -10,7 +10,7 @@ import { URL_API } from '@/utils/contants'
 import { toast } from 'sonner'
 import axios from 'axios'
 
-export default function GrupovsTurno() {
+function GrupovsTurno() {
   const [selectedGrupoHorarioId, setSelectedGrupoHorarioId] = useState<number | null>(null);
   const [options, setOptions] = useState<GrupoVsTurno | null>(null)
   const [fechtData, setFechtData] = useState(false)
@@ -191,3 +191,5 @@ export default function GrupovsTurno() {
     </section>
   )
 }
+
+export default GrupovsTurno;

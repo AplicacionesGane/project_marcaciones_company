@@ -10,7 +10,7 @@ import { URL_API } from '@/utils/contants';
 import { Trash2 } from 'lucide-react';
 import axios from 'axios';
 
-export default function Marcacion() {
+function Marcacion () {
   const [marcaciones, setMarcaciones] = useState<Marcaciones[]>([]);
   const [fechaInitial, setFechaInitial] = useState('');
   const [fechaFinal, setFechaFinal] = useState('');
@@ -130,3 +130,5 @@ export default function Marcacion() {
     </section>
   )
 }
+
+export default Marcacion;

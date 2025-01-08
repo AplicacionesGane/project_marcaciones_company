@@ -74,8 +74,14 @@ interface Marcacion {
   cantidad: number
 }
 
+interface AreaCount {
+  cant: number
+  des: string | null
+}
+
 export interface InfoMarcacion {
   count: number
   marcaciones: Marcacion[]
   totalPersona: number
+  areas: AreaCount[]
 }

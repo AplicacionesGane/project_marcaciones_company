@@ -6,8 +6,11 @@ import cors from 'cors';
 import { marcacionRouter } from './routes/marcacion.routes';
 import { opcionesRouter } from './routes/opciones.routes';
 import { personaRouter } from './routes/persona.routes';
+import { cargosRouter } from './routes/cargos.routes';
+import { areasRouter } from './routes/areas.routes';
 import { infoRoutes } from './routes/info.routes';
 import { db_connection } from './connections';
+import { turnosRouter } from './routes/turnos.routes';
 
 const app = express();
 
@@ -19,6 +22,9 @@ app.use('/', infoRoutes);
 app.use('/', marcacionRouter);
 app.use('/', opcionesRouter);
 app.use('/', personaRouter);
+app.use('/', areasRouter);
+app.use('/', cargosRouter);
+app.use('/', turnosRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

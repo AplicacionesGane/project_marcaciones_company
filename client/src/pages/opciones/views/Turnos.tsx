@@ -11,7 +11,7 @@ import { toast } from 'sonner';
 import axios from 'axios';
 import { Card } from '@/components/ui/card';
 
-export default function Turnos() {
+function Turnos() {
   const [turnos, setturnos] = useState<Turnos[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
   const [request, setRequest] = useState<boolean>(false);
@@ -176,3 +176,5 @@ export default function Turnos() {
     </section >
   );
 }
+
+export default Turnos;
