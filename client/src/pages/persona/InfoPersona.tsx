@@ -1,8 +1,8 @@
 import { ResponsePersona, PersonaFields } from '@/types/Persona';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState, ChangeEvent } from 'react';
-import { Separator } from '../../components/ui/separator';
-import { Button } from '../../components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
 import { URL_API } from '@/utils/contants';
 import { toast } from 'sonner';
 import axios from 'axios';

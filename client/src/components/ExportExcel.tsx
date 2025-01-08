@@ -1,6 +1,6 @@
 import { Marcaciones } from '@/types/Marcaciones'
 import { utils, ColInfo, writeFile } from 'xlsx'
-import { Button } from './ui/button'
+import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
 interface Props {

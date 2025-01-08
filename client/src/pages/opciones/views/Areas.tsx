@@ -1,12 +1,12 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../../components/ui/table'
-import { ModalDelete } from '../../../components/ModalDelete';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { ModalDelete } from '@/components/ModalDelete';
 import { FormEvent, useEffect, useState } from 'react';
-import { Separator } from '../../../components/ui/separator';
-import { Button } from '../../../components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
 import { type Area } from '@/types/Interfaces';
-import { Input } from '../../../components/ui/input';
-import { Label } from '../../../components/ui/label';
-import { Card } from '../../../components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card } from '@/components/ui/card';
 import { URL_API } from '@/utils/contants';
 import { toast } from 'sonner';
 import axios from 'axios';
