@@ -1,15 +1,15 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../../components/ui/table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { FormEvent, useEffect, useRef, useState } from 'react';
-import { ModalDelete } from '../../../components/ModalDelete';
-import { Separator } from '../../../components/ui/separator';
+import { ModalDelete } from '@/components/ModalDelete';
+import { Separator } from '@/components/ui/separator';
 import { type Turnos } from '@/types/Interfaces';
-import { Button } from '../../../components/ui/button';
-import { Label } from '../../../components/ui/label';
-import { Input } from '../../../components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Card } from '@/components/ui/card';
 import { URL_API } from '@/utils/contants';
 import { toast } from 'sonner';
 import axios from 'axios';
-import { Card } from '../../../components/ui/card';
 
 function Turnos() {
   const [turnos, setturnos] = useState<Turnos[]>([]);
