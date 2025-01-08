@@ -3,7 +3,7 @@ import { Persona } from '../models/persona.model';
 import { Area } from '../models/areas.model';
 import { Request, Response } from 'express';
 import { reduceStates } from '../utils';
-import { fn, Op, col } from 'sequelize';
+import { fn, Op, col, literal } from 'sequelize';
 import { z } from 'zod';
 
 export async function infoMarcaciones(req: Request, res: Response) {
@@ -33,7 +33,8 @@ export async function infoMarcaciones(req: Request, res: Response) {
       where: {
         estado: 'A'
       },
-      group: ['Area.descripcion']
+      group: ['Area.descripcion'],
+      order: literal('DES')
     });
 
     const stados = reduceStates(rows);

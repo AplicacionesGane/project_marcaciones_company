@@ -31,11 +31,21 @@ export default function Home() {
           <h1>Empleados</h1>
         </div>
 
-        <CardContent className='flex flex-col items-center justify-center h-full gap-2'>
+        <CardContent className='flex flex-col items-center justify-center h-full gap-2 px-8'>
           {
             infoMarcacion?.areas.map((a, i) => (
               <div className='flex w-full justify-between' key={i} >
-                <p>{a.des === null ? 'Sin Área' : a.des}</p>
+                {
+                  a.des === null
+                    ? (
+                      <span className='bg-yellow-100 px-2 py-1 rounded-md text-red-600 '>
+                        Sin área asignada
+                      </span>
+                    )
+                    : <span className='bg-indigo-100 px-2 py-1 rounded-md text-indigo-800'>
+                      {a.des}
+                    </span>
+                }
                 <h1>{a.cant}</h1>
               </div>
             ))
@@ -49,10 +59,10 @@ export default function Home() {
           N° Empleados Activos:
         </CardTitle>
 
-        <span className='bg-indigo-100 px-2 py-1 rounded-md text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300 text-3xl'>
+        <span className='bg-indigo-100 px-2 py-1 rounded-md text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300 text-xl'>
           {infoMarcacion?.totalPersona}
         </span>
-        <Users size={80} />
+        <Users size={60} />
 
       </Card>
 
