@@ -11,7 +11,7 @@ export const ModalDelete = ({ onCancel, funAction }: ModalDeleteProps) => {
       <div className="p-4 md:p-5 text-center bg-gray-200 rounded-md">
         <article>
           <p className="flex justify-center text-red-500">
-            <AlertTriangle size="size-24" />
+            <AlertTriangle size={120} />
           </p>
 
           <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Está seguro que desea eliminar !!!</h3>
