@@ -26,3 +26,21 @@ export interface InfoMarcacion {
   totalPersona: number
   areas: AreaCount[]
 }
+
+export interface Area {
+  id: number
+  codigo: string
+  descripcion: string
+}
+
+export interface Cargo {
+  ID: number
+  codigo: string
+  descripcion: string
+}
+
+export interface GrupoTurnos {
+  id: number;
+  codigo: string;
+  descripcion: string;
+}

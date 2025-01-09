@@ -5,6 +5,8 @@ import NotFound from "@/app/Notfound";
 const Home = lazy(() => import("@/app/Home"));
 
 import { Root } from '@/routes/root';
+import Personas from "@/app/personas/page";
+import InfoPersona from "@/app/personas/infoPersona";
 
 export const Router = createBrowserRouter([
   {
@@ -15,7 +17,15 @@ export const Router = createBrowserRouter([
       {
         index: true,
         element: <Suspense fallback={<div>Loading...</div>}><Home /></Suspense>,
-      }
+      },
+      {
+        path: '/empleados',
+        element: <Personas />,
+      },
+      {
+        path: '/empleado/:id',
+        element: <InfoPersona />,
+      },
     ]
   }
 ])
