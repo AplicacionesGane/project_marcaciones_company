@@ -14,7 +14,7 @@ pipeline {
         script {
           def env_client = readFile(ENV_MARCACION_CLIENT)
           def env_api = readFile(ENV_MARCACION_API)
-          writeFile file: './client/.env', text: env_client
+          writeFile file: './frontend/.env', text: env_client
           writeFile file: './server/.env', text: env_api
         }
       }
