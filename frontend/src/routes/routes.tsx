@@ -3,17 +3,18 @@ import { Suspense, lazy } from 'react';
 import NotFound from '@/app/Notfound';
 
 const Home = lazy(() => import('@/app/Home'));
+const Personas = lazy(() => import('@/app/personas/page'));
+const InfoPersona = lazy(() => import('@/app/personas/infoPersona'));
+const Marcacion = lazy(() => import('@/app/marcaciones/page'));
+const AuditMarcacion = lazy(() => import('@/app/marcaciones/audit-marcaciones'));
+const Areas = lazy(() => import('@/app/views/Areas'));
+const Cargos = lazy(() => import('@/app/views/Cargos'));
+const GrupoTurno = lazy(() => import('@/app/views/GrupoTurno'));
+const Turnos = lazy(() => import('@/app/views/Turnos'));
+const GrupovsTurno = lazy(() => import('@/app/views/GrupovsTurno'));
 
 import { Root } from '@/routes/root';
-import Personas from '@/app/personas/page';
-import InfoPersona from '@/app/personas/infoPersona';
-import Marcacion from '@/app/marcaciones/page';
-import AuditMarcacion from '@/app/marcaciones/audit-marcaciones';
-import Areas from '@/app/views/Areas';
-import Cargos from '@/app/views/Cargos';
-import GrupoTurno from '@/app/views/GrupoTurno';
-import Turnos from '@/app/views/Turnos';
-import GrupovsTurno from '@/app/views/GrupovsTurno';
+
 
 export const Router = createBrowserRouter([
   {

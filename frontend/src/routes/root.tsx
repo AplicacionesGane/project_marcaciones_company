@@ -10,18 +10,18 @@ export const Root = () => {
   const { isAuthenticated, user } = useAuth();
 
   if (!isAuthenticated || !user) {
-    return <LoginForm />
+    return <Suspense fallback={<div>Loading...</div>}><LoginForm /></Suspense>
   }
 
   return (
     <>
       <SidebarProvider>
         <AppSidebar />
-        <Suspense fallback={<div>Loading...</div>}>
-          <main className='w-full h-screen'>
+        <main className='w-full h-screen'>
+          <Suspense fallback={<div>Loading...</div>}>
             <Outlet />
-          </main>
-        </Suspense>
+          </Suspense>
+        </main>
       </SidebarProvider>
       <Toaster />
     </>

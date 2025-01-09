@@ -15,7 +15,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 export function NavMain({ items }: {
   items: {
@@ -34,29 +34,29 @@ export function NavMain({ items }: {
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
 
       <SidebarMenuSubButton asChild className='my-1'>
-        <Link to='/'>
+        <NavLink to='/'>
           <LayoutDashboard className='w-6 h-6' />
           Dashboard
-        </Link>
+        </NavLink>
       </SidebarMenuSubButton>
       <SidebarMenuSubButton asChild className='my-1'>
-        <Link to='/empleados'>
+        <NavLink to='/empleados'>
           <Users className='w-6 h-6' />
           Empleados
-        </Link>
+        </NavLink>
       </SidebarMenuSubButton>
       <SidebarMenuSubButton asChild className='my-1'>
-        <Link to='/marcacion'>
+        <NavLink to='/marcacion'>
           <TimerIcon className='w-6 h-6' />
           Marcaciones
-        </Link>
+        </NavLink>
       </SidebarMenuSubButton>
 
       <SidebarMenuSubButton asChild className='my-1'>
-        <Link to='/audit-marcacion'>
+        <NavLink to='/audit-marcacion'>
           <CheckCircle className='w-6 h-6' />
           Auditoría Marcaciones
-        </Link>
+        </NavLink>
       </SidebarMenuSubButton>
       <SidebarMenu>
         {items.map((item) => (
@@ -79,9 +79,9 @@ export function NavMain({ items }: {
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
+                        <NavLink to={subItem.url}>
                           <span>{subItem.title}</span>
-                        </a>
+                        </NavLink>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))}
