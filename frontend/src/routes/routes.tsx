@@ -9,6 +9,11 @@ import Personas from '@/app/personas/page';
 import InfoPersona from '@/app/personas/infoPersona';
 import Marcacion from '@/app/marcaciones/page';
 import AuditMarcacion from '@/app/marcaciones/audit-marcaciones';
+import Areas from '@/app/views/Areas';
+import Cargos from '@/app/views/Cargos';
+import GrupoTurno from '@/app/views/GrupoTurno';
+import Turnos from '@/app/views/Turnos';
+import GrupovsTurno from '@/app/views/GrupovsTurno';
 
 export const Router = createBrowserRouter([
   {
@@ -22,42 +27,42 @@ export const Router = createBrowserRouter([
       },
       {
         path: '/empleados',
-        element: <Personas />,
+        element: <Suspense fallback={<div>Loading...</div>}><Personas /></Suspense>,
       },
       {
         path: '/empleado/:id',
-        element: <InfoPersona />,
+        element: <Suspense fallback={<div>Loading...</div>}><InfoPersona /></Suspense>,
       },
       {
         path: '/marcacion',
-        element: <Marcacion />,
+        element: <Suspense fallback={<div>Loading...</div>}><Marcacion /></Suspense>,
       },
       {
         path: '/audit-marcacion',
-        element: <AuditMarcacion />,
+        element: <Suspense fallback={<div>Loading...</div>}><AuditMarcacion /></Suspense>,
       },
-      /*
+
       {
         path: '/areas',
-        element: <Areas />
+        element: <Suspense fallback={<div>Loading...</div>}><Areas /></Suspense>,
       },
       {
         path: '/cargos',
-        element: <Cargos />
+        element: <Suspense fallback={<div>Loading...</div>}><Cargos /></Suspense>,
       },
       {
         path: '/grupoturno',
-        element: <GrupoTurno />
+        element: <Suspense fallback={<div>Loading...</div>}><GrupoTurno /></Suspense>,
       },
       {
         path: '/turnos',
-        element: <Turnos />
+        element: <Suspense fallback={<div>Loading...</div>}><Turnos /></Suspense>,
       },
       {
         path: '/grupo-turno',
-        element: <GrupovsTurno />
+        element: <Suspense fallback={<div>Loading...</div>}><GrupovsTurno /></Suspense>,
       }
-        */
+
     ]
   }
 ])
