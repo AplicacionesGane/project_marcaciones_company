@@ -1,13 +1,16 @@
+import { PersonaFields, ResponsePersona } from '@/types/Persona';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 import { URL_API } from '@/utils/constants';
 import axios from 'axios';
-import { PersonaFields, ResponsePersona } from '@/types/Persona';
+import { Toast } from '@/components/ui/toast';
 
 function InfoPersona() {
   const { id } = useParams();
+  const { toast } = useToast();
 
   const [persona, setPersona] = useState<PersonaFields>({
     id: 0,
@@ -55,7 +58,7 @@ function InfoPersona() {
     axios.patch(`${URL_API}/persona`, { fields, id })
       .then(response => {
         if (response.status === 200) {
-          //toast.success('Datos actualizados correctamente', { description: 'Los datos del empleado han sido actualizados' });
+          toast({ title: 'Datos actualizados correctamente', description: 'Los datos del empleado han sido actualizados' });
           setTimeout(() => {
             setReload(!reload);
           }, 3000);
@@ -63,7 +66,7 @@ function InfoPersona() {
       })
       .catch(error => {
         console.log(error);
-        // toast.error('Error al actualizar datos', { description: 'Ocurrió un error al intentar actualizar los datos del empleado' });
+        toast({ title: 'Error al actualizar datos', description: 'Ocurrió un error al intentar actualizar los datos del empleado' });
       });
   }
 
@@ -71,7 +74,7 @@ function InfoPersona() {
     axios.patch(`${URL_API}/deletepersona`, { estado: 'R', id })
       .then(response => {
         if (response.status === 200) {
-          // toast.success('Usuario Eliminado Correctamente', { description: 'Empleado actualizado, será refirigido a lista empleados' });
+          toast({ title: 'Usuario Eliminado Correctamente', description: 'Empleado actualizado, será refirigido a lista empleados' });
           setTimeout(() => {
             navigate('/empleados')
           }, 4000);
@@ -79,7 +82,7 @@ function InfoPersona() {
       })
       .catch(error => {
         console.log(error);
-        // toast.error('Error al actualizar datos', { description: 'Ocurrió un error al intentar actualizar los datos del empleado' });
+        toast({ title: 'Error al actualizar datos', description: 'Ocurrió un error al intentar actualizar los datos del empleado' });
       });
   }
 
@@ -170,6 +173,7 @@ function InfoPersona() {
         <span>Cancelar</span>
       </Button>
 
+      <Toast />
     </section>
   )
 }

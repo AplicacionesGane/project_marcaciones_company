@@ -1,9 +1,10 @@
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarProvider } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/app-sidebar';
+import { Toaster } from '@/components/ui/toaster';
 import { useAuth } from '@/context/AuthProvider';
-import { Outlet } from "react-router-dom";
-import { LoginForm } from "@/app/Login";
-import { Suspense } from "react";
+import { Outlet } from 'react-router-dom';
+import { LoginForm } from '@/app/Login';
+import { Suspense } from 'react';
 
 export const Root = () => {
   const { isAuthenticated, user } = useAuth();
@@ -22,6 +23,7 @@ export const Root = () => {
           </main>
         </Suspense>
       </SidebarProvider>
+      <Toaster />
     </>
   )
 

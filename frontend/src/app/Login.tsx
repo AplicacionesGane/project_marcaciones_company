@@ -12,8 +12,8 @@ import axios from "axios";
 export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const { toast } = useToast()
   const { setIsAuthenticated } = useAuth()
+  const { toast } = useToast()
 
   const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault();

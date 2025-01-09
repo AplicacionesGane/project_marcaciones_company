@@ -1,12 +1,13 @@
-import { createBrowserRouter } from "react-router-dom";
-import { Suspense, lazy } from "react";
-import NotFound from "@/app/Notfound";
+import { createBrowserRouter } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
+import NotFound from '@/app/Notfound';
 
-const Home = lazy(() => import("@/app/Home"));
+const Home = lazy(() => import('@/app/Home'));
 
 import { Root } from '@/routes/root';
-import Personas from "@/app/personas/page";
-import InfoPersona from "@/app/personas/infoPersona";
+import Personas from '@/app/personas/page';
+import InfoPersona from '@/app/personas/infoPersona';
+import Marcacion from '@/app/marcaciones/page';
 
 export const Router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ export const Router = createBrowserRouter([
       {
         path: '/empleado/:id',
         element: <InfoPersona />,
+      },
+      {
+        path: '/marcacion',
+        element: <Marcacion />,
       },
     ]
   }

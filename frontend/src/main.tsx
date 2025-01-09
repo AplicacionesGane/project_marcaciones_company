@@ -5,13 +5,16 @@ import { Router } from '@/routes/routes'
 import { StrictMode } from 'react'
 import axios from 'axios'
 import './index.css'
+import { ToastProvider } from '@radix-ui/react-toast'
 
 axios.defaults.withCredentials = true
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={Router} />
+      <ToastProvider>
+        <RouterProvider router={Router} />
+      </ToastProvider>
     </AuthProvider>
   </StrictMode>,
 )
