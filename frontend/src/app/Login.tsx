@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { APP_NAME, URL_API_LOGIN } from '@/utils/constants';
+import { Toaster } from '@/components/ui/toaster';
 import { useAuth } from "@/context/AuthProvider";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -84,6 +85,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
           </CardContent>
         </Card>
       </div>
+      <Toaster />
     </section>
   )
 }
