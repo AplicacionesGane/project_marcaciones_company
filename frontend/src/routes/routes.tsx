@@ -8,6 +8,7 @@ import { Root } from '@/routes/root';
 import Personas from '@/app/personas/page';
 import InfoPersona from '@/app/personas/infoPersona';
 import Marcacion from '@/app/marcaciones/page';
+import AuditMarcacion from '@/app/marcaciones/audit-marcaciones';
 
 export const Router = createBrowserRouter([
   {
@@ -31,6 +32,32 @@ export const Router = createBrowserRouter([
         path: '/marcacion',
         element: <Marcacion />,
       },
+      {
+        path: '/audit-marcacion',
+        element: <AuditMarcacion />,
+      },
+      /*
+      {
+        path: '/areas',
+        element: <Areas />
+      },
+      {
+        path: '/cargos',
+        element: <Cargos />
+      },
+      {
+        path: '/grupoturno',
+        element: <GrupoTurno />
+      },
+      {
+        path: '/turnos',
+        element: <Turnos />
+      },
+      {
+        path: '/grupo-turno',
+        element: <GrupovsTurno />
+      }
+        */
     ]
   }
 ])

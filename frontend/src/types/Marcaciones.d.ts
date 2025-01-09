@@ -15,7 +15,6 @@ interface Persona {
   Area: AreaI | null
 }
 
-
 export interface Marcaciones {
   Id: number;
   codigo: string;
@@ -23,4 +22,14 @@ export interface Marcaciones {
   Hora: string;
   estado: Estado;
   Persona: Persona;
+}
+
+export interface AuditMarcaciones {
+  id: number
+  nombres: string
+  apellidos: string
+  hora: string
+  estado: string
+  hora_inicio: string
+  hora_fin: string
 }
