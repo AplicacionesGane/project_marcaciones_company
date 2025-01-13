@@ -5,11 +5,11 @@ import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
 import { Card } from '@/components/ui/card';
 import { URL_API } from '@/utils/constants';
 import { Cargo } from '@/types/interfaces';
 import axios from 'axios';
-import { useToast } from '@/hooks/use-toast';
 
 function Cargos() {
   const [cargos, setCargos] = useState<Cargo[]>([]);

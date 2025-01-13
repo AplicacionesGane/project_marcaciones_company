@@ -30,7 +30,8 @@ export const getMarcaciones = async (req: Request, res: Response) => {
           attributes: ['descripcion'],
           model: Area,
         }]
-      }]
+      }],
+      order: [['Fecha', 'DESC'], ['Hora', 'DESC']]
     })
 
     res.status(200).json(marcaciones)
