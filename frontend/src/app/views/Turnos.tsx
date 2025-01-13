@@ -6,9 +6,9 @@ import { type Turnos } from '@/types/interfaces';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
 import { Card } from '@/components/ui/card';
 import { URL_API } from '@/utils/constants';
-import { useToast } from '@/hooks/use-toast';
 import axios from 'axios';
 
 function Turnos() {

@@ -6,10 +6,10 @@ import { GrupoTurnos } from '@/types/interfaces';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
 import { Card } from '@/components/ui/card';
 import { URL_API } from '@/utils/constants';
 import axios from 'axios';
-import { useToast } from '@/hooks/use-toast';
 
 function GrupoTurno() {
   const [areaToDelete, setAreaToDelete] = useState<number | null>(null);
