@@ -8,7 +8,10 @@ import {
   SidebarMenuItem
 } from '@/components/ui/sidebar'
 
+import { COMPANY } from '@/utils/constants'
+
 export function TeamSwitcher() {
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -23,7 +26,7 @@ export function TeamSwitcher() {
               </div>
               <div className='grid flex-1 text-left text-sm leading-tight'>
                 <span className='truncate font-semibold'>
-                  Multired
+                  {COMPANY}
                 </span>
                 <span className='truncate text-xs'>Grupo Empresarial</span>
               </div>
