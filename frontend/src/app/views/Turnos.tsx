@@ -39,22 +39,16 @@ function Turnos() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    console.log(newTurno);
-
-    /*
-    axios.post(`${URL_API}/turno`, turno)
+    axios.post(`${URL_API}/turno`, { ...newTurno })
       .then(response => {
         if (response.status === 201) {
           toast({ title: 'El turno se creó correctamente', description: 'Turno creado' });
-          setRequest(true);
-          formRef.current?.reset();
         }
       })
       .catch(error => {
         console.log(error);
         toast({ title: error.response?.data?.message || 'Error', description: 'Error al crear el turno' });
       })
-      */
   }
 
   const confirmDeleteTurno = () => {
