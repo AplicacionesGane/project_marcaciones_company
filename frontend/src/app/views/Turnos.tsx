@@ -1,5 +1,5 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { RenderListTurnos } from '@/components/RenderListTurnos';
+import { FormEvent, useEffect, useState } from 'react';
 import { ModalDelete } from '@/components/modal-delete';
 import { Separator } from '@/components/ui/separator';
 import { type Turnos } from '@/types/interfaces';
@@ -15,8 +15,20 @@ function Turnos() {
   const [turnoDelete, setTurnoDelete] = useState<number | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [turnos, setturnos] = useState<Turnos[]>([]);
-  const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
+
+  const [newTurno, setNewTurno] = useState<Turnos>({
+    id: 0,
+    codigo: '',
+    descripcion: '',
+    hora_inicio: '',
+    hora_fin: '',
+    teorico: '',
+    hora_inicio_break: '',
+    hora_fin_break: '',
+    tiempo_breack: '',
+    conceptos: ''
+  })
 
   useEffect(() => {
     axios.get(`${URL_API}/turnos`)
@@ -26,6 +38,8 @@ function Turnos() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+
+    console.log(newTurno);
 
     /*
     axios.post(`${URL_API}/turno`, turno)
@@ -82,78 +96,83 @@ function Turnos() {
       <Separator />
 
       <section className='h-[80vh] overflow-y-auto'>
-
-        <Table>
-          <TableHeader >
-            <TableRow>
-              <TableHead>Código</TableHead>
-              <TableHead>Nombre turno</TableHead>
-              <TableHead>Horas Total Día</TableHead>
-              <TableHead>Hora Inicio</TableHead>
-              <TableHead>Hora Fin</TableHead>
-              <TableHead>Hora Inicio Break</TableHead>
-              <TableHead>Hora Final Break</TableHead>
-              <TableHead>Tiempo Breack</TableHead>
-              <TableHead>Acciones</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {
-              turnos.map(turno => (
-                <TableRow key={turno.id} >
-                  <TableCell>{turno.codigo}</TableCell>
-                  <TableCell>{turno.descripcion}</TableCell>
-                  <TableCell>{turno.teorico.split(':', 1)} h</TableCell>
-                  <TableCell>{turno.hora_inicio}</TableCell>
-                  <TableCell>{turno.hora_fin}</TableCell>
-                  <TableCell>{turno.hora_inicio_break}</TableCell>
-                  <TableCell>{turno.hora_fin_break}</TableCell>
-                  <TableCell>{turno.tiempo_breack}</TableCell>
-                  <TableCell>
-                    <Button
-                      className='hover:bg-green-200'
-                      variant={'secondary'}
-                      onClick={() => console.log('editar')}>
-                      Editar
-                    </Button>
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      className='hover:bg-red-200'
-                      variant={'secondary'}
-                      onClick={() => openModal(turno.id)}>
-                      Eliminar
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))
-            }
-          </TableBody>
-        </Table>
+        <RenderListTurnos turnos={turnos} openModal={openModal} />
       </section>
 
       <Card className='p-4'>
         <form
-          ref={formRef}
-          onSubmit={ev => handleSubmit(ev)}
           className='grid grid-cols-6 place-content-center place-items-center gap-2'
+          onSubmit={ev => handleSubmit(ev)}
         >
           <Label>Codigo</Label>
-          <Input type='text' name='codigo' id='codigo' required />
+          <Input
+            value={newTurno.codigo}
+            onChange={ev => setNewTurno({ ...newTurno, codigo: ev.target.value })}
+            type='text'
+            name='codigo'
+            id='codigo'
+            required
+          />
           <Label>Nombre Turno</Label>
-          <Input type='text' name='nombre_turno' id='nombre_turno' required />
+          <Input
+            value={newTurno.descripcion}
+            onChange={ev => setNewTurno({ ...newTurno, descripcion: ev.target.value })}
+            type='text'
+            name='nombre_turno'
+            id='nombre_turno'
+            required
+          />
           <Label>Hora Inicio turno</Label>
-          <Input type='time' name='hora_inicio' id='hora_inicio' required />
+          <Input
+            value={newTurno.hora_inicio}
+            onChange={ev => setNewTurno({ ...newTurno, hora_inicio: ev.target.value })}
+            type='time'
+            name='hora_inicio'
+            id='hora_inicio'
+            required
+          />
           <Label>Hora Fin turno</Label>
-          <Input type='time' name='hora_fin' id='hora_fin' required />
+          <Input
+            value={newTurno.hora_fin}
+            onChange={ev => setNewTurno({ ...newTurno, hora_fin: ev.target.value })}
+            type='time'
+            name='hora_fin'
+            id='hora_fin'
+            required
+          />
           <Label>Horas Total Día</Label>
-          <Input type='text' name='teorico' id='teorico' required />
+          <Input
+            value={newTurno.teorico}
+            onChange={ev => setNewTurno({ ...newTurno, teorico: ev.target.value })}
+            type='text'
+            name='teorico'
+            id='teorico'
+            required
+          />
           <Label>Hora Inicio Break</Label>
-          <Input type='time' name='hora_inicio_break' id='hora_inicio_break' />
+          <Input
+            value={newTurno.hora_inicio_break}
+            onChange={ev => setNewTurno({ ...newTurno, hora_inicio_break: ev.target.value })}
+            type='time'
+            name='hora_inicio_break'
+            id='hora_inicio_break'
+          />
           <Label>Hora Final Break</Label>
-          <Input type='time' name='hora_fin_break' id='hora_fin_break' />
+          <Input
+            value={newTurno.hora_fin_break}
+            onChange={ev => setNewTurno({ ...newTurno, hora_fin_break: ev.target.value })}
+            type='time'
+            name='hora_fin_break'
+            id='hora_fin_break'
+          />
           <Label>Tiempo Break</Label>
-          <Input type='text' name='tiempo_breack' id='tiempo_breack' />
+          <Input
+            value={newTurno.tiempo_breack}
+            onChange={ev => setNewTurno({ ...newTurno, tiempo_breack: ev.target.value })}
+            type='text'
+            name='tiempo_breack'
+            id='tiempo_breack'
+          />
 
           <Button
             type='submit'>
