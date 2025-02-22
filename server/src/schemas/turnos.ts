@@ -1,10 +1,7 @@
 import { z } from 'zod';
 
 export const turnoSchema = z.object({
-  id: z.number({
-    message: 'El id debe ser un número',
-    required_error: 'el id es requerido',
-  }),
+  id: z.number().optional(),
   codigo: z.string({
     message: 'el código debe ser una cadena de texto entre 2 a 10 caracteres',
     required_error: 'el código es requerido',
@@ -21,17 +18,25 @@ export const turnoSchema = z.object({
     message: 'la hora de fin debe ser una cadena de texto',
     required_error: 'la hora de fin es requerida',
   }),
-  hora_inicio_brake: z.string({
+  hora_inicio_break: z.string({
     message: 'la hora de inicio de brake debe ser una cadena de texto',
     required_error: 'la hora de inicio de brake es requerida',
   }),
-  hora_fin_brake: z.string({
+  tiempo_breack: z.string({
+    message: 'el tiempo de brake debe ser una cadena de texto',
+    required_error: 'el tiempo de brake es requerido',
+  }),
+  hora_fin_break: z.string({
     message: 'la hora de fin de brake debe ser una cadena de texto',
     required_error: 'la hora de fin de brake es requerida',
   }),
   teorico: z.string({
     message: 'el teórico debe ser una cadena de texto',
     required_error: 'el teórico es requerido',
+  }),
+  conceptos: z.string({
+    message: 'los conceptos deben ser una cadena de texto',
+    required_error: 'los conceptos son requeridos',
   }),
 });
 
