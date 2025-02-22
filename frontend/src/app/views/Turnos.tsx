@@ -12,40 +12,22 @@ import { URL_API } from '@/utils/constants';
 import axios from 'axios';
 
 function Turnos() {
-  const [turnos, setturnos] = useState<Turnos[]>([]);
-  const formRef = useRef<HTMLFormElement>(null);
-  const [request, setRequest] = useState<boolean>(false);
   const [turnoDelete, setTurnoDelete] = useState<number | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [turnos, setturnos] = useState<Turnos[]>([]);
+  const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
 
   useEffect(() => {
     axios.get(`${URL_API}/turnos`)
-      .then(response => {
-        setturnos(response.data)
-        setRequest(false)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }, [request]);
+      .then(response => setturnos(response.data))
+      .catch(error => console.log(error))
+  }, []);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const fields = Object.fromEntries(new window.FormData(e.target as HTMLFormElement));
 
-    const turno = {
-      codigo: fields.codigo,
-      descripcion: fields.nombre_turno,
-      hora_inicio: fields.hora_inicio,
-      hora_fin: fields.hora_fin,
-      teorico: fields.teorico,
-      hora_inicio_break: fields.hora_inicio_break,
-      hora_fin_break: fields.hora_fin_break,
-      tiempo_breack: fields.tiempo_breack,
-      conceptos: fields.conceptos
-    }
-
+    /*
     axios.post(`${URL_API}/turno`, turno)
       .then(response => {
         if (response.status === 201) {
@@ -58,6 +40,7 @@ function Turnos() {
         console.log(error);
         toast({ title: error.response?.data?.message || 'Error', description: 'Error al crear el turno' });
       })
+      */
   }
 
   const confirmDeleteTurno = () => {
@@ -66,7 +49,6 @@ function Turnos() {
         .then(response => {
           if (response.status === 200) {
             toast({ title: 'El cargo se eliminó correctamente', description: 'turno eliminado' });
-            setRequest(true);
           }
         })
         .catch(error => {
@@ -127,6 +109,14 @@ function Turnos() {
                   <TableCell>{turno.hora_inicio_break}</TableCell>
                   <TableCell>{turno.hora_fin_break}</TableCell>
                   <TableCell>{turno.tiempo_breack}</TableCell>
+                  <TableCell>
+                    <Button
+                      className='hover:bg-green-200'
+                      variant={'secondary'}
+                      onClick={() => console.log('editar')}>
+                      Editar
+                    </Button>
+                  </TableCell>
                   <TableCell>
                     <Button
                       className='hover:bg-red-200'
