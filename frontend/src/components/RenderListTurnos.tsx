@@ -2,7 +2,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import { Turnos } from '@/types/interfaces';
 
-export function RenderListTurnos({ turnos, openModal }: { turnos: Turnos[], openModal: (id: number) => void }) {
+export function RenderListTurnos({ turnos, openModal, fnEdit }: {
+  turnos: Turnos[],
+  openModal: (id: number) => void,
+  fnEdit: (turn: Turnos) => void
+}) {
   return (
     <Table>
       <TableHeader >
@@ -34,7 +38,7 @@ export function RenderListTurnos({ turnos, openModal }: { turnos: Turnos[], open
                 <Button
                   className='hover:bg-green-200'
                   variant={'secondary'}
-                  onClick={() => console.log('editar')}>
+                  onClick={() => fnEdit(turno)}>
                   Editar
                 </Button>
               </TableCell>
