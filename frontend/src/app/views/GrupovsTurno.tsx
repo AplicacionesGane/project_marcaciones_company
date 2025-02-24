@@ -85,17 +85,22 @@ function GrupovsTurno() {
   const handleUpdateGpTurno = (ev: FormEvent) => {
     ev.preventDefault();
 
-    console.log('Update Grupo vs Turno');
-
-    /*
-    axios.put(`${URL_API}/grupovsturnos`)
+    const fields = ev.currentTarget as HTMLFormElement;
+    const turno = fields['turno'].value; // trae el id del turno seleccionado
+    const grupoHorarioId = editInfo?.id;
+    
+    axios.put(`${URL_API}/updategrupovsturnos`, { idGH: grupoHorarioId, idTurno: turno })
       .then(response => {
-        console.log(response);
+        if (response.status === 200) {
+          setFechtData(!fechtData)
+          toast({ title: 'Actualización Exitosa', description: 'Se ha actualizado el Grupo-Turno correctamente' })
+          cancelEdit()
+        }
       })
       .catch(error => {
-        console.log(error);
+        console.log(error)
       })
-    */
+
   }
 
   const cancelEdit = () => {
