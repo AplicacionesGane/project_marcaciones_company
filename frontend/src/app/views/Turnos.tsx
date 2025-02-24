@@ -47,16 +47,14 @@ function Turnos() {
       .then(response => {
         if (response.status === 201) {
           toast({ title: 'El turno se creó correctamente', description: 'Turno creado' });
+          setReload(!reload);
+          setNewTurno(initialTurno);
         }
       })
       .catch(error => {
         console.log(error);
         toast({ title: error.response?.data?.message || 'Error', description: 'Error al crear el turno' });
       })
-      .finally(() => {
-        setReload(!reload);
-        setNewTurno(initialTurno);
-      });
   }
 
   const handleEditTurno = (e: FormEvent) => {
@@ -67,16 +65,14 @@ function Turnos() {
         if (response.status === 200) {
           toast({ title: 'El turno se actualizó correctamente', description: 'Turno actualizado' });
           setReload(!reload);
+          SetIsEditTurno(false);
+          setNewTurno(initialTurno);
         }
       })
       .catch(error => {
         console.log(error);
         toast({ title: error.response?.data?.message || 'Error', description: 'Error al actualizar el turno' });
       })
-      .finally(() => {
-        SetIsEditTurno(false);
-        setNewTurno(initialTurno);
-      });
   }
 
   const confirmDeleteTurno = () => {
@@ -85,6 +81,7 @@ function Turnos() {
         .then(response => {
           if (response.status === 200) {
             toast({ title: 'El cargo se eliminó correctamente', description: 'turno eliminado' });
+            setReload(!reload);
           }
         })
         .catch(error => {
