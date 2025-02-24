@@ -45,6 +45,29 @@ export const newTurno = async (req: Request, res: Response) => {
   }
 }
 
+export const editTurno = async (req: Request, res: Response) => {
+  const { success, data, error } = await verifyturno(req.body);
+
+  if (!success) {
+    res.status(400).json({ message: error.format() });
+    return;
+  }
+
+  try {
+    const result = await Turnos.update(data, { where: { id: data.id } });
+
+    if (!result) {
+      res.status(400).json({ message: 'No se pudo actualizar el turno' });
+      return;
+    }
+
+    res.status(200).json({ message: 'Turno Actualizado Correctamente' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 export const deleteTurno = async (req: Request, res: Response) => {
   const { id } = req.params;
 
