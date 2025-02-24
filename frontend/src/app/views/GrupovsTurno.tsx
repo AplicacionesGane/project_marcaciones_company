@@ -1,7 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { GrupoHorarioAsignado, GrupoVsTurno } from '@/types/interfaces'
+import { FormEvent, useEffect, useRef, useState } from 'react'
 import { Separator } from '@/components/ui/separator'
-import { useEffect, useRef, useState } from 'react'
-import { GrupoVsTurno } from '@/types/interfaces'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { useToast } from '@/hooks/use-toast'
@@ -16,6 +16,9 @@ function GrupovsTurno() {
   const [fechtData, setFechtData] = useState(false)
   const { toast } = useToast()
   const formRef = useRef<HTMLFormElement>(null);
+
+  const [editInfo, setEditInfo] = useState<GrupoHorarioAsignado | null>(null)
+  const [showEdit, setShowEdit] = useState(false)
 
   useEffect(() => {
     axios.get(`${URL_API}/grupovsturnos`)
@@ -74,12 +77,38 @@ function GrupovsTurno() {
     setSelectedGrupoHorarioId(id);
   };
 
+  const handleEdit = (GpTur: GrupoHorarioAsignado) => {
+    setEditInfo(GpTur)
+    setShowEdit(true)
+  }
+
+  const handleUpdateGpTurno = (ev: FormEvent) => {
+    ev.preventDefault();
+
+    console.log('Update Grupo vs Turno');
+
+    /*
+    axios.put(`${URL_API}/grupovsturnos`)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    */
+  }
+
+  const cancelEdit = () => {
+    setShowEdit(false)
+    setEditInfo(null)
+  }
+
   const filteredAsignados = selectedGrupoHorarioId
     ? options?.asignados.filter(asign => asign.GrupoHorario.id === selectedGrupoHorarioId)
     : options?.asignados;
 
   return (
-    <section className='flex flex-col h-screen'>
+    <section className='flex flex-col h-screen relative'>
 
       <h1 className='text-2xl text-center text-gray-700 dark:text-gray-200 font-semibold mb-1'>
         Asignación Turnos - Grupos
@@ -177,6 +206,13 @@ function GrupovsTurno() {
                 </TableCell>
                 <TableCell>
                   <Button
+                    className='hover:bg-yellow-200 mx-1'
+                    variant={'secondary'}
+                    onClick={() => handleEdit(asign)}
+                  >
+                    Editar
+                  </Button>
+                  <Button
                     className='hover:bg-red-200'
                     variant={'secondary'}
                     onClick={() => handleDelete(asign.id)}>
@@ -188,6 +224,66 @@ function GrupovsTurno() {
           </TableBody>
         </Table>
       </section>
+
+      {
+        showEdit && editInfo && (
+          <Card className='absolute shadow-2xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-20 py-4'>
+            <form onSubmit={handleUpdateGpTurno}>
+              <h1 className='text-center font-bold text-2xl pb-4'>Editar Asignación</h1>
+              <div className='flex gap-4 py-1 items-center'>
+                <Label>Turno Actual: </Label>
+                <span className='bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-yellow-900 dark:text-yellow-300'>
+                  {editInfo.Turno.descripcion}
+                </span>
+              </div>
+              <div className='flex gap-4 py-1 items-center'>
+                <Label>Grupo Horario: </Label>
+                <span className='bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-yellow-900 dark:text-yellow-300'>
+                  {editInfo.GrupoHorario.descripcion}
+                </span>
+              </div>
+              <div className='flex gap-4 py-1 items-center'>
+                <Label>Día Semana:</Label>
+                <span className='bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-yellow-900 dark:text-yellow-300'>
+                  {editInfo.diaSeman}
+                </span>
+              </div>
+
+              <Separator />
+
+              <div className='flex flex-col gap-2'>
+                <Label className='text-lg pt-1'>Seleccione Nuevo Turno</Label>
+                <select name='turno' id='turno' className='border px-4 py-2 rounded-md mb-2 text-black'>
+                  <option value=''>
+                    Seleccione Turno
+                  </option>
+                  {options?.horario.map(turno => (
+                    <option key={turno.id} value={turno.id}>
+                      {turno.descripcion}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className='flex gap-2'>
+                <Button
+                  variant={'destructive'}
+                  onClick={cancelEdit}
+                >
+                  Cancelar
+                </Button>
+
+                <Button
+                  type='submit'
+                  variant={'edit'}
+                >
+                  Guardar Cambios
+                </Button>
+              </div>
+            </form>
+          </Card>
+        )
+      }
 
     </section>
   )
