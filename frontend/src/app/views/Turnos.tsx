@@ -32,11 +32,13 @@ function Turnos() {
   const { toast } = useToast();
   const [newTurno, setNewTurno] = useState<Turnos>(initialTurno)
 
+  const [reload, setReload] = useState<boolean>(false);
+
   useEffect(() => {
     axios.get(`${URL_API}/turnos`)
       .then(response => setturnos(response.data))
       .catch(error => console.log(error))
-  }, []);
+  }, [reload]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -51,6 +53,10 @@ function Turnos() {
         console.log(error);
         toast({ title: error.response?.data?.message || 'Error', description: 'Error al crear el turno' });
       })
+      .finally(() => {
+        setReload(!reload);
+        setNewTurno(initialTurno);
+      });
   }
 
   const handleEditTurno = (e: FormEvent) => {
@@ -60,6 +66,7 @@ function Turnos() {
       .then(response => {
         if (response.status === 200) {
           toast({ title: 'El turno se actualizó correctamente', description: 'Turno actualizado' });
+          setReload(!reload);
         }
       })
       .catch(error => {

@@ -26,7 +26,7 @@ export function RenderListTurnos({ turnos, openModal, fnEdit, idEdit }: {
       <TableBody>
         {
           turnos.map(turno => (
-            <TableRow key={turno.id} className={idEdit === turno.id ? 'bg-yellow-100' : ''}>
+            <TableRow key={turno.id} className={idEdit === turno.id ? 'bg-blue-200' : ''}>
               <TableCell>{turno.codigo}</TableCell>
               <TableCell>{turno.descripcion}</TableCell>
               <TableCell>{turno.teorico.split(':', 1)} h</TableCell>
@@ -37,7 +37,7 @@ export function RenderListTurnos({ turnos, openModal, fnEdit, idEdit }: {
               <TableCell>{turno.tiempo_breack}</TableCell>
               <TableCell>
                 <Button
-                  className='hover:bg-green-200'
+                  className='hover:bg-yellow-200'
                   variant={'secondary'}
                   onClick={() => fnEdit(turno)}>
                   Editar
