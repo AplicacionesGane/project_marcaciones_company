@@ -115,6 +115,30 @@ export const getAllGrupovsTurnos = async (req: Request, res: Response) => {
   }
 }
 
+export const updateGrupovsTurnos = async (req: Request, res: Response) => {
+  const { idGH, idTurno } = req.body;
+
+  try {
+    const isEquals = await GrupoTurnoVsHorario.findOne({ where: { id: idGH, IdHorario: idTurno } });
+    
+    if (isEquals === null){
+      const result = await GrupoTurnoVsHorario.update({ IdHorario: idTurno }, { where: { id: idGH } });
+
+      if (!result) {
+        res.status(400).json({ message: 'No se pudo actualizar el grupo turno' });
+        return;
+      }
+
+      res.status(200).json({ message: 'Grupo Turno Actualizado Correctamente' });
+      return
+    }
+
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+    return 
+  }
+}
+
 export const deleteGrupovsTurnos = async (req: Request, res: Response) => {
   const { id } = req.params;
 
