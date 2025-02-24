@@ -53,6 +53,25 @@ function Turnos() {
       })
   }
 
+  const handleEditTurno = (e: FormEvent) => {
+    e.preventDefault();
+
+    axios.put(`${URL_API}/turno`, { ...newTurno })
+      .then(response => {
+        if (response.status === 200) {
+          toast({ title: 'El turno se actualizó correctamente', description: 'Turno actualizado' });
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        toast({ title: error.response?.data?.message || 'Error', description: 'Error al actualizar el turno' });
+      })
+      .finally(() => {
+        SetIsEditTurno(false);
+        setNewTurno(initialTurno);
+      });
+  }
+
   const confirmDeleteTurno = () => {
     if (turnoDelete !== null) {
       axios.delete(`${URL_API}/turno/${turnoDelete}`)
@@ -102,14 +121,17 @@ function Turnos() {
       <Separator />
 
       <section className='h-[80vh] overflow-y-auto'>
-        <RenderListTurnos turnos={turnos} openModal={openModal} fnEdit={editTurno} />
+        <RenderListTurnos turnos={turnos} openModal={openModal} fnEdit={editTurno} idEdit={newTurno.id} />
       </section>
 
       <Card className='p-4'>
         <form
           className='grid grid-cols-6 place-content-center place-items-center gap-2'
-          onSubmit={ev => handleSubmit(ev)}
-        >
+          onSubmit={
+            ev => isEditTurno
+              ? handleEditTurno(ev)
+              : handleSubmit(ev)
+          } >
           <Label>Código</Label>
           <Input
             value={newTurno.codigo}
