@@ -2,10 +2,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import { Turnos } from '@/types/interfaces';
 
-export function RenderListTurnos({ turnos, openModal, fnEdit }: {
+export function RenderListTurnos({ turnos, openModal, fnEdit, idEdit }: {
   turnos: Turnos[],
   openModal: (id: number) => void,
-  fnEdit: (turn: Turnos) => void
+  fnEdit: (turn: Turnos) => void,
+  idEdit: number
 }) {
   return (
     <Table>
@@ -25,7 +26,7 @@ export function RenderListTurnos({ turnos, openModal, fnEdit }: {
       <TableBody>
         {
           turnos.map(turno => (
-            <TableRow key={turno.id} >
+            <TableRow key={turno.id} className={idEdit === turno.id ? 'bg-yellow-100' : ''}>
               <TableCell>{turno.codigo}</TableCell>
               <TableCell>{turno.descripcion}</TableCell>
               <TableCell>{turno.teorico.split(':', 1)} h</TableCell>
