@@ -11,24 +11,26 @@ import { Card } from '@/components/ui/card';
 import { URL_API } from '@/utils/constants';
 import axios from 'axios';
 
+const initialTurno: Turnos = {
+  id: 0,
+  codigo: '',
+  descripcion: '',
+  hora_inicio: '',
+  hora_fin: '',
+  teorico: '',
+  hora_inicio_break: '',
+  hora_fin_break: '',
+  tiempo_breack: '',
+  conceptos: ''
+}
+
 function Turnos() {
   const [turnoDelete, setTurnoDelete] = useState<number | null>(null);
+  const [isEditTurno, SetIsEditTurno] = useState<boolean>(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [turnos, setturnos] = useState<Turnos[]>([]);
   const { toast } = useToast();
-
-  const [newTurno, setNewTurno] = useState<Turnos>({
-    id: 0,
-    codigo: '',
-    descripcion: '',
-    hora_inicio: '',
-    hora_fin: '',
-    teorico: '',
-    hora_inicio_break: '',
-    hora_fin_break: '',
-    tiempo_breack: '',
-    conceptos: ''
-  })
+  const [newTurno, setNewTurno] = useState<Turnos>(initialTurno)
 
   useEffect(() => {
     axios.get(`${URL_API}/turnos`)
@@ -79,6 +81,16 @@ function Turnos() {
     setTurnoDelete(null);
   };
 
+  const editTurno = (turn: Turnos) => {
+    console.log(turn);
+    setNewTurno(turn);
+    SetIsEditTurno(true);
+  }
+
+  const cancelEdit = () => {
+    SetIsEditTurno(false);
+    setNewTurno(initialTurno);
+  }
 
   return (
     <section className='p-1 flex flex-col h-screen'>
@@ -90,7 +102,7 @@ function Turnos() {
       <Separator />
 
       <section className='h-[80vh] overflow-y-auto'>
-        <RenderListTurnos turnos={turnos} openModal={openModal} />
+        <RenderListTurnos turnos={turnos} openModal={openModal} fnEdit={editTurno} />
       </section>
 
       <Card className='p-4'>
@@ -98,7 +110,7 @@ function Turnos() {
           className='grid grid-cols-6 place-content-center place-items-center gap-2'
           onSubmit={ev => handleSubmit(ev)}
         >
-          <Label>Codigo</Label>
+          <Label>Código</Label>
           <Input
             value={newTurno.codigo}
             onChange={ev => setNewTurno({ ...newTurno, codigo: ev.target.value })}
@@ -168,10 +180,14 @@ function Turnos() {
             id='tiempo_breack'
           />
 
-          <Button
-            type='submit'>
-            Crear Turno
-          </Button>
+          {
+            isEditTurno
+              ? <>
+                <Button onClick={() => cancelEdit()} variant={'destructive'}>Cancelar</Button>
+                <Button type='submit' variant={'edit'}>Guardar Cambios</Button>
+              </>
+              : <Button type='submit'>Crear Turno</Button>
+          }
         </form>
       </Card>
 
