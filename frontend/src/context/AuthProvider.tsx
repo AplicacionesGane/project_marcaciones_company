@@ -1,34 +1,24 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react'
-import { APP_NAME, URL_API_LOGIN } from '@/utils/constants'
 import { LogoutAndDeleteToken } from '@/services/logOut'
+import { URL_API_LOGIN } from '@/utils/constants'
 import { User } from '@/types/interfaces'
 import axios from 'axios'
 
 interface IAuthContext {
   isAuthenticated: boolean
-  user: User
-  setUser: Dispatch<SetStateAction<User>>
+  user: User | null
+  setUser: Dispatch<SetStateAction<User| null>>
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>
 }
-
-const InitialUser: User = { username: '', email: '', names: '', lastnames: '', company: '', process: '', sub_process: '', id: '' }
 
 const AuthContext = createContext<IAuthContext | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User>(InitialUser)
+  const [user, setUser] = useState<User | null>(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
-    const cookie = document.cookie
-
-    if (!cookie && cookie.split('=')[0] !== APP_NAME) {
-      setIsAuthenticated(false)
-      setUser(InitialUser)
-      return
-    }
-
-    axios.get(`${URL_API_LOGIN}/profile`, { params: { app: APP_NAME } })
+    axios.get(`${URL_API_LOGIN}/profile`)
       .then(res => {
         if (res.status === 200) {
           setIsAuthenticated(true)
@@ -39,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (error.response.status === 401) {
           LogoutAndDeleteToken()
           setIsAuthenticated(false)
-          setUser(InitialUser)
+          setUser(null)
         }
       })
   }, [isAuthenticated])
