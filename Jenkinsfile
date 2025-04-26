@@ -65,7 +65,5 @@ pipeline {
           script { sh 'docker compose up -d' }
           }
       }
-
-    // ** End of stages **
     }
 }
