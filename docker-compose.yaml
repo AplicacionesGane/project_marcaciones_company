@@ -1,8 +1,9 @@
-version: '3.7'
+version: '3'
 
 services:
   web_marcaciones:
-    image: nginx:stable-alpine3.19-slim
+    image: nginx:stable-alpine3.21-perl
+    restart: always
     container_name: web_marcaciones
     volumes:
       - ./frontend/dist:/usr/share/nginx/html
@@ -15,6 +16,7 @@ services:
       context: ./server
       dockerfile: Dockerfile
     container_name: api-marcaciones
+    restart: always
     image: api-marca-v1.0
     networks:
       - red-gane-int
