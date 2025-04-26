@@ -4,7 +4,9 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install && npm run build
+RUN npm install -g pnpm@latest
+
+RUN pnpm install && pnpm run build
 
 EXPOSE 4020
 
