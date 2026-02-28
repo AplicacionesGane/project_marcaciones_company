@@ -22,15 +22,13 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar'
 import { useAuth } from '@/context/AuthProvider'
-import { LogoutAndDeleteToken } from '@/services/logOut'
 
 export function NavUser() {
   const { isMobile } = useSidebar()
-  const { user, setIsAuthenticated } = useAuth()
+  const { user, logout } = useAuth()
 
-  const logOut = () => {
-    LogoutAndDeleteToken()
-    setIsAuthenticated(false)
+  const logOut = async () => {
+    await logout()
   }
 
   return (

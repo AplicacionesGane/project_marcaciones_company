@@ -9,39 +9,44 @@ import { useToast } from '@/hooks/use-toast';
 import { FormEvent, useState } from "react";
 import { cn } from '@/lib/utils';
 import axios from "axios";
+import { data } from 'react-router-dom';
 
 export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  const { setIsAuthenticated } = useAuth()
+  const { setIsAuthenticated, fetchUser } = useAuth()
   const { toast } = useToast()
 
-  const handleSubmit = (ev: FormEvent) => {
+  const handleSubmit = async (ev: FormEvent) => {
     ev.preventDefault();
     setLoading(true)
 
-    axios.post(`${URL_API_LOGIN}/login`, { username, password })
-      .then(res => {
-        if (res.status === 200) {
-          setIsAuthenticated(true)
-        }
-      })
-      .catch(error => {
-        console.log(error)
-        if (error.message === 'Network Error') {
-          toast({ title: 'Error', description: 'No se pudo conectar al servidor' })
-          return
-        }
+    try {
+      const res = await axios.post(`${URL_API_LOGIN}/login`, { username, password })
+      
+      if (res.status === 200) {
 
-        if (error.response.status === 400 || error.response.status === 401) {
-          toast({ title: error.response.data.message, description: error.response.data.description })
-          return
-        }
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+        // Obtener el perfil del usuario
+        await fetchUser()
+        setIsAuthenticated(true)
+      }
+    } catch (error: unknown) {
+      console.log(error)
+      
+      const err = error as { message?: string; response?: { status?: number; data?: { message?: string; description?: string } } }
+      
+      if (err.message === 'Network Error') {
+        toast({ title: 'Error', description: 'No se pudo conectar al servidor' })
+      } else if (err.response?.status === 400 || err.response?.status === 401) {
+        toast({ 
+          title: err.response.data?.message || 'Error', 
+          description: err.response.data?.description || 'Credenciales inválidas' 
+        })
+      }
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
