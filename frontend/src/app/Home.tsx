@@ -33,22 +33,26 @@ function Home() {
 
         <CardContent className='flex flex-col items-center justify-center h-full gap-2 px-8'>
           {
-            infoMarcacion?.areas.map((a, i) => (
-              <div className='flex w-full justify-between' key={i} >
-                {
-                  a.des === null
-                    ? (
-                      <span className='bg-yellow-100 px-2 py-1 rounded-md text-red-600 '>
-                        Sin área asignada
+            infoMarcacion?.areas && infoMarcacion.areas.length > 0 ? (
+              infoMarcacion.areas.map((a, i) => (
+                <div className='flex w-full justify-between' key={i} >
+                  {
+                    a.des === null
+                      ? (
+                        <span className='bg-yellow-100 px-2 py-1 rounded-md text-red-600 '>
+                          Sin área asignada
+                        </span>
+                      )
+                      : <span className='bg-indigo-100 px-2 py-1 rounded-md text-indigo-800'>
+                        {a.des}
                       </span>
-                    )
-                    : <span className='bg-indigo-100 px-2 py-1 rounded-md text-indigo-800'>
-                      {a.des}
-                    </span>
-                }
-                <h1>{a.cant}</h1>
-              </div>
-            ))
+                  }
+                  <h1>{a.cant}</h1>
+                </div>
+              ))
+            ) : (
+              <p className='text-gray-500'>No hay datos disponibles</p>
+            )
           }
 
         </CardContent>

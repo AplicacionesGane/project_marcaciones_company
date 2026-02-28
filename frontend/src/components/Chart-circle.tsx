@@ -36,7 +36,7 @@ export function ChartDonutMar({ items, count }: { items: { id: number, marcacion
         item.marcacion === 'Entrada Intermedia' ? { ...item, fill: 'var(--color-firefox)' } :
           item.marcacion === 'Salida' ? { ...item, fill: 'var(--color-edge)' } :
             { ...item, fill: 'var(--color-other)' }
-  )
+  ) || [] // Valor por defecto si items es undefined
 
   return (
     <>
@@ -76,7 +76,7 @@ export function ChartDonutMar({ items, count }: { items: { id: number, marcacion
                           y={viewBox.cy}
                           className='fill-foreground text-xl font-bold'
                         >
-                          {count?.toLocaleString()}
+                          {count || 0}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
